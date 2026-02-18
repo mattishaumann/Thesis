@@ -1,1 +1,12 @@
+# Local Python environment
 .venv/
+
+# Raw and processed datasets (never commit local data dumps)
+data/raw/
+data/processed/
+
+# Compressed data artifacts
+*.zip
+
+# Local VS Code workspace settings
+.vscode/

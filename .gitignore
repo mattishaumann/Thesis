@@ -15,3 +15,6 @@ data/processed/
 data/experiments/tagesschau_crawl/data/raw/tagesschau/
 
 mattis_eda.ipynb
+
+.DS_Store
+**/.DS_Store

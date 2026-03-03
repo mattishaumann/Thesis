@@ -10,3 +10,7 @@ data/processed/
 
 # Local VS Code workspace settings
 .vscode/
+
+__pycache__/
+*.pyc
+data preprocessing/BERTopic/outputs/

@@ -10,3 +10,8 @@ data/processed/
 
 # Local VS Code workspace settings
 .vscode/
+
+# Tagesschau crawl notebook outputs
+data/experiments/tagesschau_crawl/data/raw/tagesschau/
+
+mattis_eda.ipynb

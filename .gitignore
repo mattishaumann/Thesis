@@ -1,6 +1,10 @@
 # Local Python environment
 .venv/
 
+# Python cache artifacts
+__pycache__/
+*.pyc
+
 # Raw and processed datasets (never commit local data dumps)
 data/raw/
 data/processed/

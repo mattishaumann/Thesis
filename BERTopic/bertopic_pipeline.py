@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 import html
 import importlib
 import os
@@ -21,13 +20,14 @@ except ImportError:
     from stopwords_de import get_german_stopwords
 
 
-URL_PATTERN = re.compile(r"https?://\S+|www\.\S+", flags=re.IGNORECASE)
-EMAIL_PATTERN = re.compile(r"\b[\w\.-]+@[\w\.-]+\.\w+\b")
-HTML_TAG_PATTERN = re.compile(r"<[^>]+>")
-MARKDOWN_HEADING_PATTERN = re.compile(r"(?m)^\s{0,3}#{1,6}\s*")
+# URL_PATTERN = re.compile(r"https?://\S+|www\.\S+", flags=re.IGNORECASE)
+# EMAIL_PATTERN = re.compile(r"\b[\w\.-]+@[\w\.-]+\.\w+\b")
+# HTML_TAG_PATTERN = re.compile(r"<[^>]+>")
+# MARKDOWN_HEADING_PATTERN = re.compile(r"(?m)^\s{0,3}#{1,6}\s*")
+# Cleaning patterns for German news articles, tuned to remove common boilerplate while preserving semantic content.
 WHITESPACE_PATTERN = re.compile(r"\s+")
 TOKEN_PATTERN = re.compile(r"(?u)\b\w+\b")
-
+    
 
 def _require_dependency(package_name: str, install_hint: str):
     try:
@@ -96,13 +96,6 @@ def clean_text(text: Any, config: BERTopicConfig | None = None) -> str:
 
     cleaned = html.unescape(str(text))
     cleaned = cleaned.replace("\xa0", " ")
-    cleaned = HTML_TAG_PATTERN.sub(" ", cleaned)
-    cleaned = MARKDOWN_HEADING_PATTERN.sub("", cleaned)
-
-    if config.remove_urls:
-        cleaned = URL_PATTERN.sub(" ", cleaned)
-    if config.remove_emails:
-        cleaned = EMAIL_PATTERN.sub(" ", cleaned)
 
     for pattern in config.boilerplate_patterns:
         cleaned = re.sub(pattern, " ", cleaned)

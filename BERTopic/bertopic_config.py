@@ -20,6 +20,7 @@ class BERTopicConfig:
     lowercase: bool = False
     deduplicate: bool = True
 
+    # Patterns to remove from documents before topic modeling, such as boilerplate text or common phrases 
     boilerplate_patterns: tuple[str, ...] = (
         r"(?im)^lesen sie auch.*$",
         r"(?im)^mehr .*:.*$",
@@ -28,8 +29,8 @@ class BERTopicConfig:
     )
 
     ngram_range: tuple[int, int] = (1, 2)
-    min_df: int | float = 8
-    max_df: int | float = 0.85
+    min_df: int | float = 2
+    max_df: int | float = 0.9
 
     umap_n_neighbors: int = 30
     umap_n_components: int = 5
@@ -37,7 +38,7 @@ class BERTopicConfig:
     umap_metric: str = "cosine"
     umap_random_state: int = 42
 
-    hdbscan_min_cluster_size: int = 40
+    hdbscan_min_cluster_size: int = 20
     hdbscan_min_samples: int | None = 10
     hdbscan_metric: str = "euclidean"
     hdbscan_cluster_selection_method: str = "eom"
@@ -48,10 +49,17 @@ class BERTopicConfig:
     extra_stopwords: tuple[str, ...] = field(default_factory=tuple)
 
 
-def title_config(**overrides) -> BERTopicConfig:
-    """Return a BERTopic configuration tuned for short title/headline texts."""
+def full_text_config(**overrides) -> BERTopicConfig:
+    """Return explicit full-text defaults for BERTopic runs."""
 
-    base = BERTopicConfig(
+    base = BERTopicConfig() # just returns the version from above
+    return replace(base, **overrides) if overrides else base
+
+
+def title_config(**overrides) -> BERTopicConfig:
+    """Return title-focused defaults for BERTopic runs."""
+
+    base = BERTopicConfig( # just returns the version from above
         min_text_chars=8,
         min_tokens=2,
         min_df=1,

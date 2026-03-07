@@ -9,7 +9,8 @@ from contextlib import contextmanager
 from pathlib import Path
 from tempfile import gettempdir
 from typing import Any
-
+import random
+import numpy as np
 import pandas as pd
 
 try:
@@ -194,7 +195,7 @@ def build_umap_model(config: BERTopicConfig | None = None):
         n_components=config.umap_n_components,
         min_dist=config.umap_min_dist,
         metric=config.umap_metric,
-        random_state=config.random_state,
+        random_state=config.umap_random_state,
     )
 
 
@@ -282,6 +283,15 @@ def run_bertopic_pipeline(
         raise ValueError("No documents left after preprocessing. Relax the filters in BERTopicConfig.")
 
     docs = prepared["document"].tolist()
+
+    random.seed(config.random_state)
+    np.random.seed(config.random_state)
+    try:
+        import torch
+        torch.manual_seed(config.random_state)
+    except ImportError:
+        pass
+
     topic_model = build_topic_model(
         config,
         stop_words=stop_words,

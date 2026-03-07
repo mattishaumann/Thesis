@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import importlib
+import os
 import random
 import re
+from contextlib import contextmanager
 from dataclasses import dataclass
+from pathlib import Path
+from tempfile import gettempdir
 from typing import Any
 
 import numpy as np
@@ -30,16 +34,17 @@ class BERTopicV2Config:
     nr_topics: int | str | None = None
     calculate_probabilities: bool = False
     low_memory: bool = True
-    min_tokens: int = 2
-    deduplicate: bool = False
+    min_tokens: int = 8
+    deduplicate: bool = True
     ngram_range: tuple[int, int] = (1, 2)
-    min_df: int | float = 2
-    max_df: int | float = 0.95
-    umap_n_neighbors: int = 15
+    min_df: int | float = 8
+    max_df: int | float = 0.85
+    extra_stopwords: tuple[str, ...] = ()
+    umap_n_neighbors: int = 30
     umap_n_components: int = 5
     umap_min_dist: float = 0.0
-    hdbscan_min_cluster_size: int = 15
-    hdbscan_min_samples: int | None = 5
+    hdbscan_min_cluster_size: int = 40
+    hdbscan_min_samples: int | None = 10
     random_state: int = 42
 
 
@@ -65,6 +70,39 @@ def _require_dependency(package_name: str, install_hint: str):
         raise ImportError(
             f"Missing optional dependency '{package_name}'. Install it with '{install_hint}'."
         ) from exc
+
+
+@contextmanager
+def _suppress_numba_cache_during_import():
+    """Disable numba caching hooks to avoid broken packaged UMAP imports."""
+
+    try:
+        dispatcher_module = importlib.import_module("numba.core.dispatcher")
+        ufuncbuilder_module = importlib.import_module("numba.np.ufunc.ufuncbuilder")
+    except ImportError:
+        yield
+        return
+
+    dispatcher_cls = dispatcher_module.Dispatcher
+    ufunc_dispatcher_cls = ufuncbuilder_module.UFuncDispatcher
+
+    original_dispatcher_enable = dispatcher_cls.enable_caching
+    original_ufunc_enable = ufunc_dispatcher_cls.enable_caching
+    original_mplconfigdir = os.environ.get("MPLCONFIGDIR")
+
+    dispatcher_cls.enable_caching = lambda self: None
+    ufunc_dispatcher_cls.enable_caching = lambda self: None
+    os.environ.setdefault("MPLCONFIGDIR", str(Path(gettempdir()) / "mplconfig"))
+
+    try:
+        yield
+    finally:
+        dispatcher_cls.enable_caching = original_dispatcher_enable
+        ufunc_dispatcher_cls.enable_caching = original_ufunc_enable
+        if original_mplconfigdir is None:
+            os.environ.pop("MPLCONFIGDIR", None)
+        else:
+            os.environ["MPLCONFIGDIR"] = original_mplconfigdir
 
 
 def clean_text(text: Any) -> str:
@@ -119,7 +157,7 @@ def build_vectorizer(config: BERTopicV2Config | None = None, *, stop_words: list
     sklearn_text = _require_dependency("sklearn.feature_extraction.text", "pip install scikit-learn")
     CountVectorizer = sklearn_text.CountVectorizer
 
-    effective_stop_words = stop_words if stop_words is not None else get_german_stopwords()
+    effective_stop_words = stop_words if stop_words is not None else get_german_stopwords(config.extra_stopwords)
     return CountVectorizer(
         stop_words=effective_stop_words,
         ngram_range=config.ngram_range,
@@ -145,7 +183,8 @@ def build_umap_model(config: BERTopicV2Config | None = None):
     """Create a small UMAP model for BERTopic dimensionality reduction."""
 
     config = config or BERTopicV2Config()
-    umap_module = _require_dependency("umap", "pip install umap-learn")
+    with _suppress_numba_cache_during_import():
+        umap_module = _require_dependency("umap", "pip install umap-learn")
     UMAP = umap_module.UMAP
 
     return UMAP(
@@ -177,7 +216,8 @@ def build_representation_model(config: BERTopicV2Config | None = None):
     """Create spaCy POS-based representation model for cleaner topic labels."""
 
     config = config or BERTopicV2Config()
-    representation_module = _require_dependency("bertopic.representation", "pip install bertopic")
+    with _suppress_numba_cache_during_import():
+        representation_module = _require_dependency("bertopic.representation", "pip install bertopic")
     PartOfSpeech = representation_module.PartOfSpeech
     return PartOfSpeech(config.spacy_model_name)
 
@@ -191,7 +231,8 @@ def build_topic_model(
     """Build BERTopic with multilingual embeddings and spaCy topic representation."""
 
     config = config or BERTopicV2Config()
-    bertopic_module = _require_dependency("bertopic", "pip install bertopic")
+    with _suppress_numba_cache_during_import():
+        bertopic_module = _require_dependency("bertopic", "pip install bertopic")
     BERTopic = bertopic_module.BERTopic
 
     return BERTopic(

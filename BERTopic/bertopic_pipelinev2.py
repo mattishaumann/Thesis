@@ -43,6 +43,19 @@ class BERTopicV2Config:
     random_state: int = 42
 
 
+@dataclass(slots=True)
+class BERTopicV2ConfigTitle(BERTopicV2Config):
+    """Title-focused defaults for a second BERTopic run on headlines."""
+
+    min_tokens: int = 2
+    deduplicate: bool = True
+    min_df: int | float = 1
+    max_df: int | float = 0.98
+    umap_n_neighbors: int = 10
+    hdbscan_min_cluster_size: int = 10
+    hdbscan_min_samples: int | None = 3
+
+
 def _require_dependency(package_name: str, install_hint: str):
     """Import a dependency and raise a clear install message if missing."""
 

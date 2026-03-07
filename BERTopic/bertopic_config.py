@@ -35,6 +35,7 @@ class BERTopicConfig:
     umap_n_components: int = 5
     umap_min_dist: float = 0.0
     umap_metric: str = "cosine"
+    umap_random_state: int = 42
 
     hdbscan_min_cluster_size: int = 40
     hdbscan_min_samples: int | None = 10

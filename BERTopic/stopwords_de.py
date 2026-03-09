@@ -127,6 +127,8 @@ BASE_GERMAN_STOPWORDS = {
     "zum",
     "zur",
     "zwischen",
+    "live", 
+    "moderation"
 }
 
 PROJECT_STOPWORDS = {

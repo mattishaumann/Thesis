@@ -17,8 +17,16 @@ data/processed/
 
 # Tagesschau crawl notebook outputs
 data/experiments/tagesschau_crawl/data/raw/tagesschau/
+data/experiments/tagesschau_crawl/data/raw/tagesschau/
+BERTopic/outputs/rt_model
+BERTopic/outputs/ts_model
 
 mattis_eda.ipynb
 
 .DS_Store
 **/.DS_Store
+
+.numba_cache/
+.mplconfig/
+.DS_Store
+BERTopic/outputs/*.joblib

@@ -1,5 +1,5 @@
 {
-  "calculate_probabilities": false,
+  "calculate_probabilities": true,
   "language": null,
   "low_memory": true,
   "min_topic_size": 10,

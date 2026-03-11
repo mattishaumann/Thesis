@@ -32,7 +32,7 @@ class BERTopicV2Config:
     language: str = "multilingual"
     top_n_words: int = 10
     nr_topics: int | str | None = None
-    calculate_probabilities: bool = False
+    calculate_probabilities: bool = True
     low_memory: bool = True
     min_tokens: int = 8
     deduplicate: bool = True

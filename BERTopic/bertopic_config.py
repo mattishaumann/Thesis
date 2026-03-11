@@ -9,7 +9,7 @@ class BERTopicConfig:
     embedding_model_name: str = "paraphrase-multilingual-MiniLM-L12-v2"
     language: str = "multilingual"
     low_memory: bool = True
-    calculate_probabilities: bool = False
+    calculate_probabilities: bool = True
     top_n_words: int = 10
     nr_topics: int | str | None = None
 

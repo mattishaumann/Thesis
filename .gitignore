@@ -18,8 +18,8 @@ data/processed/
 # Tagesschau crawl notebook outputs
 data/experiments/tagesschau_crawl/data/raw/tagesschau/
 data/experiments/tagesschau_crawl/data/raw/tagesschau/
-BERTopic/outputs/rt_model
-BERTopic/outputs/ts_model
+1a_BERTopic/outputs/
+1a_BERTopic/outputsdk_model/
 
 mattis_eda.ipynb
 

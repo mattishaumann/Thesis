@@ -1,0 +1,915 @@
+title,date,url,author,teaser,article_text
+"Tatort Zürich flimmert hektisch zu Hightech, Hackern, Hochfinanz",2025-09-29,https://www.tichyseinblick.de/feuilleton/medien/tatort-zuerich-flimmert-hektisch/,Emil Kohleofen,"In der Folge ""Kammerflimmern"" geht es im Tatort aus Zürich dramatisch zu: 56 Todesopfer, ein Schuldiger mit hehren Motiven und eine Komplizin mit Rachegelüsten – die eigentlichen Bösewichte sind gewissenlose gewinnorientierte Unternehmer im Gesundheitssektor. Wie so oft: Eine spannende Idee, umgesetzt als provinzielle Meinungsmache.","Die Schweizer Ausgabe des deutschen Krimi-Lastengauls trabt diesmal in der Fahrspur grosser IT-lastiger Kassenschlager, in denen Stars wie Keanu Reeves (Matrix), Leonardo di Caprio (Inception) oder Arnold Schwarzenegger (Terminator) sich schon mit den Tücken der vernetzten, verdrahteten und automatisierten Welt herumschlagen mussten.
+
+Das
+
+Cybercrime Magazine
+
+aus Northport, N.Y, hat hier eine schöne Übersicht solcher Filme zusammengestellt.
+
+Schade nur, dass die eigentlich gute Idee, wie bei der ARD üblich, mit Meinungsmache durchsetzt und auf ein provinzielles Niveau heruntergekocht wurde.
+
+Der Katastrophenfilm mit am Ende nicht weniger als 56 Toten und 29 Schwerverletzten (ein neuer „Rekord“ nach Tatort-Kriterien) beginnt mit dem plötzlichen Herztod in denkbar harmloser Umgebung, beim Yoga, Gassi gehen und Radfahren. Reihenweise sacken Menschen einfach in sich zusammen, in der ganzen Stadt jaulen die Martinshörner, hektische Aktivität in den Notaufnahmen.
+
+Kommissarin Tessa Ott (Carol Schuler) und Kollegin Isabelle Grandjean (Anna Pieri Zuercher) werden mit der Untersuchung dieser Häufung außergewöhnlicher Todesfälle (im Behördenjargon AGTs) beauftragt.
+
+Schnell wird klar, dass die Verstorbenen oder mit schwerer Herzinsuffizienz in die Spitäler Eingelieferten eins gemeinsam hatten: weil ihre Herzen unregelmäßig schlugen, hatte man ihnen einen ICD (Implantierter Cardioverter Defibrillator) unter die Haut gepflanzt, der bei Rhythmusstörungen automatisch einen Millisekunden dauernden Stromstoß in den Herzmuskel entlädt und den Herzschlag so wieder normalisiert. Es sind ausschließlich Patienten betroffen, die Geräte der Firma Lauber Cardio implantiert bekommen hatten.
+
+Bei der Herstellerfirma lösen die massenhaften Herzanfälle natürlich helle Panik aus: Noch vor 32 Tagen hatte man die Software der automatischen Defibrillatoren erneuert, nun versucht man hektisch (Simon und Kilian Berger, gespielt von Martin Vischer und Elias Arens), diese auf den früheren Stand zurückzufahren (sog. „downgrade“). Die letzte Hoffnung, dass man die Lage selbst in den Griff bekommen kann, schwindet, als die eingesetzten Firmencomputer von einem Virus befallen werden, der frech die Botschaft verkündet, dass die Firma nur nach Zahlung von 317 Millionen US-Dollar die Herrschaft über ihre Defibrillatoren zurückerlangen wird.
+
+Bei Polizei und Staatsanwaltschaft (Anita Wegenast, gespielt von Rachel Braunschweig) herrschen Bestürzung und Ratlosigkeit angesichts dieses unsichtbaren und übermächtigen Feindes, während die Todesfälle sich weiter häufen. Nur Computer-Experte Noah Löwenherz (Aaron Arens) behält die Nerven und den Überblick, entwirrt die Fakten: Nach etwa 3,5 Millionen Herzschlägen setzt der Defibrillator den tödlichen Elektroschock, daher dauert es bei jedem Opfer unterschiedlich lange, bis es angegriffen wird. Während die Kliniken anfangen, Geräte von LC in Notoperationen auszutauschen, werden den einzeln ohne Angabe von Gründen (man will eine Massenpanik vermeiden) einbestellten Patienten ohne Symptome Betablocker verabreicht, die die Herzschlagrate heruntersetzen und so den tödlichen Stromschlag herauszögern sollen.
+
+Ein Hacker und Gentleman ?
+
+Den Zuschauern wird derweil der Täter präsentiert: Hacker Albin Fischer („Fischer“ laut ARD-Liste, anderswo und im O-Ton aber Albin „Frey“, gespielt von Sven Schelker), wird gezeigt, wie er einem (der „feine BWL- Student“ Fabian, gespielt von Pablo Caprez, im V-Ausschnitt Tennispullover), wie er ihn nennt, „Fascho live“ mit „feiner Freundin, feinem Ruderclub, feinen Verbindungsbuddies“ die Prüfungsfragen der Uni vorab verkauft. Weil Fabian, wie Albin durch die Lektüre dessen Accounts festgestellt habe, „anonym ziemlich heftigen Rassistenshit poste“ zwingt er ihn, all seine Accounts zu löschen und verlangt statt der vereinbarten 500 Franken das Vierfache.
+
+Mit dem sich nun anschließenden Telefongespräch zwischen ihm und einer Unbekannten nimmt das Drehbuch (André Küttel und Petra Ivanov) den ICD-Todesfällen den Ruch des geplanten Mordes: Albin reagiert bestürzt auf die Mitteilung, dass hier „Menschen sterben“ und überprüft das sofort auf seiner gehackten Webseite über die die Züricher Notfallmeldungen eingehen, verspricht, das „zu checken“ und radelt hastig, ohne auf Fabians Geld zu warten, davon. In Panik versucht er reuig, als Raumreinigerin verkleidet, den rettenden Computerschlüssel bei LC zu deponieren, wird aber durch die anrückende Polizei vertrieben.
+
+„Wo keiner sich hin wagt, dort segeln wir“ (Wahlspruch der Gebrüder Lauber)
+
+Bei Lauber Cardio liegen mittlerweile die Nerven blank, die beiden Eigentümer gehen wenig brüderlich auf einander los, Kilian, der die Firma „für den Börsengang radikal auf Umsatz getrimmt habe“ setzt seinen nervösen Bruder Simon, den Entwickler der Defibrillatorensoftware, unter Druck, sein Englischsprachiges Team auf Trab zu bringen und die Katastrophe, „das Blutbad, am Montag, wenn die Börse aufmacht“, noch zu verhindern. Der Tatort lässt durchblicken, dass bei LC nur „Sparsamkeit um konkurrenzfähig zu sein“ und „Marktwirtschaft und Geld“, nicht die Menschen, im Vordergrund gestanden hätten, immer seien die „schuld“, nicht die Maschinen. Und Simon sei sogar so weit gegangen, das „Repository“ der Software umzuprogrammieren, das sei „wirklich ernster shit“. Hier liegen auch die Ursprünge der Abneigung des politisch so sensiblen Hackers Albin, der früher bei LC als IT-Programmierer angestellt war und die Firma verließ, als er sich von Simon (dem „Wackeldackel“ seines Bruders, wie ihn alle dort genannt hätten) zu unlauteren Softwaremanipulationen genötigt gefühlt sah.
+
+Die Hacktivistin und der Spekulant
+
+Ott und Grandjean bekommen Wind davon, dass jemand auf den Absturz der LC – Aktie eine Börsenwette abgeschlossen hat und erhalten von Otts reichem Vater (Gustav Ott, gespielt von Oscar Bingisser, dessen bescheidene Yacht von seiner Bescheidenheit als Investor zeugt). Insiderinformationen über den Spekulanten; Es handelt sich um Billie Zogg (Nadège Meta Kanku), Mitglied einer Schweizer „Hacktivistinnengruppe“ namens „Darius“, die unter anderem durch die Offenlegung der Schwachstellen der Baseler Ampelschaltungen auf sich aufmerksam gemacht habe.
+
+Billie wiederum gibt den entscheidenden Hinweis auf Albin, der auf einer Houseparty mit dem Wissen angegeben hätte, dass LC „bald absaufen werde“. Nur: Simon hatte bereits zufällig bei seinem abspenstigen ehemaligen Mitarbeiter vorbeigeschaut, um sich dessen Programmierkünste einzukaufen und war dabei auf dessen Fluchtvorbereitungen gestoßen. Darufhin hatte er eins und eins zusammengezählt und Albin im Streit um den rettenden Schlüssel für das Computervirus erwürgt – Ott und Grandjean können nur noch den Tatort sichern, ein abgerissenes Kettchen führt sie aber direkt zu Simon.
+
+Diffizil: Darius, Delibes, Dolignon ?
+
+Langsam entwirrt sich das Puzzle, nur um noch etwas verwirrender zu werden. Die Umprogrammierung der Software durch den ehemaligen LC-Mitarbeiter Albin sollte die Betroffenen „nur einen kleinen Stich verspüren lassen“, mutierte aber durch Pfusch in der LC-Software von harmlosen 5 Millisekunden zu einem tödlichen 5-Sekunden-Stromschlag. Eigentlich wollten Albin und seine Komplizin, die Journalistin Paula Bianchi (Annina Walt) doch nur den Ruf der Firma Lauder mit einem „shitstorm“ ruinieren. Das Computervirus ließ sich, wie der Super-Polizei-ITler Noah herausfindet, durch das Abspielen eines Musikstücks abschalten. Paula hatte aber noch ganz handfeste Gründe, die Firma Lauber zu hassen: Ihr Vater Yann Delibes hatte einen automatischen LC-Defibrillator, der aber während eines Ausflugs zur Oma (sie war damals 12) fehlerhaft auslöste und den Wagen der Familie in einen Unfall verwickelte, der nicht nur ihre Eltern, sondern auch noch 9 Insassen eines Busses das Leben kostete. Der Unfall passierte auf der Straße D 317, daher die absurde Summe der Lösegeldforderung. Aus rücksichtsloser Profitgier verschleierten Kilian und Simon Berger ihre Mitschuld an dem Unfall durch rückwirkende Fälschung der Software ihrer ICDs.
+
+Überflüssige Appetithäppchen am Rande
+
+Kommissarin Ott soll seit nun gefühlt 5 Folgen Tatort an der Gründung einer Stiftung durch ihre Mutter mitwirken. Mutti hat auch einen ICD von Lauber, sitzt aber auf einem abgeschiedenen Bergbauernhof. Exmann Gustav Ott macht sich zu Fuß im Dunkeln auf, um sie zu informieren, dass ihr der plötzliche Herztod drohen könnte. Sie wird gerettet und ist nun endlich mal stolz auf ihre Tessa, die vor lauter Sorge um Mama dem Vorschlag mit der Stiftung zugestimmt hat.
+
+Die leitende Ärztin am Züricher Herzzentrum (Dr. Esme Sahin, gespielt von Beren Tuna) ist eine Namensvetterin des deutschen Professors und Gründers der Firma BioNTech. Im Wartebereich des Züricher Klinikums gibt es offenbar (wie in einigen deutschen Kliniken bereits üblich) uniformierte Security Mitarbeiter (schreiten gegen die rabiate Journalistin Bianchi ein).
+
+Wer das zu verwirrend fand, den wird evtl. (in Schwizerdütsch mit Untertiteln) die
+
+ganz sehenswerte Dokumentation
+
+entschädigen, die der SRF zum Hintergrund gedreht hat."
+Jetzt auch Lufthansa: Im Herbst der Reformen fallen die Arbeitsplätze,2025-09-29,https://www.tichyseinblick.de/wirtschaft/bosch-thyssenkrupp-lufthansa-stellenabbau/,Klaus-Rüdiger Mai,"Bosch will 13.000 Stellen abbauen, Thyssenkrupp 11.000, Lufthansa hat nun angekündigt, 4000 Jobs zu streichen – und dabei wird es nicht bleiben. Der CEO von Palantir warnt, Deutschland stecke in der Krise. Die SPD-Entwicklungsministerin findet, das Land könne auch in schwierigen Zeiten weiter an den „Globalen Süden“ zahlen.","Vom Herbst der Reformen kann man sich auch an den Kamin zurückziehen und Gabriel García Márquezs Roman „Der Herbst des Patriarchen“ aufschlagen. Am besagten Kamin würde man möglicherweise dem Einfall nachgeben, nicht sofort freilich, aber mit zunehmender Lektüre, den spanischen Titel „El otoño del patriarca“ mit „Der Herbst der Eliten“ zu übersetzen.
+
+Der Palantir-Chef Alex Karp fordert, dass Deutschland sich den Schlaf aus den Augen reiben, sich neu erfinden, die Tugenden eines Unternehmers zeigen müsse, denn: „Deutschland steckt in einer Krise – und wenn es nicht handelt, verliert Europa sein industrielles Herz.“ Nachdem Bosch angekündigt hatte, 13.000 Stellen zu streichen, prognostiziert der Auto-Experte Ferdinand Dudenhöffer: „Bis zum Jahr 2030 gehen wir davon aus, dass im gesamten Zulieferfeld rund 100.000 Arbeitsplätze wegfallen. Dabei sind Insolvenzen bei mittleren und kleineren Zuliefern nicht ausgeschlossen.“
+
+Autozulieferer-Sparte
+
+Bosch plant Abbau von 13.000 Stellen in Deutschland
+
+Thyssenkrupp Steel plant einen Stellenabbau von 11.000 Jobs. Binnen eines Jahres sind laut Meldungen in der deutschen Wirtschaft 100.000 Jobs weggefallen. Nun kündigt auch die Lufthansa an, bis 2030 4000 Jobs zu streichen – und bei dieser Planung wird es nicht bleiben. Für die Airlines wird Fliegen in Deutschland zu einem unrentablen, zu einem Verlustgeschäft. Die Preise werden von der Politik getrieben, durch „extrem hohe Belastungen durch Steuern und Gebühren“, wie Branchen-Sprecher und Eurowings-Chef Jens Bischof im Interview mit der WELT einschätzt. „Das ist zum Beispiel sieben Mal mehr als in Spanien … Geld verdienen Airlines derzeit vor allem außerhalb Deutschlands. Da boomt die Luftfahrt.“
+
+Die Aussicht ist dementsprechend düster: „In Bremen, Dresden, Köln/Bonn, Leipzig/Halle, Münster/Osnabrück, Nürnberg, Stuttgart – überall stehen Flüge auf der Kippe. Das sind Hochburgen des Mittelstands, des Maschinenbaus, der Tech-Industrie. Diese Unternehmen brauchen direkte, schnelle Verbindungen in die Welt, die bislang über Zubringerflüge zu den internationalen Drehkreuzen Frankfurt und München sichergestellt werden. All diesen Regionen droht die Abkoppelung vom globalen Luftverkehr.“ Bischof erläutert, dass jedes Mittelstreckenflugzeug in Deutschland im Grunde ein mittelständisches Unternehmen ist, mit dem 170 Arbeitsplätze und 70 Millionen Euro Wertschöpfung in Verbindung stehen.
+
+Doch für ein Land, dessen Eliten heftige Flugscham empfinden, wenn andere als sie selbst fliegen, Eliten, die mit allem medialen Druck und aller Macht und mit Heerscharen von finanzierten NGOs dafür kämpfen, dass Deutschland – außer sie selbst – vom Flugzeug auf das Fahrrad umsteigt. Deutschland hat die höchste Luftverkehrsteuer. Bischof rechnet vor, dass „die staatlichen Kosten …sich mittlerweile auf 4,4 Milliarden Euro pro Jahr“ summieren, „wovon allein die Hälfte eine Sondersteuer ausmacht“.
+
+Auf der einen Seite treibt die regierende Brandmauereinheitspartei die deutsche Wirtschaft in die Krise und ins Ausland, auf der anderen Seite stellt die regierende Brandmauereinheitspartei für die „internationale Klimafinanzierung“ die Rekordsumme von 11,8 Milliarden Euro bereit. Damit verdoppelt sie noch die von der Vorgängerregierung zugesagte Summe von mindestens 6 Milliarden Euro.
+
+Klar, dass diese Regierung mit dem Geld nicht auskommt, dass bereits Überlegungen angestellt werden, die Pflegestufe 1 zu streichen, Rentnern einen Soli abzuknöpfen und/oder sie in einen Rentnerarbeitsdienst zu zwingen, zudem das Ehegattensplitting zu streichen, die Erbschaftssteuer zu erhöhen. Der Staat braucht dringend Geld aus Deutschland für das Ausland, für den „Globalen Süden“. Die Ausplünderung der Deutschen wird massiv von der Regierung betrieben, die keine Gelegenheit verstreichen lässt, deutsche Gelder, auch die gepumpten, ins Ausland zu schaffen. Wie frohlockt doch Entwicklungsministerin Reem Alabali Radovan (SPD): „Deutschland steht auch in schwierigen Zeiten an der Seite des Globalen Südens.“
+
+Beschimpfungen und Gefälligkeitsgutachten
+
+Realitätsverweigerung auf höchster Ebene
+
+Richtigerweise müsste es heißen: Deutschland schuftet auch in schwierigen Zeiten für den Globalen Süden, bis eben nichts mehr von Deutschland übrig ist. Oder wie der Palantir-Chef sagte: „Deutschland steckt in einer Krise – und wenn es nicht handelt, verliert Europa sein industrielles Herz.“ Die Botschaft ist bei Reem Alabali Radovan und ihren Kollegen offensichtlich nicht angekommen. Man weiß nicht recht, in welcher Welt sie leben.
+
+Ehrlich wie diese Regierung ist, brüstet sie sich damit, dass 6,1 Milliarden Euro aus dem Haushalt kommen. Und der Rest? Mit 5,7 Milliarden Euro finanzieren KfW und DEG (Deutsche Investitions- und Entwicklungsgesellschaft) unter anderem Solar- und Windanlagen. Die Chinesen freut es. Besonders hübsch ist, dass auch der Ausbau des Nahverkehrs in Indien, Südafrika, Indonesien und Mexiko mit deutschen Geldern finanziert werden soll. Verschuldet die deutsche Regierung nicht gerade uns und unsere Kinder mit 500 Milliarden Euro für die Werterhaltung der zusammenbrechenden Infrastruktur, beispielsweise auch des Nahverkehrs in Deutschland?
+
+Es sind die dysfunktionalen Eliten Deutschlands, die das Land herunterwirtschaften, die beständig von Wirtschaftswachstum reden, wobei sie alles unternehmen, jegliches Wirtschaftswachstum zu verhindern.
+
+Der eingangs erwähnte Roman des großen lateinamerikanischen Schriftstellers beginnt so: „Während des Wochenendes fielen die Aasgeier über die Balkone des Präsidentenpalastes her, zerrissen mit Schnabelhieben die Drahtmaschen der Fenster und rührten mit ihren Flügeln die innen erstarrte Zeit auf, und im Morgengrauen des Montags erwachte die Stadt aus der Lethargie von Jahrhunderten…“"
+Harald Juhnke und die Mohrenstraße,2025-09-29,https://www.tichyseinblick.de/meinungen/harald-juhnke-mohrenstrasse-berlin/,Alexander Heiden,"Was verbindet einen bekennenden Alkoholiker, einen unbekannten Philosophen und eine Bande von schwarzen Sklavenhändlern? Sie alle zeigen, dass unsere unvergleichliche Hauptstadt Berlin tatsächlich völlig durchgeknallt ist.","„Keine Termine und leicht einen sitzen.“ So hat Harald Juhnke einst seine Vorstellung von Glück beschrieben. Allein schon dafür wurde er geliebt. Etwas mehr als 20 Jahre nach seinem Tod hat sich auch Juhnkes Heimatstadt Berlin nun dazu durchgerungen, einen Platz nach dem enorm populären Volks- und Lebenskünstler zu benennen.
+
+Also, eigentlich wurde der Platz direkt am Kurfürstendamm (Grolmann- Ecke Uhlandstraße) schon vor vier Wochen umgetauft. Doch erst heute hat der Regierende Bürgermeister Kai Wegner (CDU) in seinem Kalender die Zeit dafür gefunden, das Schild mit der Aufschrift „Harald-Juhnke-Platz“ feierlich und medienwirksam zu enthüllen. Das Stadtoberhaupt ist mindestens terminlich also erkennbar weit von Juhnkes Glücksformel entfernt.
+
+*****
+
+Glücklich waren dagegen die Aktivisten in Berlin-Mitte, als dort vor einem Monat ein anderes Schild enthüllt wurde. Nach einem jahrelangen, erbitterten, politischen und juristischen Streit heißt die bisherige Mohrenstraße nun Anton-Wilhelm-Amo-Straße.
+
+Wenn Sie, lieber Leser, bisher noch nie im Leben etwas von Anton Wilhelm Amo gehört haben sollten, dann machen Sie sich nichts draus. Es geht Ihnen dann nicht anders als 99,99 Prozent aller Menschen.
+
+Die sogenannte Dekolonisierungsszene in Berlin feiert den Ghanaer als „bedeutenden schwarzen Philosophen des 18. Jahrhunderts“. Das ist, mit Verlaub, etwas hochgegriffen. Tatsächlich wurde Amo noch als Kind 1707 von seinen Eltern an den Hof der Herzöge von Braunschweig-Wolfenbüttel geschickt. Später lehrte er an den Universitäten Wittenberg und Halle. In Jena bot er Kurse in Astrologie und Geheimschrift an. Als Amo 1747 nach Afrika zurückkehrte, galt er dort als Wahrsager. Bei uns zieht man es heute vor, ihn als den ersten bekannten Philosophen afrikanischer Herkunft in Deutschland zu bezeichnen. Nun gut.
+
+Jedenfalls kämpft das grün-woke Establishment seit Jahren dafür, die Mohrenstraße umzubenennen, weil der Begriff „Mohr“ angeblich rassistische Stereotype transportiert. Mit Amo – angeblich ein ehemaliger Sklave und späterer Denker – meinen die Aktivisten, die perfekte Alternative gefunden zu haben.
+
+Das ist gleich aus zwei Gründen fragwürdig. Erstens ist es ganz prinzipiell intellektuell erbärmlich, historische Straßennamen zu tilgen, weil sie heutigen Zeitgeist-Surfern emotionales Unbehagen verursachen. Und zweitens stellt sich jetzt ganz konkret heraus, dass Anton Wilhelm Amo als Namensgeber wohl doch keine so gute Wahl war.
+
+Der Historiker Michael Zeuske ist Professor in Bonn und Autor des Standardwerks „Sklaverei – eine Menschheitsgeschichte von der Steinzeit bis heute“. Er ist tief ins Archiv gestiegen und hat Originalquellen zu unserem vermeintlichen Helden aus Ghana gesichtet. Und siehe da: Zeuske kommt in der „Berliner Zeitung“ zu dem Schluss, „dass weder der junge Amo noch der Amo am Hof von Wolfenbüttel jemals Sklave gewesen ist“.
+
+Vielmehr gehörte der Mann in Ghana „zur Elite einer politischen Gemeinschaft, die Sklaven hielt und Kriegsgefangene sowie Sklaven an die verbündeten Niederländer lieferte und verkaufte“. Diese Gruppe nannte man damals ausdrücklich Mohren oder Morianer. Laut Zeuske waren es „Sklavenjäger, Sklavenhalter und Sklavenhändler“.
+
+Dass Anton Wilhelm Amo selbst auch mit Sklaven gehandelt hat, lässt sich weder belegen noch gesichert verneinen. Sicher ist aber: Der Mann war definitiv kein Sklave, sondern entstammt einer Sippe von berüchtigten Sklavenhändlern. Er war selbst einer von genau jenen „Mohren“, nach denen die Mohrenstraße benannt war.
+
+Ups.
+
+Der neue Straßenname erinnert nun also, genau wie schon der alte, an die historisch bekannte, aber von den links-woken Sturmtruppen stets verdrängte Wahrheit, dass Afrikaner auch von Afrikanern als Sklaven gehalten wurden. Sowas kommt von sowas.
+
+Würde Berlin seine eigenen Gesetze ernst nehmen, was die Stadt bekanntlich schon seit Ewigkeiten nicht mehr tut, dann müsste die Anton-Wilhelm-Amo-Straße gleich wieder umbenannt werden. Das Berliner Straßengesetz verbietet nämlich die Benennung nach „Wegbereitern und Verfechtern von Kolonialismus, Sklaverei und rassistisch-imperialistischen Ideologien“ sowie nach „in diesem Zusammenhang“ stehenden Orten, Sachen „oder ähnlichem“.
+
+„Die Verantwortlichen sollten überlegen, was sie falsch gemacht haben“, sagt Historiker Zeuske. Die Bezirksverordnetenversammlung von Berlin-Mitte, die mit rot-grüner Mehrheit im August 2020 die Umbenennung der Mohrenstraße in Anton-Wilhelm-Amo-Straße beschlossen hatte, wird das natürlich nicht tun.
+
+*****
+
+Geschichte ist dazu da, dass wir uns erinnern – an die guten Zeiten und an die schlechten. Geschichte ist nicht dazu da, dass wir sie verhüllen und verstecken. Nur wenn wir Geschichte sehen, können wir aus ihr lernen. Wenn wir unsere Geschichte verhüllen und verstecken, ist sie schnell ganz vergessen. Dann fangen wir jedes Mal wieder bei null an. Dann machen wir jeden Fehler, der schon längst gemacht wurde, wieder und wieder.
+
+Darum war es gut, dass es die Mohrenstraße gab. Und darum ist es gut, dass es jetzt einen Harald-Juhnke-Platz gibt.
+
+Prösterchen."
+Sex mit einer Zwölfjährigen: Freisprüche im Fall „Mia“,2025-09-29,https://www.tichyseinblick.de/meinungen/sex-mit-einer-zwoelfjaehrigen-freisprueche-mia/,Anna Diouf,"Nicht nur in Großbritannien, auch im deutschsprachigen Raum wird jungen Mädchen Verantwortung für die Sexualverbrechen aufgebürdet, denen sie zum Opfer fallen – während die Täter freigesprochen werden. Das belegt nun endgültig der Fall „Mia“, der vor dem Wiener Landesgericht verhandelt wurde.","Ein zwölfjähriges Mädchen wird von einem Dutzend Jugendlicher und junger Männer über Monate hinweg sexuell missbraucht. Diese halten die Taten teilweise per Video fest, setzen das Mädchen damit unter Druck.
+
+Diese Tatsachen leugnet im Fall „Mia“ niemand. Und dennoch wurden nun zehn Tatverdächtige im Alter zwischen 16 und 21 Jahren, Syrer, Nordmazedonier, Türken und Bulgaren, vor dem Wiener Landgericht freigesprochen.
+
+Urteil im Fall Mia
+
+Von Wien bis Rotherham: Die unerträgliche Banalisierung sexueller Gewalt
+
+Dem vorausgegangen waren zwei weitere Freisprüche in dem Fall: TE hatte über den Freispruch eines zum Tatzeitpunkt 15-jährigen Syrers berichtet, der dem Opfer noch im Gerichtssaal 100 Euro übergab – ob als Entschuldigung, oder um die sexuellen Handlungen nachträglich zu kaufen, muss offen bleiben, ein Hohn gegenüber dem missbrauchten Kind ist dieses Verhalten in jedem Fall.
+
+Nun also wurden auch die anderen Täter freigesprochen. Die Verantwortung für vielfachen sexuellen Missbrauch, für den Schmerz, die Demütigung und die lebenslange psychische Belastung, die mit Vergewaltigung einhergeht, wird damit einzig und allein dem Opfer zugewiesen. Einem Kind, das zur mündigen Einwilligung gar nicht fähig war.
+
+Der verantwortliche Richter Daniel Schmitzberger sah jedoch nicht als erwiesen an, dass das Mädchen eingeschüchtert worden sei. Es habe nie von einer Gruppenvergewaltigung gesprochen. Auf eine Anklage wegen Missbrauchs einer Unmündigen hatte die Staatsanwaltschaft gleich ganz verzichtet, da nicht nachweisbar sei, dass die Täter das wahre Alter des Mädchens gekannt hätten; körperlich wirke das Mädchen älter.
+
+Keine Gesetze gegen importierte Straftaten?
+
+Kinderbräute: Verbrechen, von denen niemand wissen will
+
+Das hatte den Ex-Freund des Mädchens allerdings nicht vor einer Verurteilung geschützt – der wurde
+
+laut ORF
+
+wegen des einvernehmlichen Geschlechtsverkehrs mit der damals 13-Jährigen zu 15 Monaten auf Bewährung verurteilt; er war zu dem Zeitpunkt 16 Jahre alt.
+
+Nicht nur diese Verurteilung schafft einen Kontext, in dem die Freisprüche fragwürdig wirken – 2023 hatte derselbe Richter zwei junge Männer zu Haftstrafen, teils auf Bewährung, verurteilt,
+
+weil sie Impfzertifikate gefälscht hatten.
+
+Unverständnis dafür, wieso derartige Taten eine Haftstrafe rechtfertigen, während monatelanger Kindesmissbrauch keinerlei Konsequenzen nach sich zieht, bleibt sicher nicht auf juristische Laien beschränkt. Diese eklatante Schieflage ist schlicht nicht vermittelbar.
+
+Hier zeigt sich eine Mentalität, die in Frauenfeindlichkeit verhaftet ist, und zugleich die Gegebenheiten des 21. Jahrhunderts sowohl in Bezug auf sexuelle Gewalt als auch auf die Lebensrealitäten von Jugendlichen, insbesondere aus sozial schwachen Verhältnissen, nicht annähernd begreift oder begreifen will.
+
+Immer früher werden Kinder mit Pornographie konfrontiert. In den USA kam
+
+eine Studie
+
+mit 1300 Jugendlichen zu dem Ergebnis, dass 15 Prozent der Befragten beim Erstkontakt mit Pornographie 11 Jahre alt oder jünger waren. Das bewirkt nicht nur Frühsexualisierung und Verrohung bei männlichen Jugendlichen. Es fügt auch Mädchen großen Schaden zu, und zwar indirekt auch dann, wenn sie nicht selbst Pornographie konsumieren.
+
+Denn das Frauenbild, das ihnen über ihre Altersgenossen wie auch anderweitig über soziale Medien vermittelt wird, suggeriert, dass Verfügbarkeit die anzustrebende Haltung einer Frau zu sein habe, dass ihre Objektivierung vollkommen normal sei und integral zu sexuellen Handlungen dazugehöre, inklusive Herabwürdigung und Gewalt.
+
+Doch dem Sachverhalt, dass Mädchen oftmals bereits ein Verständnis internalisiert haben, das ihnen unmöglich macht, den eigenen Unwillen adäquat auszudrücken – ein Problem, das häufig selbst noch erwachsene Frauen betrifft – oder auch nur zu erkennen, dass ihnen Unrecht getan wird, trägt die Rechtsprechung nicht Rechnung. Sie ignoriert, dass immer mehr Kinder durch entsprechenden Medienkonsum und durch die Haltung zu Sexualität, die sie in ihrem sozialen Umfeld erleben, in ihrem Selbstbewusstsein und Selbstwertgefühl bereits so geschädigt sind, dass sie ihnen zugefügte Gewalt nicht einordnen können.
+
+„Scottish Girl“
+
+Wie ein zorniges Mädchen das Abendland wachrüttelt
+
+Wenn dann auch noch vorliegende Belege, wie die auf Video festgehaltene Bitte „aufzuhören“, nicht als stichhaltig betrachtet werden, dafür aber Chatnachrichten, in denen kein Widerwille zum Ausdruck käme, hat ein Opfer wie „Mia“ keine Chance.
+
+Nicht nur an dieser Stelle scheinen sich Gerichte in einem Paralleluniversum zu bewegen. Denn abgesehen davon, dass hier neben Scham und Unvermögen, das Erlebte auszudrücken, auch das Bedürfnis eine Rolle spielen könnte, sich vor „Freunden“ und der eigenen Peer-Group keine Blöße geben zu wollen, scheint ihnen zeitgenössisches Chatverhalten ein Buch mit sieben Siegeln zu sein. Dass Chats nicht zwangsläufig die eigenen Gefühlsregungen umfänglich und vor allem lückenlos darlegen, sollte kein Geheimnis sein.
+
+Während „Mia“ also unverhältnismäßig viel abverlangt wird, werden die Jugendlichen exkulpiert. Und das, obwohl sie sehr genau wissen, dass das, was sie tun, nicht in Ordnung ist.
+
+Sie können darauf zählen, dass dieselbe mangelnde Reife, die „Mia“ zum Schaden ausgelegt wird, ihnen Straffreiheit garantiert. Sie treffen auf ein Rechtssystem, das die Zukunft eines Vergewaltigers für wichtiger erachtet als Genugtuung für die Missbrauchte, und seinen moralischen Defiziten mit Milde, Verständnis und Nachsicht begegnet.
+
+Hier kommt der Migrationshintergrund der Täter ins Spiel. Angesichts der Grooming-Gang-Skandale in Großbritannien wäre es schlechthin lächerlich, behaupten zu wollen, dass dieser keine Rolle spiele.
+
+Reale Taten und Online-Überwachung
+
+Großbritannien: Polizisten als Mittäter im Grooming-Gangs-Skandal beschuldigt
+
+Die oft misogyne und gewaltaffine kulturelle Prägung der Täter trifft aber nicht nur auf ein Justizsystem, das nicht auf die kriminelle Energie, Verrohung und Dreistigkeit der Jugendlichen ausgerichtet ist, sondern ganz konkret auf Richter und Schöffen, die schlicht nicht willens sind, die Täter zu bestrafen.
+
+Woher rührt dieser generelle Unwille, Kinder vor sexueller Gewalt zu schützen? Anzunehmen, hier handle es sich ausschließlich um Appeasement gegenüber migrantischen oder um falsch verstandene Nachsicht mit jungen Tätern, greift zu kurz.
+
+Viel grundlegender fehlen einer Gesellschaft, die „Einvernehmlichkeit“ als einzigen relevanten Parameter betrachtet, um Sexualkontakte zu legitimieren, die Instrumente, um in einer Kultur, die von Pornographie und Frauenverachtung geprägt ist, sicherzustellen, dass die Schwächsten vor Übergriffen geschützt werden. Zumal ein elitäres Klassendenken auch in Kontinentaleuropa existiert. Ganz offensichtlich werden auch hier Mädchen aus bestimmten sozialen Milieus als wertlos betrachtet, ihr Wohl als vernachlässigbar."
+Das Wohngeld wird zur nächsten sozialpolitischen Bombe der SPD,2025-09-29,https://www.tichyseinblick.de/daili-es-sentials/das-wohngeld-wird-zur-naechsten-sozialpolitischen-bombe-der-spd/,Mario Thurnes,"Tue Gutes, aber rede besser nicht drüber. Diese Devise gilt für die schwarz-rote Regierung, wenn es ums Wohngeld geht – denn das entwickelt sich sonst zur nächsten sozialpolitischen Bombe, die von der SPD gelegt wurde.","Dass der Staat Empfängern von Bürgergeld die volle Miete bezahlt, dürfte allgemein bekannt sein. Weit weniger wissen, dass auch Menschen mit geringem Einkommen einen Anspruch auf Geld vom Staat haben: Studenten, Rentner und auch Beschäftigte mit geringem Einkommen. Unter Umständen auch dann, wenn ihnen die Wohnung gehört, in der sie leben. Es ist durchaus im Sinne der Regierung, wenn die Betroffenen nicht wissen, dass ihnen da Geld zusteht – denn der laufen die Kosten fürs Wohngeld schon jetzt weg. Noch so eine sozialpolitische Bombe, die hochgehen und jeden Effekt der laufenden Schuldenorgie wegsprengen könnte.
+
+Im vergangenen Jahr haben Bund und Länder laut Statistischem Bundesamt 4,7 Milliarden Euro an Wohngeld ausgezahlt. Demnach haben rund 1,2 Millionen Haushalte das Geld bezogen. Im Schnitt knapp 300 Euro im Monat. In Bayern erhielten nur 1,7 Prozent der Haushalte Wohngeld, in Mecklenburg-Vorpommern waren es 5,6 Prozent. Die Ausgaben von rund 4,7 Milliarden Euro entsprechen einem Anstieg im Vergleich zum Jahr 2023 um 9 Prozent, wie das Statistische Bundesamt mitteilt.
+
+Sozialdemokraten verlieren „Herzkammer“
+
+Infarkt der SPD in Dortmund: Es liegt am Kopf
+
+Das Problem: Schon von 2022 auf 2023 haben sich die Ausgaben fürs Wohngeld erhöht. Um 137 Prozent. Seinerzeit von 1,8 auf 4,3 Milliarden Euro. Grund für diese massive Steigerung war ein Gesetz von SPD, Grüne und FDP. Unter Finanzminister Christian Lindner (FDP) erweiterte der Bund nicht nur die Menge der Berechtigten, sondern führte auch zusätzliche Zahlungen für Heizkosten und „Klimakomponenten“ ein.
+
+Mit mittlerweile knapp fünf Milliarden Euro verantworten SPD, Grüne und FDP damit nicht nur ein teures Projekt. Wie seit Jahrzehnten üblich hat hier eine Regierung den Abbau von Bürokratie versprochen – aber neue Bürokratiemonster geschaffen: Für 1,2 Millionen Berechtigte müssen nun Beamte Mietkosten erfassen, Grundbuchauszüge verwalten, Heizkosten prüfen oder „Klimakomponenten“ freigeben. Wohlgemerkt für 1,2 Millionen anerkannt Berechtigte. Denn es ist von einer hohen Zahl auszugehen an Berechtigten, die ihren Anspruch bisher nicht erhoben haben. Sei es, weil sie sich schämen, Geld vom Staat zu nehmen – oder weil sie schlicht von dieser potenziellen Zahlung nichts wissen.
+
+Bisher sind etwas mehr als die Hälfte der Bezieher von Wohngeld Rentner, 44 Prozent sind Familien. Vor allem Alleinerziehende. Der entsprechende Antrag geht an die lokale Wohngeldbehörde. Diese prüft, wie viele Personen in einem Haushalt leben, wie viele Einnahmen welchen Ausgaben für Mieten, Hauserhaltung oder Heizkosten gegenüberstehen. Auch wenn der Antragssteller in Klimaschutz investieren will oder muss, entscheidet die Wohngeldbehörde über den Zuschuss.
+
+Das Institut der Deutschen Wirtschaft geht davon aus, dass rund zwei Millionen Anspruch auf Wohngeld haben – wenn denn alle den entsprechenden Antrag stellen. Entsprechend würden dann die Gesamtkosten nochmal steigen. Das ist die eine sozialpolitische Bombe, die unter dem Wohngeld liegt. Laut Bauministerium ist zum Jahreswechsel aber auch die Höhe der Zahlung allgemein gestiegen.
+
+Die Höhe wird zwar individuell ausgerechnet. Doch ohne Sonderzahlungen wie Heizkosten oder Klimaschutzinvestitionen hatten die Empfänger laut Bauministerium bisher einen monatlichen Anspruch von180 Euro pro Monat. Künftig werden es 370 Euro sein. 190 Euro mehr. Also eine satte Verdopplung des grundsätzlichen Anspruchs. Überschlägt man die beiden möglichen Anstiegsgründe – bisher nicht gestellte Anträge und Erhöhung der Basiswerte – dann können die gesamten staatlichen Kosten fürs Wohngeld schnell in den zweistelligen Milliardenbereich schießen.
+
+Entsprechend schlagen die ersten zuständigen Minister jetzt Alarm. So wie Bauministerin Ina Scharrenbach (CDU) in Nordrhein-Westfalen. Sie rechnet für das laufende Jahr mit einem Anstieg der Kosten ihres Landes von 645 auf 707 Millionen Euro, wie sie gegenüber der
+
+Bild
+
+sagte. Gleichzeitig spricht die Christdemokratin sich dafür aus, die Verfahren zu vereinfachen. Einerseits wäre es gerechter, wenn alle Berechtigten das ihnen zustehende Geld erhielten – nur geht die sozialpolitische Bombe dann erst recht hoch."
+Ein schlechter Tag für die Demokratie,2025-09-29,https://www.tichyseinblick.de/meinungen/ein-schlechter-tag-fuer-die-demokratie/,Alexander Horn,"Mit Ann-Katrin Kaufhold hat der Bundestag eine Verfassungsrichterin gewählt, die politische Ziele mit Hilfe von Gerichten, Zentralbanken und demokratisch nicht legitimierten supranationalen Institutionen durchsetzen will. Die Unterhöhlung der Gewaltenteilung hat durch ihre Wahl eine neue Qualität erreicht.","Die Wahl von Verfassungsrichtern ist ein politischer Vorgang mit großer Tragweite. Im Grundgesetz ist verankert, dass die insgesamt 16 Bundesverfassungsrichter von den gesetzgebenden Organen, also Bundestag beziehungsweise Bundesrat mit Zwei-Drittel-Mehrheiten zu wählen sind. Die Tragweite dieser Entscheidung erschließt sich daraus, dass die gewählten Verfassungsrichter dann Teil einer von der Politik unabhängigen Institution werden, deren Rechtsprechung für die anderen Verfassungsorgane – darunter Bundestag und Bundesrat – wiederum bindend ist.
+
+Die Trennung zwischen Politik und Gerichten ist ein konstituierendes Prinzip liberaler Demokratien. Dementsprechend gibt es eine Gewaltenteilung zwischen den Gerichten und Rechtsprechung (Judikative) einerseits und der Politik mit gesetzgebender Funktion (Legislative) sowie ausführenden Organen, darunter die Bundesministerien, Bundesverfassungsschutz und Staatsanwaltschaften (Exekutive) andererseits. Die Gewaltenteilung soll Machtmissbrauch verhindern, indem sich die drei Gewalten gegenseitig kontrollieren und begrenzen.
+
+Die sehr nahe Zukunft
+
+Statt Reformen kommen Enteignung und Umbau der Gesellschaft – dieser Weg  ist jetzt freigeräumt
+
+Durch die nun vom Bundestag mit den Stimmen von CDU/CSU, SPD, Grünen und Linken vollzogene Wahl von Ann-Katrin Kaufhold zur Bundesverfassungsrichterin und deren anschließende Wahl zur Vizepräsidentin des Bundesverfassungsgerichts durch den Bundesrat, ist diese Gewaltenteilung jedoch in Frage gestellt. Denn, wie sich durch die öffentliche Diskussion um ihre Person im Vorfeld der Wahl gezeigt hatte, ist die von der SPD vorgeschlagene Bundesverfassungsrichterin hinsichtlich der Nutzung des Verfassungsgerichts zur Erreichung politischer Ziele nicht nur aufgeschlossen, vielmehr beansprucht sie sogar eine aktivistische Rolle des Bundesverfassungsgerichts bei der Politikgestaltung.
+
+Auf die Frage, wie die Klimazukunft aktiv zu gestalten sei, erklärte Kaufhold 2023 in einem
+
+Interview
+
+zu ihrem Forschungsprojekt „The Institutional Architecture for a 1.5 °C World“ an der LMU München: „Natürlich denkt man in solchen Fragen zunächst an Parlament und Regierung. Wir stellen aber leider fest, dass sie das Thema nicht schnell genug voranbringen. Deswegen muss man überlegen, wie man das Tableau der Institutionen erweitert.“ In den letzten Jahren seien die Gerichte auf den Plan getreten, „die deutlich machen, dass Klimaschutz auch eine menschenrechtliche Dimension hat“, und zum anderen die Zentralbanken. Hinzu komme eine Reihe anderer Institutionen, die man in Deutschland und auf europäischer Ebene für den Klimaschutz geschaffen habe.
+
+Explizit erwähnt sie den Sustainable-Finance-Beirat der Bundesregierung, auf europäischer Ebene die Platform on Sustainable Finance und international das Network for Greening the Financial System, allesamt Institutionen ernannter und selbsternannter Experten, die über keine demokratische Legitimation verfügen und gegenüber dem Wahlvolk nicht rechenschaftspflichtig sind. Bei so vielen Akteuren könne man sich fragen, so Kaufhold weiter: „Wer macht es am besten, am effizientesten, am effektivsten? Und wie sollte das Zusammenspiel der Institutionen aussehen, damit sie sich möglichst gegenseitig stärken und nicht behindern?“
+
+Die Lage der Nation
+
+Parteirichter statt Verfassungswächter?
+
+Kaufhold hegt offenbar nicht nur erhebliche Zweifel am politischen Prozess in einer Demokratie, vielmehr sieht sie dessen Dysfunktionalität sogar als erwiesen an, was sie dazu bewegt, Gerichte, Zentralbanken und nicht gewählten Expertengremien unter Umgehung der Demokratie zur Durchsetzung politischer Ziele in Anspruch nehmen zu wollen. Unumwunden erklärt sie, dass sie mit ihrem Forschungsprojekt die Frage beantworten wolle, wie man Institutionen schaffen könne, „die einerseits gesellschaftlichen Rückhalt haben und andererseits effektiven Klimaschutz ermöglichen“. Zwar könnten weder Parlamente, Gerichte, Zentralbanken oder andere Institutionen „auf Dauer gegen eine Mehrheitsmeinung in der Bevölkerung agieren“ und Parlamente hätten den Vorteil, dass sie „politisch stark legitimiert“ seien, wohl aber sei es ein „Defizit von Parlamenten mit Blick auf den Klimaschutz […], dass sie auf Wiederwahl angewiesen sind“. In der Folge tendierten sie wohl dazu, so Kaufhold weiter, „unpopuläre Maßnahmen nicht zu unterstützen“, während Gerichte und Zentralbanken unabhängig seien und sich daher „besser [eignen], unpopuläre Maßnahmen anzuordnen“.
+
+EZB macht Politik
+
+Die von Kaufhold propagierte Übertragung politischer Verantwortung an demokratieferne Institutionen, deren Personal nicht vom Volk gewählt wird und somit den Bürgern gegenüber daher nicht rechenschaftspflichtig und abwählbar ist, ist keine Fiktion, sondern wird immer mehr zur gängigen Praxis. Sehr deutlich zeigt sich dies anhand der von ihr angesprochenen Zentralbanken.
+
+Um Wähler und Politik aus der Geldpolitik herauszuhalten, wurden die institutionellen Strukturen der Deutschen Bundesbank mit der Gründung der EZB auf diese übertragen. Dabei hat man – um die Macht nichtgewählter Zentralbanker zumindest einzuschränken – dieses Mandat strikt auf die Gewährung der Geldwertstabilität beschränkt. Gemäß Artikel 127 des Vertrags über die Arbeitsweise der EU ist die Preisstabilität daher als das „vorrangige Ziel des Europäischen Systems der Zentralbanken“ festgelegt. „Soweit dies ohne Beeinträchtigung des Zieles der Preisstabilität möglich ist“, darf die EZB die allgemeine Wirtschaftspolitik
+
+unterstützen.
+
+Rotrotgrün und die Macht:
+
+Kehrt das Zeitalter politischer Prozesse zurück?
+
+Mit dem Amtsantritt von Christine Lagarde als EZB-Präsidentin änderte sich dies. Sie kündigte sofort an, dass sie den Klimaschutz zur Aufgabe der EZB machen werde. Diese Ausweitung des EZB-Mandats begründete sie damit, dass der Klimawandel ihrer Auffassung nach die Stabilität des Finanzsystems bedrohe. Bei einer Anhörung im EU-Parlament im September 2019 hatte sie als oberstes Ziel der EZB die Preisstabilität genannt. Es sei aber dennoch legitim, weitere Ziele zu verfolgen. Und sie ließ nicht den geringsten Zweifel an ihrer Überzeugung, dass es ihr als EZB-Chefin obliegt, ihr Mandat selbst zu definieren: „Es gibt sekundäre Ziele, die nach meiner Überzeugung nicht sekundär sind. Und wenn Preisstabilität vorliegt, dann kann man sich auch weitere Ziele […] anschauen. Zum Beispiel kann die EZB gewiss das Ziel Umweltschutz mit
+
+aufgreifen.
+
+“ Mit dieser Selbstermächtigung zog die EZB ein politisches Mandat an sich, was ihr seitdem erlaubt, unbehelligt vom Wählerwillen Klimapolitik zu betreiben.
+
+Die Instrumentalisierung der EZB für politische Zwecke ist jedoch keineswegs die Erfindung von Lagarde. Als es den Regierungen der Euroländer Anfang der 2010er Jahre nicht gelungen war, das aufgrund steigender Schulden zunehmende Risiko eines Zusammenbruchs der Eurozone zu verhindern, sprang die EZB in die Presche. Auf dem Höhepunkt der Eurokrise 2012 erklärte der damalige EZB-Präsident Mario Draghi die Vergemeinschaftung der Schulden der Euroländer, indem er sagte, die EZB werde „alles tun“, um die Eurozone zu retten. Da nun klar war, dass die „Länder zusammen [einstehen] für die Schulden der Angeschlagenen“, wie seinerzeit der Präsident der Schweizerischen Nationalbank kommentierte, beendete dies schlagartig die eskalierende Eurokrise (Zitiert nach Hans-Werner Sinn, „Der Euro – Von der Friedensidee zum Zankapfel“, Carl Hanser Verlag 2015, Seite 387). Gegen die Interpretation von Draghis Handeln setzte sich keine Regierung der Eurozone zur Wehr.
+
+Die EZB lässt sich jedoch auch durch die Übernahme einer immer wichtigeren wirtschaftspolitischen Rolle instrumentalisieren. Seit langem beflügeln die Zentralbanken die Finanzmärkte und halten die wertschöpfende Wirtschaft durch das viele billige Geld zumindest am Ticken. Zudem verschaffen sie den Staaten durch niedrige Zinsen und den Kauf ihrer Staatsanleihen zusätzliche fiskalische Spielräume. Im Gegenzug halten die Regierungen der Euroländer und die Gerichte der EZB den Rücken frei, indem sie die politische Unabhängigkeit der EZB verteidigen und den Vorwurf von Mandatsüberschreitungen unter anderem durch Entscheidungen des Bundesverfassungsgerichts und des Europäischen Gerichtshofs kontinuierlich zurückweisen. Jürgen Stark, ehemaliger EZB-Chefökonom, kritisierte bereits vor vielen Jahren, dass die EZB unter Draghi „zu einer mächtigen, hochpolitisierten und damit auch angreifbaren Institution“
+
+geworden sei.
+
+Politische Inanspruchnahme der Gerichte
+
+Die politische Inanspruchnahme von Institutionen, die im demokratischen Gefüge keinen politischen Auftrag haben, da sie nicht dem Votum der Wähler als Souverän der Demokratie unterliegen, lässt sich inzwischen auch bei den Gerichten und speziell beim Bundesverfassungsgericht erkennen.
+
+Artikel 3 Absatz 3 Grundgesetz
+
+„Sexuelle Identität“ ins Grundgesetz: Der Bundesrat und sein trojanisches Pferd
+
+Dass das Bundesverfassungsgericht mittlerweile zu tiefen Eingriffen in politische Zuständigkeiten bereit ist, zeigte sich am
+
+Klimaurteil
+
+des Bundesverfassungsgerichts von 2021, in dem die Richter die politische Verantwortung zur Klimaneutralität allein aus dem Grundgesetz ableiteten. Damit engen sie den zukünftigen Gestaltungsspielraum der Politik massiv ein, denn mit ihrem Urteil hoben sie die mit einfacher Mehrheit im Bundestag getroffene Verpflichtung zur Klimaneutralität Deutschlands in den Verfassungsrang, sodass sie ohne verfassungsändernde Zwei-Drittel-Mehrheit schwerlich korrigierbar ist.
+
+Dieser richterliche politische Aktivismus wird dadurch verstärkt, dass das Grundgesetz und die Verfassungen der Bundesländer politisch
+
+aufgeladen werden.
+
+Dies geschieht auf Grundlage der seit 1949 sukzessiv hinzugefügten politischen Staatsziele, die den Staat verpflichten, diese nach seinen Kräften anzustreben und sein Handeln danach auszurichten. Hierzu gehören zum Beispiel die Verwirklichung eines vereinten Europas (Art. 23 Abs. 1 GG) oder der Schutz der natürlichen Lebensgrundlagen sowie Tierschutz in Verantwortung für die künftigen Generationen (Art. 20a GG).
+
+Staatsziele beinhalten politische Zielsetzungen, die über die reinen Strukturprinzipien des Grundgesetzes, also die Festlegung auf eine Republik sowie das Demokratie-, Sozialstaats- Bundesstaats- und Rechtsstaatsprinzip hinausgehen. Sie sind handlungsleitend und können über die Rechtsprechung der Verfassungsgerichte ausgedehnt werden, was mit dem eben erwähnten Klimaurteil des Bundesverfassungsgerichts von 2021 geschah. In der vergangenen Legislaturperiode wollten SPD, Grüne und FDP gemäß ihrem Koalitionsvertrag „Kultur in ihrer Vielfalt als Staatsziel“
+
+im Grundgesetz verankern
+
+, wozu es nicht mehr kam. Nun hat der Bundesrat – als Versuch der Politisierung abseits der Staatsziele – eine Grundgesetzänderung initiiert, um die „sexuelle Identität“ in den Katalog der Diskriminierungsverbote des Artikels 3 des Grundgesetzes
+
+aufzunehmen.
+
+Gerichte als politische Waffe
+
+Diese sowohl von der Politik als auch von Gerichten und der EZB gleichermaßen vorangetriebene Politisierung führt zu einer Aushöhlung der Demokratie und im Fall der Gerichte zudem zur Demontage der Gewaltenteilung. Denn die Politisierung der Gerichte bedeutet, dass gegenüber den Wählern nicht rechenschaftspflichtige Zirkel politische Entscheidungen treffen und politisch agieren, obwohl sie kein politisches Mandat haben, während die Möglichkeiten der Bürger zur politischen Einflussnahme im gleichen Umfang beschnitten werden. Die Kehrseite der Politisierung der Gerichte ist die Verrechtlichung der Politik, da der dem Wahlvolk und den Parlamenten überlassene Entscheidungsraum durch Vorgaben von Richtern immer weiter eingeengt wird.
+
+Die Richterwahl als Farce
+
+Auf dem Weg in „unsere Demokratie“
+
+Kaufhold hat mit ihren öffentlichen Stellungnahmen sehr deutlich gemacht, dass sie der Politisierung des Bundesverfassungsgerichts keineswegs ablehnend gegenübersteht, sondern dass sie vielmehr eine Umgehung der politischen Prozesse sogar fordert. Es sei – wie oben zur Klimapolitik zitiert – ein „Defizit von Parlamenten […], dass sie auf Wiederwahl angewiesen sind“, weswegen sie überzeugt sei, dass „Parlament und Regierung […] das Thema nicht schnell genug voranbringen“ und man deshalb überlegen müsse „wie man das Tableau der Institutionen erweitert“. Es ist ihr ein Dorn im Auge, dass demokratisch fundierte politische Prozesse unterschiedliche Interessen berücksichtigen müssen und dass die ihrer Auffassung nach zu geringe Umsetzungsgeschwindigkeit der Klimapolitik nicht zuletzt auf politische Widerstände bei den Wählern zurückzuführen ist, die wegen der immer erkennbareren und einschneidenden wirtschaftlichen und sozialen Folgen dieses Elitenprojekts entstehen.
+
+Kaufhold personifiziert richterlichen politischen Aktivismus und macht keinen Hehl daraus, dass sie die Instrumentalisierung des Bundesverfassungsgerichts für politische Zwecke sogar für notwendig hält. Nicht etwa trotz, sondern offenbar wegen dieser exponierten Auffassungen hält die übergroße Mehrheit der Bundestagsabgeordneten von CDU/CSU bis zur Linken und derer Parteiführungen sie für eine Idealbesetzung als Bundesverfassungsrichterin, wie die innerhalb dieser Fraktionen völlig unumstrittene Richterwahl gezeigt hat. Die Unterhöhlung der Gewaltenteilung hat durch diese Entscheidung eine neue Qualität erreicht, denn was bisher eher schleichend und hinter vorgehaltener Hand geschah, erfolgt nun im grellen Licht der Öffentlichkeit.
+
+Dass die Instrumentalisierung der Gerichte für politische Ziele inzwischen offenbar legitim erscheint und dass Bundesverfassungsrichter danach streben, politische Verantwortung zu übernehmen, öffnet der Nutzung der Gerichte als politische Waffe Tür und Tor. Um dem aufkommenden Populismus Paroli zu bieten, wurden kurz vor der diesjährigen Bundestagswahl institutionelle Vorkehrungen beim Bundesverfassungsgericht getroffen. Bisher einfachgesetzlich Geregeltes hat durch eine Grundgesetznovellierung nun Verfassungsrang und kann nur per Zwei-Drittel-Mehrheit geändert werden, was den Spielraum einfacher Mehrheiten weiter begrenzt. Umgekehrt wurde zugleich ermöglicht, politische Minderheiten, die mehr als ein Drittel der Wählerstimmen auf sich vereinigen, bei der Wahl der Bundesverfassungsrichter zu
+
+übergehen.
+
+Dies zeigt sich aber auch daran, dass Gerichte zur Bekämpfung politischer Gegner in Stellung gebracht werden und sich dafür instrumentalisieren lassen.
+
+Gericht vor Links-Progressiven schützen
+
+Windschatten-Taktik: Ann-Katrin Kaufhold ans Bundesverfassungsgericht?
+
+Mit dem in diesem Jahr von der SPD gefassten Parteitagsbeschluss sowie der Bundestagsinitiative der Grünen, ein Verbot der AfD durch das Bundesverfassungsgericht zu erwirken, setzen diese Parteien explizit auf die Roten Roben, um es als Waffe gegen den politischen Gegner einzusetzen. Anstatt den politischen Weg zu beschreiten, indem sie dem Wahlvolk – dem Souverän der Demokratie – höchstselbst die vermeintlich gegen das Grundgesetz und die Demokratie gerichteten Ziele der AfD im politischen Diskurs vermitteln, um es für sich zu gewinnen, wollen sie den politischen Gegner unter Nutzung der Gerichte behindern oder sogar ganz ausschalten.
+
+Sie wollen politische Verantwortung an die Gerichte abgeben, in der Erwartung, dass sie sich dafür instrumentalisieren lassen, entsprechend den politischen Zielvorgaben der Parteien zu entscheiden. Indem jedoch Verbote eingesetzt werden sollen, um der politischen Auseinandersetzung und dem öffentlichen Meinungsstreit aus dem Weg gehen zu können, erhalten die Gerichte ein immer größeres Gewicht im Verhältnis zu dem, was politisch ausgefochten wird. Es ist also kein Zufall, dass die SPD mit Kaufhold eine aktivistische Richterin als Bundesverfassungsrichterin ausgerechnet für die Kammer vorgeschlagen hat, die für ein potenzielles AfD-Verbotsverfahren zuständig wäre – und dass sie nun mit breiter Mehrheit der Bundestagsabgeordneten von CDU/CSU, SPD, Grünen und Linken gewählt wurde.
+
+Alexander Horn ist Mitglied des Medienkomitees des frisch gegründeten
+
+„Bündnis Redefreiheit“
+
+, das die Freiheit des Wortes als „Urprinzip jeder anderen Freiheit und als Grundpfeiler der Demokratie“ verteidigt und Menschen beisteht, um deren Recht auf freie Meinungsäußerung in der Öffentlichkeit, am Arbeitsplatz oder im digitalen Raum zu verteidigen. Mehr von Alexander Horn lesen Sie in den Büchern,
+
+„Experimente statt Experten – Plädoyer für eine Wiederbelebung der Demokratie“
+
+und „Sag, was Du denkst!: Meinungsfreiheit in Zeiten der Cancel Culture“"
+Trumps Deal: Wer will wirklich Frieden in Nahost?,2025-09-29,https://www.tichyseinblick.de/kolumnen/aus-aller-welt/trumps-deal-wer-will-wirklich-frieden-in-nahost/,Matthias Nikolaidis,"Der 21-Punkte-Plan für Frieden in Israel und im Gazastreifen ist kurz vor der Präsentation hochumstritten. Die arabischen Staaten wollen keine totale Entwaffnung der Hamas, Israel will weiter freie Hand für seine Truppen. Daneben gibt es Gerüchte um Steve Witkoff und seine Geschäftsbeziehungen zu den Kataris.","Donald Trump scheint entschlossen, den Fall Israel-Gaza seinen fünf oder sieben Friedensschlüssen zuzugesellen, die er in diesen Wochen lobend hervorhebt. Darunter sind so illustre Fälle wie die Schlichtung zwischen Pakistan und Indien oder die Beilegung des langjährigen Konflikts zwischen Armenien und Aserbaidschain. Und wahr ist, über den historischen Handschlag der beiden Präsidenten ging die Presse bald hinweg, über den thailändisch-kambodschanischen Grenzkonflikt noch mehr. Aber im Fall zwischen Israel und Gaza könnten am Ende vielleicht nur Formelkompromisse herauskommen, die nicht zu verwirklichen sind.
+
+Der US-Vorschlag in 21 Punkten für ein Ende des Gaza-Kriegs, den die
+
+Times of Israel
+
+veröffentlicht hat, sieht vor, dass der Gazastreifen eine „entradikalisierte, terrorfreie Zone“ wird und keine Bedrohung mehr für seine Nachbarn darstellt. Die Bevölkerung darf im Gazastreifen bleiben oder ihn verlassen, um später zurückzukehren. Sogar für Hamas-Mitglieder, die sich zur friedlichen Koexistenz bekennen, soll es eine Amnestie geben. Daneben soll Hamas-Mitgliedern freies Geleit in einen Staat ihrer Wahl gewährt werden.
+
+Neun von zehn Briten anderer Meinung
+
+Großbritannien, Kanada und Australien: Palästina anerkennen, um Israel zu strafen
+
+Im Gegenzug soll der Streifen zugunsten seiner Bevölkerung „neu entwickelt“ werden. Architekten und Städtebauer sollen dann über den Neuaufbau des Gazastreifens sprechen, der daneben eine Zone mit verminderten Zöllen sein soll. Das ist der Grundstock der alten Trump-Idee von der levantinischen „Riviera“, aber ein Unterschied besteht aus israelischer Sicht darin, dass die Gazaner nun darin bestärkt werden, im Gazastreifen zu bleiben. Aber auch der Plan, zwei Millionen Palästinenser umzusiedeln, den man aus Trumps erster Intervention vor einigen Monaten entnommen hatte, wäre nicht leicht durchsetzbar. Wohin sollten die Gazaner vor allem gehen? Das Rote Meer würde sich ihnen kaum öffnen, und alle Nachbarstaaten bleiben felsenfest überzeugt, dass ihre Aufnahme nicht vorteilhaft wäre. Auch die Kataris werden wohl kein Angebot in dieser Richtung vorlegen, und wenn man noch so sehr in der Muslimbruderschaft geeint scheint.
+
+Mit der Annahme des Friedensvorschlags sollen die israelischen Kräfte unmittelbar ihre Operationen einstellen und den Landstreifen verlassen. Zugleich sollen innerhalb von 48 Stunden alle Geiseln, tot oder lebendig, nach Israel zurückkehren. Im Gegenzug sollen einige hundert zu lebenslänglich verurteilte Palästinenser aus israelischer Haft entlassen werden, daneben über 1.000 Gazaner, die die Israelis seit Beginn des Krieges festgenommen haben. Auch die Körper einiger hundert toter Palästinenser soll Israel an die Gegenseite ausliefern.
+
+Hilfslieferungen in großer Zahl (600 Lastwagen am Tag) sollen in den Gazastreifen strömen. Die Vereinten Nationen, der Rote Halbmond und verschiedene Organisationen, die weder israelisch noch palästinensisch sind, sollen das organisieren. Dazu könnte auch die Gaza Humanitarian Foundation gehören, die formal amerikanisch ist.
+
+Die USA zusammen mit „europäischen und arabischen Partnern“ sollen dann ein Komitee für die vorübergehende Regierung des Gazastreifens bestimmen, bis die Palästinensische Autonomiebehörde (PA) eine neue Organisationsform für den Streifen gefunden hat. Das scheint eine Entlehnung aus Tony Blairs Friedensplan zu sein, über den die
+
+Times of Israel
+
+vor einem Monat berichtet hatte. Israel hatte in der Vergangenheit ausgeschlossen, dass die Autonomiebehörde Macht über Gaza erhält.
+
+Ein bindendes Versprechen, alle „militärischen Offensivstrukturen“ zu zerstören, soll die Macht der Hamas in Gaza brechen. Regionale Partner sollen garantieren, dass die Hamas ihre Verpflichtungen erfüllt – also ihre Selbstabschaffung durchführt. Aber genau das scheint angesichts der führenden Rolle des muslimbruder- und hamas-freundlichen Staates Katar zweifelhaft. Und selbst wenn die politischen Fraktionen im Streifen andere Namen annehmen, also nicht mehr Hamas und Islamischer Dschihad heißen, könnten die neuen Organisationen nur Tarnvereine für alte Strukturen werden. Denn die Veränderung der „Denkweisen und Narrative“ durch einen „interreligiösen Dialog“ – auch ein Punkt des Plans – dürfte sich noch etwas hinziehen.
+
+Umerziehung auf Palästinensisch?
+
+Ein bisschen erinnert das alles an die Spezialbehandlung Westdeutschlands nach dem Krieg, auch als „reeducation“ bekannt. Auch dieses Vorhaben hatte bekanntlich nicht direkt durchschlagenden Erfolg. Es brauchte mindestens die „Holocaust“-Serie, um die jüngere Generation der Deutschen zur inneren Umkehr zu bewegen, was dann gewissermaßen in der Willkommenskultur von 2015 gipfelte, als man neue Antisemiten – Juden- und Israelfeinde – ins Land einführte. Auch wenn es letztlich die USA waren, die diese Entwicklung in der alten BRD anstießen, ist nicht zu erwarten, dass sie im Gazastreifen dasselbe schaffen werden.
+
+Letzter Paragraph des Vorschlags: Die Möglichkeit einer „friedlichen Koexistenz“ Israels und der Palästinenser soll in einem US-induzierten Dialog erkundet werden. Der Vorschlag verlangt beiden Seiten etwas ab und scheint allein deshalb geringe Chancen auf eine Verwirklichung zu haben. Auch das ist eine Konstante in diesem Konflikt. Derweil sind IDF-Truppen noch immer damit beschäftigt,
+
+explosive Installationen (Sprengfallen) der Hamas
+
+in Gebäuden im Gazastreifen zu entschärfen.
+
+Es bleiben sehr viele
+
+Fragen angesichts dieses US-Friedensplans
+
+. Etwa die, ob die arabischen Golfstaaten wirklich für den Wiederaufbau von Gaza zahlen wollen, wie teilweise berichtet wird. Und ob sie es sollen. Denn Israel ist darum bemüht, den Einfluss vor allem von Katar zu begrenzen. So könnte man zumindest die unselige UNRWA abschaffen, die über Jahrzehnte einen Terrorstaat finanziert hat, ihn wachsen ließ und ihm ein respektables Ansehen gewährte. Das allein wäre einiges wert. Mit der Finanzierung des Gazastreifens durch Muslimbrüder-Staaten wie Katar würde man sich zumindest ehrlich machen. Es klebte drauf, was drin wäre, kein Pseudo-Völkerbund-Etikett. Aber im Plan ist den UN zumindest unmittelbar nach dem Friedensschluss erneut eine Rolle zugewiesen, vielleicht ja nur als provisorischer Hilfsgüter-Lieferant. Und eine zentrale Rolle für Katar würde offenbar bedeuten, dass der Einfluss der Muslimbrüder – damit auch die Virulenz eines letztlich terroristischen Politikansatzes – im Gazastreifen nicht nachlässt, sondern bestärkt wird.
+
+Will überhaupt jemand Frieden?
+
+Die Hauptfrage bleibt aber, ob überhaupt irgendjemand zwischen Jordan und Mittelmeer diesen Frieden will. Ein Plan, der die Koexistenz nicht nur zweier Völker, sondern zweier Staaten forderte (was dieser Plan nicht tut), wäre nicht im Interesse Netanjahus, weil das offensichtlich seine Koalition sprengen würde. Einige seiner Partner wollen das Westjordanland umgehend annektieren.
+
+Einen solchen Schritt hat wiederum Trump ausgeschlossen, offenbar auf Druck der Gegenseite hin.
+
+Dabei könnte den Arabern im Westjordanland als vollgültigem Teil Israels eine blühende Zukunft bevorstehen. So wie ihren rund zwei Millionen Brüdern, die schon länger in den inneren Grenzen Israels leben. Die Araber in Israel profitieren von demokratischer Kultur und Minderheitenschutz, wirtschaftlichem Wachstum und privatem Erfolg. All das ist sonst Mangelware in der breiteren Region.
+
+Aber auch am Friedenswillen der Palästinenser bestehen ernste Zweifel. Die Hamas will keinen Friedensplan von Donald Trump erhalten haben, zu dessen Voraussetzungen die Rückgabe aller Geiseln gehört. Seit Sonntagabend
+
+haben verschiedene arabische Staaten Einwände gegen die Formulierungen zur Entwaffnung der Hamas geltend gemacht
+
+. Die Hamas soll besser nur nett „gebeten“ werden, ihre Waffen zu übergeben. Außerdem wollen die arabischen Staaten sofort nach dem Friedensschluss eine Regierung der Autonomiebehörde im Gazastreifen – dabei besitzt die PA zum einen nur ein schwaches Mandat der eigenen Bevölkerung und ist zum anderen (eben deshalb) auch selbst kein gemäßigter Spieler. Eine etwaige Friedenstruppe wollen die Staaten nur an der Grenze zwischen Gazastreifen und Israel akzeptieren, nicht in Gaza. Katar und die Autonomiebehörde lehnen angeblich eine Rolle für Tony Blair ab. Israel fordert demgegenüber, es müsse den IDF-Kräften auch weiterhin freistehen, im Gazastreifen zu operieren, sollte die Hamas versuchen, sich wieder zu bewaffnen oder neu aufzubauen.
+
+Beobachter hegen zudem Zweifel, ob man die Hamas – und ihre zu erwartenden Nachfolge- und Ersatzorganisationen – wirklich aus der Regierung des Gazastreifens heraushalten kann. Das ist im Grunde derselbe Zweifel, der sich schon länger gegen Netanjahus Plan einer Zerschlagung der Hamas erhebt. Der Impuls ist angesichts der terroristischen Neigungen der Hamas nur zu verständlich, aber angesichts der engen Verbindung zu einer Mehrheit der Palästinenser (in Gaza wie in der Westbank) ist auch Netanjahus Plan vielleicht schlicht unrealistisch. Man wird irgendwie mit dem Übel des Terrors leben müssen. Aber deshalb wird der Kampf dagegen nicht sinnlos.
+
+Bestochener Sondergesandter oder Atem der Geschichte?
+
+Gegen Trump und sein Team – insbesondere den Sondergesandten Steve Witkoff – erheben sich nun Vorwürfe, als ob sie auch den Gaza-Konflikt nur als Gelegenheit für praktische Immobiliendeals ansähen. Das ist kein ganz neuer Twist. Aber nun erhält er neue Nahrung durch eine Veröffentlichung der
+
+New York Times
+
+, wonach auch Witkoffs Sohn Alex gerade Milliarden-Geschäfte mit den Kataris und anderen in der Region einfädelt.
+
+Planmäßiger Gewaltexzess
+
+Christenverfolgung in Syrien – und keiner schaut hin
+
+Gerade der Einfluss Katars lässt an dieser Stelle aufhorchen, denn einflussreiche Investoren mit dem wohlgefüllten Staatsfinanzierungsfonds (von 557 Milliarden US-Dollar?) kaufen sich in diesen Jahren an vielen Stellen in die internationale Politik ein, auch in Europa, namentlich in Frankreich. Inwieweit die berichteten Beziehungen zum Witkoff-Clan Einfluss auf die Friedensverhandlungen genommen haben, bleibt dabei unklar. Das Weiße Haus hat solche Anwürfe dementiert, es handele sich um „eine weitere falsche Verleumdung der gescheiterten
+
+New York Times
+
+gegen Steve Witkoff“, der derzeit „den Prozess des Ausstiegs aus seinem Unternehmen“ abschließe. Witkoff war lange vor seiner Berufung, schon seit den 1980er-Jahren, im Immobiliengeschäft tätig.
+
+Für Trump steht freilich fest: „Die arabische Welt will Frieden, Israel will Frieden und Bibi will Frieden.“ Die arabischen Staaten seien „phantastische Arbeitspartner“ gewesen, und die Hamas folge ihnen. Trump sieht den Vertrag als die „erste Chance auf echten Frieden im Nahen Osten“, wie
+
+Axios
+
+schreibt.
+
+Aber da ein Friedensschluss immer beide Seiten braucht, ist sehr die Frage, ob es ausreicht, einen Sondergesandten zu bestechen, um zum einseitigen Erfolg zu kommen. Die innere Lage des Konflikts ist komplex genug, um solche einfachen „Geschäfte“ zu verhindern. Sicher ist aber: Im Hintergrund ist der Einfluss der Kataris über die Jahre gewachsen, während der Einfluss des Irans zurückgeht. Das könnte wirklich zu einer veränderten Lage in den Palästinensergebieten führen. An der Dauerhaftigkeit eines Friedensschlusses, wenn er denn kommt, gibt es dennoch einige Zweifel. Denn auch die Kataris führen die Palästinenser nicht an der Leine. Derzeit heben sich die Forderungen der Araber und Israels gegenseitig auf. Das Abkommen, auch wenn geschlossen, wird nur ein erster Schritt, ein Provisorium und Kartenhaus bleiben, das durch jeden Hauch der Geschichte wieder umgeweht werden kann."
+Blutige Nacht in Gelsenkirchen – Massenschlägerei nach der Wahl,2025-09-29,https://www.tichyseinblick.de/daili-es-sentials/gelsenkirchen-massenschlaegerei-messer-ein-toter/,Holger Douglas,"Keine halbe Stunde nach der Wahl in Gelsenkirchen erlebt die Stadt am Sonntagabend eine Massenschlägerei, die sich gewaschen hat. Zuerst eine lautstarke Auseinandersetzung, Schreie, dann gezückte Messer – am Ende (bisher) ein Toter.","Anwohner meldeten gegen 20 Uhr große Auseinandersetzungen im Stadtteil Bismarck. Von einer „Tumultlage“ im Stadtteil Bismarck spricht der Polizeibericht, an der zwischen 20 bis 30 Personen beteiligt waren. Sie gingen mit Messern, Baseballschlägern und Knüppeln aufeinander los.
+
+Mindestens fünf Personen wurden schwer, vier davon lebensgefährlich verletzt. Rettungskräfte brachten sie zur Behandlung in umliegende Krankenhäuser. Die Polizei rückte mit Verstärkung aus mehreren benachbarten Städten an, sogar ein Polizeihubschrauber wurde eingesetzt, der ein Lagebild liefern sollte.
+
+Ein 56-jähriger Mann erlitt einen Messerstich ins Herz, er wurde noch vor Ort reanimiert und ins Krankenhaus gebracht. Dort verstarb er. Zwei weitere Opfer sollen immer noch in kritischem Zustand in benachbarten Krankenhäusern liegen.
+
+Sozialdemokraten verlieren „Herzkammer“
+
+Infarkt der SPD in Dortmund: Es liegt am Kopf
+
+Mit der Kommunalwahl in der einstigen Hochburg der SPD sollen die Auseinandersetzungen nichts zu tun haben, so die Polizei. Es soll sich nach BILD-Informationen um einen Streit zwischen zwei türkischen Großfamilien handeln, die in direkter Nachbarschaft wohnen. Bereits am Freitag soll es zu einer Auseinandersetzung gekommen sein, die geplante „Aussprache“ endete in einem Blutbad. Ein direkter Zusammenhang mit Clankriminalität wird allerdings bislang von der Polizei weder bestätigt noch ausgeschlossen.
+
+Dieser Vorfall ist besonders gravierend wegen der hohen Beteiligung, der schwersten Verletzungen und des Todesopfers. Die Vorgehensweise mit Messern, Elektroschockern und Schlagwerkzeugen ist eine weitere Eskalationsstufe, die über eine spontane Auseinandersetzung hinausgehen könnte.
+
+Auch die Jugendlichkeit einiger Tatverdächtiger wirft Fragen zur Gewaltentwicklung und Prävention auf. Die Beamten nahmen drei männliche Tatverdächtige im Alter von 16, 29 und 52 Jahren und drei weibliche Tatverdächtige im Alter von 25, 28 und 50 Jahren vor Ort vorläufig fest. Die Polizei sperrte den Tatort an der Pommernstraße weitläufig ab und sicherte Spuren. Eine Mordkommission wurde eingerichtet, die nun unter anderem die Hintergründe der Tumultlage ermittelt.
+
+Interview mit Enxhi Seli-Zacharias
+
+„Migranten wählen AfD wegen Überfremdung“
+
+Doch das war nicht die einzige blutige Auseinandersetzung in der SPD-bestimmten Stadt. Polizei und Rettungskräfte waren kurz zuvor im Bahnhofscenter in der Altstadt im Einsatz. Dort kam es gegen 17.30 Uhr zu einer gefährlichen Körperverletzung, so die gemeinsame Pressemitteilung der Staatsanwaltschaft Essen und der Polizei Gelsenkirchen, bei der ein 40 Jahre alter Mann aus Castrop-Rauxel durch mehrere Messerstiche schwer verletzt wurde. Unmittelbar eintreffende Polizeibeamte haben im Nahbereich einen 23 Jahre alten Mann festgenommen, der im Verdacht steht, im Zusammenhang mit der Tat zu stehen.
+
+Für die Dauer der Sachverhaltsaufnahme wurde der nördliche Bereich des Bahnhofscenter am dortigen Rolltreppenaufgang zum Busbahnhof abgesperrt. Die Polizei hat ebenfalls eine Mordkommission eingerichtet und die Ermittlungen aufgenommen.
+
+So bekamen die zahlreich angereisten Medienvertreter, die eigentlich über den Ausgang der Kommunalwahlen berichten wollten, ein ungewollt drastisches Bild von Gelsenkirchen. Eine Stadt, in der die AfD mittlerweile ebenso viele Sitze im Stadtrat stellt wie die SPD.
+
+„Wer Verunsicherung und Ängste als Nährboden für seine unwahren Lösungsversprechen nutzt, wer auf Menschenrechte, Demokratie und auf die Werte, die die Bundesrepublik Deutschland groß gemacht haben, pfeift, der hat in mir eine entschiedene Gegnerin“, ruft noch am Wahlabend die Gewinnerin der Stichwahl, Andrea Henze, SPD, aus. Für sie zählt die „Brandmauer“ gegenüber der AfD zu einer der wichtigsten Aufgaben.
+
+Wohin die Sozialdemokraten die einstige Bergarbeiterstadt in den vergangenen Jahrzehnten führten, sieht man am Dreck, Elend und an der Verwahrlosung ganzer Stadtteile."
+Infarkt der SPD in Dortmund: Es liegt am Kopf,2025-09-29,https://www.tichyseinblick.de/meinungen/infarkt-der-spd-in-dortmund-es-liegt-am-kopf/,Mario Thurnes,"Die SPD hat mit Dortmund eine Stadt verloren, die mal ihre „Herzkammer“ war. Doch es ist der Kopf, der nicht mehr funktioniert. Die Partei hat sich derart in den Glauben an die eigene Unfehlbarkeit gesteigert, dass sie zu vernünftiger Politik nicht mehr fähig ist.","Carrie schickt ihren Vater Arthur zum Psychiater. Der soll den lauten Querulanten mit Tabletten ruhigstellen. Doch der Psychiater gibt Doug und Carrie einen anderen Tipp: Sie sollen den Mann, der in ihrem Keller lebt, machen lassen. Der fühle sich nicht gehört und ließen sie ihn treiben, was er wolle, dann werde er ruhiger. Das klappt. Nachdem sich Arthur ausgetobt hat, ist er ein handzahmer Mitbewohner.
+
+Die Folge stammt aus der Fernsehserie „King of Queens“. Die blühte nach dem September 1998 auf, das Fernsehen brillierte in den 1970ern – beides wie die SPD. Mittlerweile sind die Sozialdemokraten wie Arthur: Eigentlich sind sie am Ende, leben im Keller und auf Kosten der Generation, die im Berufsleben steht, und machen deren Leben durch ihren Egoismus und ihre abgedrehten Ideen kaputt.
+
+Kommunalwahl in NRW
+
+Kein AfD-Bürgermeister – SPD-Desaster in Dortmund – Klatsche für die Grünen
+
+Zwei Ergebnisse aus der Kommunalwahl in Nordrhein-Westfalen stehen für die Situation der SPD. Für das Problem und die mögliche Lösung. Da ist zum einen Dortmund. Dort haben die Genossen seit 79 Jahren ununterbrochen den Oberbürgermeister gestellt. Die Stadt um den Borsigplatz war früher derart fest in eigener Hand, dass Herbert Wehner sie „die Herzkammer der SPD“ genannt hat. Krankheiten am Herzen haben zwei mögliche Folgen: Entweder ändert der Patient danach sein Leben – oder er stirbt. Unmittelbar oder zeitversetzt.
+
+Die Reaktionen der SPD lassen darauf schließen, dass die Partei einfach so weitermacht wie in den letzten 27 Jahren – von denen sie 23 Jahre in der Bundesregierung verbracht und zehn Jahre davon den Bundeskanzler gestellt hat. Der Vorsitzende Lars Klingbeil redet das Ergebnis schön und die Partei tröstet sich mit Erfolgen, die sie erzielt hat wie in Köln oder Duisburg. Frei nach dem Motto: Wie schlimm kann ein krankes Herz sein, wenn die Leber und die Milz noch funktionieren?
+
+Doch eigentlich passt die Arthur-Metapher besser zur SPD. Denn der Partei geht es wie dem Querulanten aus dem Keller: Sie hat sich zu Tode gesiegt. Jetzt weiß sie nicht mehr weiter. In besagten 23 von 27 Jahren hat sie den Sozialetat auf rund 200 Milliarden Euro im Jahr ausufern lassen. Nur im Bund. Die ganzen Etats in den Ländern, Städten, Gemeinden und Sozialversicherungen nicht mitgerechnet. Der Sozialstaat ist in Deutschland so gewachsen, dass dem Rest des Staates das Platzen droht.
+
+Und er wächst weiter. Anders als Arthur in der Serie sieht die SPD nicht ein, dass sie sich zu Tode gesiegt hat. Zumal sie sich nicht anders zu helfen weiß, als den Sozialstaat weiter wachsen zu lassen. Die Verantwortlichen wissen, dass sie Bürgergeld und Sozialversicherungen reformieren müssten – was eigentlich bedeutet, sie zurückzufahren. Doch zum Beginn der schwarz-roten Koalition haben sie die Rente noch teurer für den Staat gemacht und über das Lösen der Schuldenbremse die Möglichkeit geschaffen, immer noch mehr und noch mehr Sozialstaat zu bezahlen. Unter dem Versprechen ihres Vorsitzenden Klingbeils, diese Möglichkeiten nicht ausschöpfen, sondern den Haushalt „konsolidieren“ zu wollen. Wie ein Herzpatient, der sich 20 Kisten Rotwein kauft und verspricht, diesen nur für das Ablöschen von Mahlzeiten einsetzen zu wollen.
+
+Aktuell tagen die Arbeitskreise, die CDU, CSU und SPD eingesetzt haben, um Reformen vorzubereiten. Immer wieder steigen aus diesen Kreisen Testballons in die Luft, um zu sehen, welcher Einschnitt in den Sozialstaat geht und welcher zu viele Proteste mit sich bringt. Der jüngste Versuch war, die „Pflegestufe eins abschaffen“ zu wollen. Die Regierung gibt solche Ideen an befreundete Medien weiter, damit diese wohlwollende Sprachregelungen in die Welt setzen wie „Pflegestufe eins abschaffen“ – statt, die Dinge beim Namen zu nennen: CDU, CSU und SPD wollen Arbeitnehmern zwar weiter Geld vom Lohn nehmen für den Fall, dass die später mal Pflege brauchen – will aber diesen Arbeitnehmern diese Pflege nur in richtig schweren Fällen zukommen lassen.
+
+Harmonie zwischen Union und Linken
+
+Bürgerschreck SPD in der Erbschaftsteuerdebatte
+
+Matthias Miersch hat den Testballon aus dem Haus von Gesundheitsministerin Nina Warken (CDU) gleich platzen lassen. Die Streichung der Pflegestufe eins sei mit dem SPD-Generalsekretär nicht zu machen. Unter Parteilinken wie Miersch sitzt das Trauma der Hartz-Reformen tief. Diese haben der Bundesrepublik geholfen, den Aufschwung der 2010er Jahre ermöglicht – doch der SPD geschadet. Sie hat in der Folge Wahlen verloren. Und die SPD lebt nach dem Prinzip Arthur: In ihrer Welt kommen erstmal die Sozialdemokraten, dann lange Zeit nichts und dann wieder Sozialdemokraten.
+
+Nun führt Egoismus auf Kosten kommender Generationen schon aus altruistischer Sicht zu nichts Gutem. Etwa in der Renten- oder der Finanzpolitik der SPD. Doch obendrein irren sich die Sozialdemokraten öfter als Arthur in 207 Folgen „King of Queens“. Die SPD hat nicht wegen der Hartz-Reformen Wahlen verloren: Gerd Schröder hat 2005 gezeigt, dass die Partei durchaus noch punkten kann, wenn sie selbstbewusst auftritt und zu ihren Entscheidungen steht. Danach aber hat die Partei Wahlkämpfe geführt, in der sie sich von den eigenen Reformen, also von der eigenen Politik distanziert hat. Die SPD hat also nicht wegen der Reformen Wahlen verloren, sondern weil sie nicht zu sich und ihrer eigenen Politik gestanden hat – etwas, dass immer schieflaufen muss. Wie jüngst die FDP in der Ampel hätte lernen können.
+
+Die Situation der SPD ähnelt nun der Situation der FDP in der Ampel: Sie wird sich nicht durchsetzen können. Aus unterschiedlichen Gründen zwar: Die FDP-Führung um Christian Lindner und Marco Buschmann war zu willensschwach, um sich gegen die eigentlich rot-grüne Regierung zu wehren. Die SPD hingegen hat in Sachen Ausbau des Sozialstaats bereits alles gemacht, was möglich ist – und vieles auch, was unmöglich ist. Schon jetzt nehmen die hohen Steuern, Energiekosten und Beiträge zur Sozialversicherung der Wirtschaft die Luft zum Atmen. Die schrumpft seit drei Jahren massiv, die Lage ist dramatisch.
+
+Anders als die FDP in der Ampel kann sich die SPD in der schwarz-roten Regierung durchsetzen. Das hat sie bereits mehrfach bewiesen. Friedrich Merz ist kein Gegner für Lars Klingbeil und Bärbel Bas. Die Realität indes schon – und diese Realität ist eine massiv schrumpfende Wirtschaft. Schuldenbremse, Rentenniveau … noch kann sich die SPD gegen CDU und Realität durchsetzen. Doch letztere schlägt brutal zurück. Die nächste Steuererhöhung, die nächste Beitragserhöhung ist dann die eine zu viel.
+
+Das Streichen der Pflegestufe eins ist einfallslos. Die Idee setzt die Politik der SPD aus 23 der letzten 27 Jahren fort: Im ersten Schritt alle Lasten dem Staat aufbürden wollen – und dann die Last von Betrieben und Beschäftigen tragen lassen. In dem Fall durch das Streichen von Leistungen, für die Beschäftigte mit ihren Pflegebeiträgen eigentlich bezahlt haben. Alle Aufgaben an den Staat binden und dann Steuern wie Beiträge erhöhen, aber Leistungen streichen. So lässt sich die SPD-Politik zusammenfassen.
+
+Kollaps der Automobilwirtschaft
+
+Gewerkschaften wollen den Status quo einfrieren
+
+Für andere Lösungen ist die SPD blind. Wie Arthur ist sie derart manisch von der Idee überzeugt, immer Recht zu haben, dass sie nicht mehr fähig ist, Fehler einzugestehen und zu korrigieren: Einwanderung in die Sozialsysteme beenden. Kriminelle Clans erkennen, benennen und bekämpfen, die das Bürgergeld systematisch ausplündern. Fehlanreize durch das Bürgergeld beenden. Oder dem Bürger mehr Freiheiten lassen und den Staat zurücknehmen, was dann auch die Bürokratie zurückführt. All das ist der SPD nicht mehr möglich. Weil es eine komplette Korrektur der eigenen Politik wäre – verbunden mit dem Eingeständnis, bisher falsch gelegen zu haben.
+
+Dass die SPD mit einer anderen Politik Wahlen gewinnen kann, zeigt ausgerechnet Duisburg. Dort bleibt Sören Link Oberbürgermeister. Im ersten wie im zweiten Wahlgang hat er eindrucksvolle Ergebnisse geholt. Link steht für Razzien gegen Sozialbetrug. Er hat erkannt, dass Einwanderung und Sozialpolitik nicht das sozialdemokratische Märchen sind, das die Partei-Oberen so gerne als Einschlafgeschichte vortragen. Das hat ihm intern den Spitznamen „Trump der SPD“ eingebracht.
+
+Ein Ausdruck des SPD-Herzinfarkts, der eigentlich im Kopf anfängt: Die Sozialdemokraten sind nicht nur derart stark überzeugt, alles richtig zu machen, dass sie zu Korrekturen nicht mehr in der Lage sind. Sie diffamieren jeden, der eine abweichende Position vertritt als Trump, Putin-Troll, Nazi, Klima-Leugner, Covidiot, Sexist und so weiter und so weiter. Dass eine derart manisch arrogante und spaltende Partei in Frank-Walter Steinmeier einen Bundespräsidenten stellt, der gerne davon redet, er würde gerne die „Spaltung der Gesellschaft“ beenden.
+
+In „King of Queens“ geht der Plan auf: Arthur einfach machen lassen und irgendwann verliert er die Lust. Doch Deutschland hat die SPD zu lange machen lassen. Wenn das Land weiter mit dem Quälgeist im Keller lebt, dann droht ihnen die Situation, dass er ihnen das Haus abfackelt – wie er es gleich in der Pilotfolge mit seinem eigenen Haus getan hat. Das Problem ist nur: Der Bürger hat schon bei mehreren bundesweiten Wahlen deutlich gemacht, dass er den Quälgeist aus dem Keller gerne los wäre – doch Friedrich Merz will ihn da weiterleben lassen und setzt das auch durch. Nur so lustig wie in „King of Queens“ ist das schon lange nicht mehr."
+„Correctiv“ muss Falschbehauptungen unterlassen – wann gibt es politische Konsequenzen?,2025-09-29,https://www.tichyseinblick.de/daili-es-sentials/correctiv-falschbehauptungen-urteil-politische-konsequenzen/,Redaktion,"Das Landgericht Berlin verbot der Aktivistenplattform weitere Teile der „Potsdam-Story“, und wirft der Organisation „Framing“ vor. Jetzt stellt sich die Frage: Warum genießt „Correctiv“ noch immer ein Steuerprivileg?","Mit ihrer Geschichte über das angebliche „Wannsee 2.0“-Treffen in Potsdam, erschienen im Januar 2024, hat die teils staatsfinanzierte Plattform „Correctiv“ einen großen Teil seiner Reputation verloren. Als die Organisation kürzlich angeblich neue Recherchen zu dem Komplex veröffentlichte, nahmen selbst die Medien, die 2024 die angeblich sensationelle Enthüllung entweder weitergaben oder sogar noch zuspitzten, kaum noch Notiz von der Publikation. Denn inzwischen gibt es mehr als ein Dutzend rechtskräftige Urteile gegen Medien wie NDR, SWR und zahlreiche Zeitungen, die damals für bare Münzen nahmen, was „Correctiv“ in seinem eigenen Text nur raunend andeutete: nämlich, dass bei der Zusammenkunft in Potsdam ein „Masterplan Remigration“ geschmiedet worden sei, der auch die massenhafte Vertreibung deutscher Staatsbürger vorgesehen hätte.
+
+Wieder falsch, wieder öffentlich-rechtlich:
+
+Weitere gerichtliche Schlappe für NDR, SWR & Co im Correctiv-Dramolett
+
+In einem Eilverfahren vor dem Hamburger Landgericht und Oberlandesgericht ließ ein Teilnehmer des Treffens, der Staatsrechtler Ulrich Vosgerau, bereits eine Behauptung von „Correctiv“ verbieten. Da seinerzeit zwei weitere Behauptungen von „Correctiv“ vom Gericht nicht als falsche Tatsachenbehauptungen eingestuft wurden, konnte „Correctiv“ anschließend behaupten, das Verfahren zwei zu eins gewonnen zu haben. Bis jetzt. Denn nun untersagte das Landgericht Berlin im Hauptsacheklageverfahren zwei weitere Falschbehauptungen. Worum ging es?
+
+Zum einen hatte „Correctiv“ 2024 dem CDU-Mann Vosgerau die Äußerung untergeschoben, junge Wählerinnen türkischer Herkunft könnten sich keine unabhängige Meinung bilden. In Wirklichkeit hielt der Staatsrechtler in Potsdam einen Vortrag über das Briefwahlrecht und die Genzen, die das Verfassungsgericht in seiner Rechtsprechung diesem Verfahren setzt. Vosgerau sagte damals vielmehr, er habe Zweifel, dass Wählerinnen türkischer Herkunft tatsächlich im Briefwahlverfahren unbeeinflusst abstimmen, wenn sie das unter den Augen ihrer Väter und Brüder per Briefwahl tun. In seinem Vortrag ging es um die generelle Manipulationsanfälligkeit der Briefwahl. Genau das erklärte er „Correctiv“ auch auf Anfrage vor Erscheinen des Artikels im Januar 2024. „Correctiv“ machte daraus die Behauptung, Vosgerau habe die falsche Behauptung der Plattform selbst bestätigt. Beide verdrehte und manipulative Behauptungen untersagte das Landgericht Berlin nun „Correctiv“. Und mehr noch: Das Gericht sprach in seinem Urteil von einem Correctiv-„Framing“, also von einer sprachlichen Einrahmung einer Aussage, die den Leser in die Irre führen soll.
+
+Die Richter ließen sich auch nicht von der angeblichen Eidesstattlichen Versicherung des früheren Neonazis und Rassenideologen Erik Ahrens beeindrucken, der früher für die AfD arbeitete, sich dann aber mit der Partei überwarf und heute selbst versichert, er wolle alles tun, um der AfD zu schaden. „Correctiv“ legte ausgerechnet eine Erklärung dieser dubiosen Figur vor – allerdings interessanterweise nicht im Original, sondern nur als Kopie. „Erik Ahrens ist ein rechtsradikaler Verschwörungstheoretiker, der sich offen zu Lügen bekennt und sich damit rühmt, dass er sich im Kampf ‚gegen rechts‘ auch gerne strafbar macht“,
+
+kommentiert
+
+Rechtsanwalt Carsten Brennecke von der Kanzlei Höcker, die das Verfahren für Vosgerau führt, den Vorgang. Abgesehen von der Person des Zeugen und den Umständen seiner vorgelegten Erklärung: Ahrens’ Versicherung bestätigte gerade nicht die Falschbehauptung von „Correctiv“, sondern Vosgeraus Darstellung.
+
+„Die Entscheidung des Landgerichts Berlin trägt dazu bei, eine der größten Lügengeschichten der deutschen Pressegeschichte weiter zu widerlegen“, so Brennecke. Kulturstaatsminister Wolfram Weimer erklärte bereits, anders als seine Vorgängerin Claudia Roth „Correctiv“ kein Geld aus Bundesmitteln mehr zur Verfügung zu stellen. Jetzt bleibt nur noch ein wichtiger politischer Punkt übrig: der Entzug der Gemeinnützigkeit für die zwielichtige Plattform. Verantwortlich dafür ist das Finanzministerium von Nordrhein-Westfalen."
+Ende der finanziellen Freiheit: Der digitale Euro geht in die nächse Phase über,2025-09-29,https://www.tichyseinblick.de/wirtschaft/ende-der-finanziellen-freiheit-der-digitale-euro-geht-in-die-naechse-phase-ueber/,Hannes Märtin,"Die Einführung des digitalen Euros rückt näher: Die EZB leitet die nächste Vorbereitungsphase ein. Für die Bürger der EU ein Grund zur Sorge, denn die Implementierung der digitalen Zentralbankwährung ist ein massiver Eingriff in die finanzielle Freiheit. Abschaffung von Bargeld und Totalüberwachung drohen.","Die erste Phase des digitalen Euros, die im November 2023 startete, diente dazu, die Grundlagen für eine mögliche Ausgabe der digitalen Zentralbankwährung zu schaffen. Nun steht der Übergang in die nächste Phase bevor.
+
+Ab 2026 soll eine zweite Runde von Pilotversuchen starten. Diesmal unter Beteiligung von Händlern, Fintechs, Start-ups, Universitäten, Banken und weiteren Zahlungsdienstleistern. Darauf hatte sich die Europäische Zentralbank (EZB) vor kurzem verständigt. Im ersten Halbjahr werden dazu weitere Einzelheiten veröffentlicht.
+
+Nach Abschluss dieser zweiten Testphase stünde einer Einführung des digitalen Euros grundsätzlich nichts mehr im Wege. Bereits Ende kommenden Jahres könnte die neue Zentralbankwährung theoretisch an den Start gehen. Auch wenn bislang kein fixes Datum genannt wurde, ist klar: Die Einführung des digitalen Euros rückt immer näher – und mit ihr auch der Verlust der finanziellen Freiheit der Bürger.
+
+Warum ist der digitale Euro so gefährlich für die finanzielle Freiheit?
+
+Die Sorge vor dem Ende finanzieller Freiheit gründet sich unter anderem auf der schleichenden Abschaffung des Bargelds – und damit dem Verlust der Anonymität.
+
+Zwar betonen offizielle Stellen, der digitale Euro solle das Bargeld lediglich ergänzen und keinesfalls ersetzen. Doch die Realität zeigt ein anderes Bild: Die Abschaffung des Bargelds wird von der EU-Kommission konsequent vorangetrieben. So hat die Europäische Zentralbank etwa die Münzprägung zuletzt deutlich reduziert. Konkret dürfen die 20 Euroländer im laufenden Jahr nur noch Münzen im Gesamtwert von rund 2,17 Milliarden Euro herstellen – nach 2,35 Milliarden Euro im Vorjahr. Zum Vergleich: 2023 wurde den Mitgliedsstaaten noch erlaubt 2,6 Milliarden Münzen zu prägen.
+
+Auch bei der Ausgabe von Banknoten zeigt sich derselbe Trend. Bereits seit 2014 stellt die EZB keine 500-Euro-Scheine mehr her. Gleichzeitig werden Bargeldtransaktionen immer stärker eingeschränkt. Was absurd klingt, ist längst beschlossen: Ab 2027 sind Bargeldzahlungen ab 10.000 Euro in der gesamten EU verboten – offiziell, um Geldwäsche und Terrorismusfinanzierung zu bekämpfen. Ein Argument, das kaum überzeugend ist.
+
+Darüber hinaus greift ab demselben Zeitpunkt eine verschärfte Regulierung: Für Barzahlungen ab 3.000 Euro gilt dann eine verpflichtende Identitätsprüfung, inklusive umfangreicher Datenerhebung von Händler und Käufer. Auch dadurch möchte man angeblich die Finanzkriminalität bekämpfen, offensichtlich wird dieses Ziel jedoch verfolgt, um Bargeldtransaktionen so unattraktiv wie möglich zu gestalten und letztlich den Übergang in ein digitales Geldsystem zu ebnen.
+
+In Deutschland ist zudem der massive Rückbau der Bargeldinfrastruktur zu beobachten.
+
+Bankfilialen und Geldautomaten verschwinden in rasantem Tempo
+
+. Laut Bundesbank existierten Ende 2024 noch rund 17.870 Bankfilialen – ein Rückgang von 8,4 Prozent im Vergleich zum Vorjahr. Über
+
+1.600 Filialen wurden allein 2024 geschlossen
+
+. Im Vergleich zur letzten Dekade hat sich die Zahl der Filialen sogar nahezu halbiert.
+
+Besonders bedenklich ist dieser Rückgang, weil Bargeld durch seine Anonymität ein zentrales Element finanzieller Freiheit darstellt. Mit der vollständigen Digitalisierung des Zahlungsverkehrs wird jeder Geldfluss einsehbar und potenziell kontrollierbar – eine ideale Voraussetzung, um die Bürger mit finanziellen Einschränkungen und Sanktionen belegen zu können.
+
+Enteignungsfantasien der politischen Elite
+
+Besonders bedrückend sind vor diesem Hintergrund die programmierbaren Eigenschaften, die der digitale Euro aufweisen wird. Durch Technologien wie Blockchain, auf denen die digitale Währung basieren wird, und sogenannte Smart Contracts – also selbstausführende Verträge – werden diese Möglichkeiten geschaffen.
+
+Beispielsweise könnte Geld so programmiert werden, dass es nur bis zu einem bestimmten Datum gültig ist oder nur in einem bestimmten geografischen Umkreis ausgegeben werden darf. Außerdem könnten Gehaltszahlungen eingeschränkt oder Konsumausgaben begrenzt werden – oder das Konto könnte sogar vollständig enteignet werden.
+
+Besonders kritisch wird dieses Szenario, wenn man berücksichtigt, dass der digitale Euro mit einem sozialen Bewertungssystem gekoppelt werden könnte. Finanzielle Freiheiten könnten dann von konformem und „staatstreuem‟ Verhalten abhängig gemacht werden. Wer sich also etwa kritisch gegenüber der Regierung äußert, die Klimaideologie oder die Gender-Agenda ablehnt, dem könnten Gehaltszahlungen verweigert oder das Vermögen mit einem Ablaufdatum versehen werden.
+
+Natürlich sind das dystopische Vorstellungen – in der Theorie jedoch durchaus denkbar. Insbesondere vor dem Hintergrund, dass die Meinungsfreiheit in Deutschland, aber auch in Europa, zunehmend eingeschränkt wird und Andersdenkende durch die Politik immer stärker unterdrückt werden.
+
+Bürger und Politik reagieren ablehnend auf den digitalen Euro
+
+Dass die Befürchtung einer Enteignung durch den digitalen Euro gerechtfertigt ist, verdeutlicht eine aktuelle Umfrage von
+
+Focus Online
+
+unter der eigenen Leserschaft.
+
+Laut der Umfrage äußerten 38 Prozent der Leser die Überzeugung, dass der digitale Euro ein Enteignungsinstrument sei. 11 Prozent erwarten sogar die vollständige Abschaffung des Bargelds im Zuge der Einführung. Ein Leser bringt die Sorge auf den Punkt: „Und mit einem Knopfdruck ist man ärmer oder ganz arm. Es geht um ein Ziel – totale Kontrolle über das Privatvermögen.“
+
+Auch aus der Politik mehren sich die kritischen Stimmen. Der finanzpolitische Sprecher der
+
+AfD-Bundestagsfraktion, Kay Gottschalk
+
+, erklärt dazu:
+
+„Der digitale Euro wird als Ergänzung verkauft, ist in Wahrheit aber der Türöffner für totale Kontrolle. Schon heute wird Bargeld durch Obergrenzen und Auflagen systematisch geschwächt. Mit einem digitalen Zentralbankgeld kann der Staat künftig jede Zahlung überwachen oder sogar verbieten. Das ist ein Angriff auf die informationelle Selbstbestimmung der Bürger. Bargeld ist gelebte Freiheit und muss erhalten bleiben.“
+
+Das Fiat-System: Ein riesiges Schneeballsystem
+
+Jedes Argument, das darauf verweist, wie abwegig eine Enteignung durch den digitalen Euro sei, lässt sich leicht entkräften. Denn im Kern ist das gesamte
+
+Fiat-System ein groß angelegtes Enteignungskonzept
+
+. Ein Großteil der weltweiten Währungen geht über kurz oder lang an massiver Inflation zu Grunde. Die Folge: Bürger, die ihr Vermögen in diesen Währungen halten, stehen am Ende häufig vor dem Totalverlust.
+
+Ein Paradebeispiel hierfür ist tatsächlich auch der Euro. Seit seiner Einführung im Jahr 2002 hat die Gemeinschaftswährung mehr als 80 Prozent an Wert eingebüßt – die Kaufkraft der Bürger hat sich entsprechend drastisch reduziert. Gegenüber realen Werten wie Gold ist der Verfall noch deutlicher: Allein seit Jahresende 2024 hat der Euro im Vergleich zum Gold rund 25 Prozent seiner Kaufkraft verloren.
+
+Viele klassische Währungen – ob Euro, US-Dollar, Rubel, Pfund oder Yen – werden mit großer Sicherheit in wenigen Jahrzehnten gar nicht mehr existieren.
+
+Das Trojanische Pferd der Kontrolle
+
+Mit dem digitalen Euro marschiert die EU stillschweigend in eine neue Ära – nicht der Innovation, sondern der Überwachung. Unter dem Vorwand von Effizienz und Modernisierung entsteht ein Instrument, das Bargeld verdrängen, Zahlungsverhalten steuern und letztlich den gläsernen Bürger schaffen soll.
+
+Die schleichende Bargeldabschaffung, gepaart mit der Programmierbarkeit des Geldes, macht aus einem Zahlungsmittel ein Machtinstrument. Kontrolle statt Freiheit, Gehorsam statt Eigenverantwortung. Das neue Finanzsystem, dass nun in die nächste Testphase übergeht, könnte schon bald zur Realität werden – mit weitreichenden Konsequenzen für jede Form der finanziellen Selbstbestimmung."
+NDR-Skandal um die Entlassung von Julia Ruhs kommt gottlob nicht zur Ruhe,2025-09-29,https://www.tichyseinblick.de/feuilleton/medien/ndr-skandal-entlassung-julia-ruhs/,Josef Kraus,"Nicht alle NDR-Redakteure stehen hinter dem Rauswurf von Julia Ruhs, einige sehen darin eine Zensur und Einschränkung der Meinungsfreiheit. Nun befasste sich der NDR-Rundfunkrat „eingehend mit der Causa Klar“. Aus dem Wirbel um Ruhs wolle man Konsequenzen ziehen, so der NDR-Intendant. Wird man? Eine vorläufige Bilanz.","Am 17. September wurde die Moderatorin der NDR-Sendung „Klar – Was Deutschland bewegt“, Julia Ruhs, vom Norddeutschen Rundfunk (NDR) vor die Tür gesetzt. Julia Ruhs (*1994) hatte am 9. April in der ersten ihrer insgesamt nur drei „Klar“-Sendungen auf Probleme in der deutschen Migrationspolitik hingewiesen. Sie berichtete dort über die Folgen der Asylpolitik für die Kommunen sowie überlastete Behörden und ließ Angehörige von Mordopfern migrantischer Gewalttäter zu Wort kommen. TE hat am 17. September 2025 berichtet.
+
+Unliebsame Kollegin rausgemobbt
+
+Das Gründonnerstagstribunal – Wie der NDR Julia Ruhs abserviert
+
+Die drei „Klar“-Sendungen sind übrigens (noch?) in der
+
+NDR-Mediathek abrufbar.
+
+Wie sich bald herausstellte, ging dieser Kündigung ein abartiges Kesseltreiben von bis zu 250 (!) NDR-Leuten gegen Julia Ruhs voraus. Diese Meutenhetze setzte intern bereits wenige Tage nach der ersten „Klar“-Sendung am 17. April („Gründonnerstagstribunal“) ein. Antreiber des Tribunals soll der NDR-Mann Daniel Bröckerhoff gewesen sein. Von ihm muss man wissen, dass er zugleich „Trainer“ beim Fake-News- und „Potsdam-2.0“-Erfinderportal „Correctiv“ ist.
+
+Für die NDR-Oberen hieß die Devise aber erst einmal: „Gehen Sie ruhig weiter, es gibt nichts zu sehen!“ Die „grüne“ Überfliegerin Katrin Göring-Eckardt meinte am 24. September 2025 im Bundestag gar, die Entlassung von Julia Ruhs durch den NDR sei ein Stück Pressefreiheit. Aber wer nimmt diese Dame außer den drei Prozent, die sie bei der Bundestagswahl am 23. Februar 2025 gewählt haben, noch ernst?
+
+Im Gleichschritt marsch gegen rechts
+
+Gleichzeitig sammelten sich die Hetzer gegen Julia Ruhs in ihren Schützengräben. Links-Moderatorin und „Wissenschaftsjournalistin“ („Wissen vor acht“) Anja Reschke (NDR) hatte sofort das Etikett „rechtsextrem“ für das Ruhs-Magazin parat. Großinquisitor in der Maske des „Satirikers“ Jan Böhmermann (ZDF) bezeichnete die Ruhs-Sendungen als „rechtspopulistischen Quatsch“. Der große Links-Einordner Georg Restle (WDR) wies alle Vorwürfe, er stecke hinter allem, zurück. Man kennt das: „Haltet den Dieb“. Eine ZDF-„Komikerin“ Sarah Wer …? (Sarah Bosetti) verteidigt das Ruhs-Aus: „Populismus und schlechter Journalismus!“
+
+Ein im bayerischen Rundfunkrat als Mitglied der Asylindustrie untergekommener (erfolgloser) Asylbewerber namens Hamado Dipama hetzte aktuell ebenfalls gegen Julia Ruhs: „Bravo an den NDR für diese weitsichtige Entscheidung! Die Unterwanderung durch Rechte und Neofaschisten in öffentlich-rechtlichen Medien muss gestoppt werden.“
+
+Hamado Dipama hetzt gegen Julia Ruhs
+
+Abgelehnter Asylbewerber als Strippenzieher seit acht Jahren im BR-Rundfunkrat
+
+Der Rückhalt für den ÖRR schwindet
+
+Mit einem freilich hatten die überbezahlten ÖRR-Allgewaltigen nicht gerechnet: mit einem breiten Sturm der Zwangsgebührenzahler in den Netzwerken gegen den ÖRR. Nicht nur aufgrund der Kündigung Julia Ruhs’ durch den NDR geht den NDR-Oberen und ihren Sympathisanten ein gewisser Körperteil auf Grundeis. Schließlich fielen in die gleiche Zeit die hinterfotzigen Hetzereien einer Dunja Hayali (ZDF) und eines US-„Korrespondenten“ Elmar Theweßen (ZDF) gegen den am 10. September ermordeten christlichen US-Influencer Charlie Kirk. Auch darüber hat TE ausführlich berichtet.
+
+Kritik verboten
+
+Mediale Doppelstandards: Hayali wird hofiert, Ruhs zum Abschuss freigegeben
+
+Aber es kam vorher schon und synchron mit dem NDR-Skandal ganz dicke: Julia Ruhs veröffentlichte im Frühsommer 2025 ihr
+
+Buch
+
+„Links-grüne Meinungsmacht“. Alexander Teschke gab nach sechs journalistischen Jahren bei der
+
+Tagesschau
+
+im Januar 2025 sein
+
+Buch
+
+mit dem Titel „inside tagesschau – Zwischen Nachrichten und Meinungsmache“ heraus. Und soeben berichtete ZDF-Mann und ZDF-Insider Andreas Halbach im NRW-Landtag Skandalöses aus dem Innenleben des Senders: Kritik und missliebige Darstellungen würden unterdrückt. Interne Kritik ist offenbar gefährlich. Recherchen gegen befreundete Sender
+
+sind nicht erwünscht.
+
+Nun
+
+berichtet
+
+die
+
+Berliner Zeitung
+
+am 25. September 2025 (Autor: Alexander Teske!). Es brodelt im NDR. Denn nicht alle NDR-Redakteure stünden hinter der Kündigung Ruhs’. Es sei massive Kritik an der Geschäftsleitung geäußert worden. Aus dem Nähkästchen über den Umgang mit Ruhs und dem Team der Klar-Sendung plauderte ein Mitarbeiter von
+
+NDR Info
+
+: Die Titulierung als „Rechtsextreme“ sei noch eine freundliche Beschreibung der Kritiker bezüglich der „Klar“-Kollegin gewesen.
+
+Bei einer internen Konferenz äußerten NDR-Kollegen heftige Kritik an der Senderspitze. Einige betrachteten den Rauswurf als Zensur und Einschränkung der Meinungsfreiheit. Andere fürchteten die Folgen für den „NDR“. Wieder andere sprechen gar von Zensur. An anderer Stelle der Videokonferenz mit circa 250 zugeschalteten NDR-Mitarbeitern empörte sich allerdings die Direktorin des Landesfunkhauses Schleswig-Holstein, Andrea Lütke, über Julia Ruhs: Dass die gekündigte Moderatorin dem NDR nun Cancel Culture vorwerfe, würde die negative Reputation des Senders mächtig befeuern. Deshalb sei das Problem des NDR aktuell, dass man mit der Entscheidung in der „aggressiven Öffentlichkeit nicht durchgedrungen“ sei.
+
+Am Freitag, 26. September, schließlich befasste sich der NDR-Rundfunkrat „eingehend mit der Causa Klar“. Alle 58 Rundfunkratsmitglieder waren kurzfristig zur Teilnahme an der Sitzung nach Hamburg gebeten worden. Die ganze Sitzung ist
+
+bei YouTube abrufbar.
+
+Mitschnitte sind hier zu finden:
+
+Ich bin damit einverstanden, dass mir Inhalte von Twitter angezeigt werden.
+
+In dieser Sitzung sagte der neue NDR-Intendant Hendrik Lünenborg: Aus dem Wirbel um Julia Ruhs wolle man Konsequenzen ziehen. Zugleich räumte er in einer Rundfunkratssitzung ein, dass „Fehler“ im Umgang mit der von Ruhs moderierten Sendung „Klar“ das Vertrauen in den NDR belastet hätten. „Das hätte so, wie es passiert ist, nicht passieren dürfen. Wir müssen aus den Fehlern lernen.“ Als Konsequenz kündigte Lünenborg an, die interne Debattenkultur im Sender verbessern zu wollen.
+
+Diese sei im Moment nicht in bestem Zustand. Er habe daher die Organisationsentwicklung des NDR gebeten, einen Prozess aufzusetzen, um die Debattenkultur im Haus nachhaltig zu verbessern. Mit Blick auf die hitzige Debatte rund um die Sendung „Klar“
+
+sagte er:
+
+„Wir müssen den Streit vor allem intern führen, damit wir im Programm vorankommen.“
+
+Wetten, dass der Skandal keine Folgen hat!? Denn eines ist auch längst klar: Dieser ÖRR ist nicht reformierbar, weil er zu 90 Prozent be- und zersetzt ist von 68-er Enkeln, linken Gouvernanten (m/w/d) und radikalen Weltverbesserern. Der mit jährlich 9 Milliarden Euro (= täglich mit 9 Millionen Euro) gemästete ÖRR gehört abgeschafft. Zumindest gehört der Zwangsbeitrag drastisch reduziert. Denn wenn weniger Geld da ist, muss man sich endlich darauf besinnen, was laut Medienstaatsvertrag eigentlich die Pflicht des ÖRR ist und dass man dafür nicht Tausende von linken Kostgängern braucht.
+
+Und die hohe Politik? CDU-Generalsekretär Carsten Linnemann hatte jüngst Reformen gefordert. Seine Idee: Der öffentlich-rechtliche Rundfunk müsse sich auf seinen Kernauftrag in den Bereichen Kultur, Bildung und Informationen fokussieren, bestehende Strukturen sollen zusammengeführt und damit verschlankt werden. Der ehemalige FDP-Bundestagsvizepräsident Wolfgang Kubicki hatte bei
+
+Welt TV
+
+sogar die Kündigung des Staatsvertrages und ebenso eine scharfe Veränderung des Rundfunks gefordert – „nur so sei eine Veränderung möglich“, so Kubicki wörtlich.
+
+Wäre alles recht und schön, wenn denn dazu der politische Wille vor allem der 16 deutschen Länder da wäre. Daran fehlt es. Wie anders ist es etwa zu erklären, dass sich ein CDU-Nord-Ministerpräsident (Spitzname „Genosse Günther“) gratismutig und pro forma an Ruhs’ Seite stellte, in den NDR-Rundfunkrat für die CDU aber die „Grüne“ Jessica Leutert entsandte."
+Realitätsverweigerung auf höchster Ebene,2025-09-29,https://www.tichyseinblick.de/wirtschaft/wirtschaft-insitute-politik-merz-spahn-realitaetsverweigerung/,Thomas Kolbe,"Schönfärberei der Lage durch die Institute, Unverschämtheiten des Bundeskanzlers – die Entscheidungsebene der deutschen Wirtschaft und Politik durchläuft in diesen Tagen die Phase des ersten Realitätsschocks. Bis zur Fehleranalyse ist es wohl noch ein weiter Weg.","Sie sind in Berlin ganz offenkundig nicht zufrieden mit dem Volk. Vor allem der Bundeskanzler wirkte während seiner Rede bei der Mittelstandsunion der CDU (MIT) sichtlich entgeistert vom Bürger.
+
+Friedrich Merz appellierte an die Deutschen, weniger zu klagen und stattdessen mehr Eigeninitiative und Zuversicht zu zeigen. „Hören wir doch mal auf, so larmoyant und so wehleidig zu sein in diesem Land.“ Folgen wir den Worten des Kanzlers, jammern wir uns also in die Krise hinein.
+
+Unverschämt und abgehoben
+
+Merz betonte die internationale Attraktivität des Standortes Deutschland und forderte, mehr Optimismus und Tatkraft an den Tag zu legen und
+
+stellte klar:
+
+„Das Glas ist nicht halb leer, sondern halb voll.“ Ob Merz hier möglicherweise noch in Gedanken beim
+
+Oktoberfest
+
+weilte, wissen wir nicht.
+
+Doch ist der unappetitliche Beigeschmack, den der bizarre Auftritt des Krisenkanzlers bei der MIT hinterlassen hat, mehr als lediglich ein rhetorischer Fauxpas. Merz erlaubte uns einen unmittelbaren Einblick in die Gedankenwelt einer politischen Kaste, deren ideologiedurchtränkte, beinahe kultische Abhängigkeit von der öko-sozialistischen Doktrin die Existenz von Millionen Familien bedroht.
+
+Man fasst es im Grunde nicht, aber ausgerechnet diejenigen, die für den sichtbar dramatischen Verfall der Bundesrepublik die Hauptverantwortung tragen, besitzen die Chuzpe, sich über die mehr als berechtigte Kritik der Menschen im Land, die täglich ihre Leistung abrufen, zu erheben.
+
+Spahn sieht Bürger am Zug
+
+Auch Merz’ Parteikollege und Vorsitzender der Unionsfraktion, Jens Spahn, lebt in derselben Welt politischer Illusionen. Deutschlands ökonomischer Kollaps stellt sich ihm als eindimensionales Verteilungsproblem dar. Im
+
+Interview
+
+mit der
+
+Neuen Osnabrücker Zeitung
+
+(NOZ) machte Spahn deutlich, die Politik habe das Ihrige getan, die Krise zu überwinden, die seit 2020 weit über eine Million Jobs gekostet hat.
+
+Ausland registriert Verzwergung Deutschlands
+
+Die „Financial Times“ zerlegt den deutschen Sozialstaat
+
+Man habe schließlich das Sondervermögen zur Investition in die Infrastruktur und die Bauwirtschaft zur Verfügung gestellt, sorge nun für Entlastungen bei der Bürokratie. Spahn bezeichnete die nicht näher erwähnenswerten Maßnahmen zur Beschleunigung von Genehmigungsverfahren im vollständig kollabierten Bausektor (PMI von 39) als „Bauturbo“. Das ist politische Infantilensprache und flüchtiges Wegwischen struktureller Probleme, die bislang an der stabilen politmedialen Abwehrmauer abprallen.
+
+Ab dem 1. Januar würden Unternehmen und Haushalte zudem um zehn Milliarden Euro jährlich bei den Energiekosten entlastet, so Spahn – mehr Subventionen, weitere Interventionen. Dass jede Subvention einer Umverteilung entspricht, hat Spahn nicht verstanden. Linke Tasche, rechte Tasche – so simpel lassen sich komplexe ökonomische Probleme aus der Welt schaffen, wenn man als deutscher Politiker aus dem Elfenbeinturm des ewigen Funktionärs auf die Welt blickt.
+
+Die Lage der deutschen Wirtschaft hat dabei mehr als nur dramatische Züge angenommen. In den Kernsektoren der Industrie sind die Produktionszahlen seit 2018 um bis zu 25 Prozent eingebrochen – allein die Automobilindustrie liefert ein Warnsignal, das Politik und Konzernspitzen eigentlich zum radikalen Umdenken zwingen müsste. In der Industrie entsteht die eigentliche Wertschöpfung; alles andere sind Derivate dieser höchsten Stufe ökonomischer Leistungskraft.
+
+Auch die Meldung, dass Bosch weitere 13.000 Jobs am Standort Deutschland streichen wird, muss sich im engmaschigen Aufmerksamkeitsfilter der Berliner Politikblase verfangen haben.
+
+Der große Marsch
+
+Statt einer dringenden Kurskorrektur setzt sich der Niedergang fort: Der Maschinenbau meldet für dieses Jahr ein weiteres Produktionsminus von fünf Prozent. Diesen Zug stoppt niemand, solange der groteske Feldzug gegen einen herbeifantasierten Klimawandel durch CO2, die sozialistischen Grabenkämpfe einer Umverteilungspolitik sowie das Angebot eines sperrangelweit geöffneten Sozialamts nicht endlich über Bord geworfen werden.
+
+Reformverweigerung
+
+Friedrich Merz und der Herbst der Retuschen
+
+Knappe Ressourcen müssen wieder über einen freien Kapitalmarkt ohne die Dauerintervention staatlicher Akteure gesteuert werden. Ansonsten ist Wachstum schlichtweg nicht möglich. Genau diese Erkenntnis muss sich in den kommenden Jahren des wirtschaftlichen Abstiegs in die Köpfe der Deutschen verpflanzen, will man im Anschluss an den nun folgenden Niedergang wieder Hoffnung schöpfen und ein neues Wohlstandsmodell entwickeln.
+
+Merz und Co. arbeiten mit Medienspielen, Scheinreformen und Ablenkungstaktik daran, den Status quo des Machtkomplexes, in dem sie sich geschmeidig bewegen, abzusichern und genau dieses Umdenken zu zerstreuen.
+
+Niemand setzt die Axt an die Wurzel aller Probleme an und zersägt den Green Deal, die zentralistische Transformationsagenda der EU, die dieses Land in die schwerste Krise gestürzt hat. Und wenn Bundeskanzler Merz davon spricht, die „Maschine in Brüssel“ stoppen und ihr ein „Stöckchen in die Räder halten“
+
+zu wollen,
+
+so ist dies auch wieder nur eines seiner Medienspiele, ein neuerlicher Ablenkungsversuch, Zeit zu gewinnen und mit immer größeren Schuldenprogrammen und Interventionen die Macht über die Ökonomie poltisch-administrativ zu zentralisieren.
+
+Profiteure der Krise
+
+Doch jede Krise kennt auch ihre Gewinner und Profiteure. Dort, wo der Staat in den kommenden Jahren Schuldenpakete von bis zu einer Billion Euro verfeuern wird, und wo der Brüsseler Zentralkörper allein über 750 Milliarden Euro in seinem sozialistischen Sieben-Jahres-Plan zur Rettung des Weltklimas an seine Günstlinge verteilt, wächst zwangsläufig die Zahl eben dieser Günstlinge. Das dröhnende Schweigen angesichts des Verfalls wird von dieser gigantischen Umverteilungsmaschine verfestigt – eine perfide Taktik, die Wohlstand umleitet und Macht zementiert.
+
+Kollaps der Automobilwirtschaft
+
+Gewerkschaften wollen den Status quo einfrieren
+
+Neben den hinlänglich bekannten Profiteuren des Klimakomplexes scheinen nun auch die Banken die Sektkorken knallen zu lassen – in Vorfreude auf die gigantischen Kreditpakete. Die Deutsche Bank
+
+rechnet
+
+für das kommende Jahr in Deutschland mit einem Wachstum von zwei Prozent. In Frankfurt weiß man genau, wie viel künstlicher Kredit durch die Bilanzen strömen wird, fein säuberlich gelenkt in die von der Politik vorgegebenen Sektoren.
+
+Selbstverständlich ist diese Zahl nichts anderes als ein Fantasieprodukt. Hier entstehen weder Güter noch Dienstleistungen, die Menschen tatsächlich nachfragen. Was entsteht, sind Wirtschaftsbrachen, die so schnell kollabieren wie zuletzt der Wasserstoffkomplex oder das Fantasieprodukt des grünen Stahls. Zurück bleiben einige ausgewählte gefüllte Taschen, enge verflochtene Kontakte zwischen der Günstlingswirtschaft und Berlin – und gesellschaftliche Fronten, die sich weiter verhärten.
+
+Gefälligkeitsgutachten der Institute
+
+In ihrer Analyse macht die Deutsche Bank keinen Hehl daraus, dass es die Staatsnachfrage ist, die die Wachstumsziffer nach oben treibt. Auch bei Rheinmetall und Co. geht es kurzfristig bergauf – die jahrelange Angstpropaganda über angeblich invasionsbereite Russen zeigt nun erste Früchte. Die Branche sucht händeringend nach Führungskräften – ein Tipp: bei ehemaligen Politikern anfangen. Dann fließen Subventionen reibungslos, schnell und ohne Umwege dorthin, wo das Geld ohnehin längst erwartet wird.
+
+Die Wirtschaftsforschungsinstitute liefern derweil flankierend Gefälligkeitsgutachten und bestätigen mit der
+
+Prognose
+
+eines Durchschnittswachstums von 1,3 Prozent im kommenden Jahr offen den Kurs der Politik. Kein Wunder: Sie hängen größtenteils selbst am Tropf der öffentlichen Versorgung. Doch so erklärbar dieses Verhalten ist, es bleibt unethisch – und für die Deutschen am Ende verhängnisvoll."
+Goldrally – Dax und Wall Street nach Stabilisierung mit Wochengewinnen – Lufthansa kündigt Stellenabbau an,2025-09-29,https://www.tichyseinblick.de/wirtschaft/geldanlage/goldrally-dax-wall-street-stabilisierung-lufthansa-stellenabbau/,Redaktion,"Der Goldpreis eilt von einem Rekord zum nächsten. Allein in den vergangenen vier Wochen legte er mehr als zehn Prozent zu. Die US-Börsen haben sich nach einigen Kursturbulenzen etwas erholt, auch der Dax hat sich zum Ende einer durchwachsenen Woche berappelt. Aktien aus der zweiten und dritten Reihe tendierten leicht im Minus.","Der Goldpreis eilt von einem Rekord zum nächsten. Allein in den vergangenen vier Wochen legte er mehr als zehn Prozent zu und notierte am Freitag bei fast 3227 Euro – knapp 1000 Euro mehr als vor zwölf Monaten. Viele fragen sich, ob sie noch auf den Zug aufspringen sollen. Aber nicht jede Investitionsmöglichkeit ist gleichermaßen geeignet. Die physischen Anlageformen reichen vom Edelmetall als Goldbarren, Münzen oder Schmuck im Schrank zuhause oder im Bankschließfach bis zur Einzel- oder Sammelverwahrung im Banktresor. Daneben gibt es Edelmetallkonto, Edelmetall-ETFs mit physischer oder ohne physische Hinterlegung sowie einzelne Goldminenaktien. Jedes Produkt hat Vor- und Nachteile, die man sich vor einer Anlageentscheidung durch den Kopf gehen lassen sollte.
+
+​Wegen des Diebstahlrisikos oder der Möglichkeit eines Brandes sollte man seinen physischen „Goldschatz“ eigentlich nicht zu Hause aufbewahren. Ein Schließfach ist zwar ein sicherer und relativ preiswerter Aufbewahrungsort, und die Tresorräume sind in der Regel gegen Feuer und Elementarschäden geschützt, aber die darin gelagerten Gegenstände sind durch die Hausratversicherung nicht versichert. Im Fall des Falles steht man also ohne da, wenn man nicht eine separate Versicherung abgeschlossen hat. Bei größeren Mengen bietet sich auch die Lagerung in einem Zollfreilager an, weil dort die bei sonstigen Transaktionen mit Silber, Platin und Palladium in voller Höhe zu zahlende Mehrwertsteuer nicht fällig wird. Goldbarren und Münzen sind dagegen in der EU stets mehrwertsteuerfrei. Eine Wertsteigerung zwischen Kauf und Verkauf ist ab einer Haltedauer von zwölf Monaten bei allen Metallen steuerfrei.
+
+Bei einem Metallkonto erwirbt der Anleger einen Anspruch auf eine bestimmte Menge Gold, welches bei dem entsprechenden Institut verwahrt wird. Damit entfallen sowohl die Kosten für die physische Lagerung als auch die Mehrwertsteuer (Silber, Platin und Palladium). Rechtlich gilt das Konto als Forderung gegenüber der Bank; das heißt, das Metall erscheint in der Bilanz des Instituts als Aktivposten, die Ansprüche des Anlegers als Passivposten. Die Abwicklung von Kauf- und Verkaufsaufträgen oder Transfers ist hier vergleichsweise kostengünstig. Allerdings hat man sich das Insolvenzrisiko des Instituts eingekauft.
+
+Neben dem physischen Goldhandel sind börsengehandelte Fonds – sogenannte Exchange Traded Funds (ETFs) – sowie Zertifikate häufig genutzte Produkte, die besonders kostenseitig attraktiv sind. Während ETFs als Sondervermögen außerhalb der Bilanz des Emittenten geführt werden, sind Zertifikate rechtlich vom Institut emittierte Schuldverschreibungen, mit denen man wiederum ein Insolvenzrisiko trägt. ETFs sind also eigentlich vorzuziehen. Besonders physisch gedeckte Gold-ETFs sind beliebt, da diese den Goldpreis mehr oder weniger eins zu eins abbilden und das Investment durch die Hinterlegung physischer Barren bei einer unabhängigen Verwahrstelle abgesichert sind. Die Vorteile solcher ETFs sind neben den geringen Kosten die hohe Liquidität und die einfache Handelbarkeit. Steuerlich werden sie (wegen der Hinterlegung) wie physisches Gold behandelt.
+
+Eine indirekte Möglichkeit von Goldanlagen sind Aktien von Minengesellschaften. Diese Unternehmen profitieren im aktuellen Marktumfeld überproportional von steigenden Goldpreisen, da die Margen der Goldproduzenten mit jedem Preisanstieg wachsen. Anleger erzielen so einen Hebeleffekt, der sich bei fallenden Kursen gegen den Anleger wirkt. Hier handelt man sich zudem andere Risiken ein – wie einen Regierungswechsel oder Enteignungen in den Förderländern. Minenaktien gelten daher als spekulativ.
+
+Die US-Börsen haben sich am Freitag nach einigen Kursturbulenzen etwas erholt. Der Leitindex Dow Jones Industrial verabschiedete sich knapp 0,7 Prozent höher mit 46.247 Punkten aus dem Handel. Damit verringerte er seinen Wochenverlust auf rund 0,1 Prozent. Der marktbreite S&P 500 gewann 0,6 Prozent auf 6.644 Punkte. Der technologielastige Auswahlindex Nasdaq 100 konnte seine zwischenzeitlichen Verluste am Ende abschütteln und legte um gut 0,4 Prozent auf 24.504 Punkte zu, womit er sein Wochenminus auf 0,5 Prozent eindämmte.
+
+Als Stütze nach drei Verlusttagen, denen eine Rekordjagd vorausgegangen war, erwiesen sich die US-Inflationsdaten. Schwache Daten zur Verbraucherstimmung trübten nur vorübergehend die Stimmung.
+
+Im Rahmen der privaten Einkommen und Konsumausgaben für den August wurde auch der PCE-Deflator der persönlichen Konsumausgaben veröffentlicht. Er gilt als wichtigstes Inflationsmaß für die Geldpolitik der US-Notenbank Fed. Die Kennziffer legte im Jahresvergleich wie erwartet ein wenig zu, während die Kernrate stagnierte, bei der die schwankungsanfälligen Preise für Energie und Nahrungsmittel herausgerechnet werden. Dies gebe der Federal Reserve Bank Spielraum für weitere Zinssenkungen, stellte Marktexperte Andreas Lipkow fest. Derweil trübte sich die Verbraucherstimmung im September stärker als erwartet ein, wie das von der Universität Michigan erhobene Konsumklima belegt.
+
+Die Aktien des Flugzeugbauers Boeing brachen am Freitag mit plus 3,6 Prozent aus der Konsolidierungsspanne der vergangenen zwei Wochen aus. Die US-Luftfahrtbehörde FAA bestätigte einen Bericht des „Wall Street Journal“ (WSJ), dem zufolge sie die Beschränkungen für die Maschinen des Typs 737 Max lockern wird. Zudem will die Fluggesellschaft Turkish Airlines bis zu 225 neue Maschinen kaufen.
+
+Bei Intel konnten sich die Anleger über Kursgewinne von 4,4 Prozent freuen. Damit setzten die Titel des Chipherstellers ihren steilen Höhenflug fort. Laut WSJ erwägt die US-Regierung, die US-Abhängigkeit von im Ausland produzierten Halbleitern zu verringern. Insgesamt entwickelten sich die Branchentitel aber in unterschiedliche Richtungen.
+
+Die Papiere von Electronic Arts sprangen um knapp 15 Prozent hinauf und erreichten eine Bestmarke. Der Computerspiele-Hersteller stehe angesichts einer milliardenschweren Übernahmeofferte kurz vor dem Abschied von der Börse, schrieb das WSJ unter Berufung auf „informierte Kreise“. Demnach könnte ein Konsortium unter Führung des Finanzinvestors Silver Lake und des saudischen Staatsfonds Public Investment Fund schon kommende Woche eine Transaktion bekanntgeben. Die Diskussion um den Preis laufe noch; dieser könnte bis zu 50 Milliarden Dollar betragen.
+
+Pharmawerte standen im Zeichen der US-Zollpolitik. Trump hatte auf eine Vielzahl von Importprodukten ab Oktober neue Zölle verhängt. Ob die neuen Regelungen auf bereits geltende Abgaben – etwa länderspezifische Sätze – aufgeschlagen werden, war allerdings zunächst unklar. Davon dürften dann positive Impulse für US-Pharmawerte ausgehen. Am Freitag legten die Aktien von Branchengrößen wie Merck & Co und Johnson & Johnson stärker als der Dow zu.
+
+Auch ausländische Nutzfahrzeughersteller könnte der Zollhammer wieder treffen. Lastwagen gehören zu den Produkten, auf die US-Präsident Donald Trump demnächst branchenspezifische Zölle erheben will. Anders als für europäische Autos, deren Import-Abgaben rückwirkend zum 1. August auf 15 Prozent gesenkt wurden, sollen auf große, schwere Lkw ab Oktober Zölle in Höhe von 25 Prozent verhängt werden.
+
+Aktien des US-Nutzfahrzeugherstellers Paccar zogen um 5,2 Prozent an. Laut dem US-Analysehaus Bernstein Research würden Paccar und der schwedische Konkurrent Volvo von solchen zusätzlichen Zöllen profitieren, da sie für den US-Markt fast ausschließlich vor Ort produzierten.
+
+Zum Ende einer durchwachsenen Woche hat sich zuvor auch schon der Dax berappelt. Aktien aus der zweiten und dritten Reihe tendierten hingegen leicht im Minus. Nach der Bekanntgabe neuer US-Konjunktur- und Inflationsdaten erklomm der deutsche Leitindex ein Tageshoch und schloss mit einem Plus von knapp 0,9 Prozent bei 23.739 Punkten. Daraus resultierte ein Wochengewinn von rund 0,4 Prozent. Dagegen fiel der MDax mit den mittelgroßen deutschen Unternehmen am Freitag wieder unter die Marke von 30.000 Punkten und verlor letztlich knapp 0,2 Prozent auf 29.987 Zähler.
+
+Die Marktteilnehmer seien nicht enttäuscht worden, bemerkte Marktexperte Andreas Lipkow: „Die PCE-Kernrate signalisiert einen gleichbleibenden Preistrend und gibt der US-Notenbank Raum für weitere Zinssenkungen“, so Lipkow. Die Dax-Gewinne fußten am Freitag unter anderem auf einem Kursgewinn des Schwergewichts Siemens von 2,2 Prozent. Damit erholten sich die Papiere des Technologiekonzerns von ihrem Tief seit Anfang August. Händler verwiesen auf Aussagen in einem Briefing zu den im November erwarteten Zahlen. Aus diesem sei hervorgegangen, dass das vierte Geschäftsquartal besser ausfallen werde als das vergangene Jahresviertel. Außerdem hieß es, dass der Konzern weiterhin darauf hinarbeite, seine Mehrheitsbeteiligung an Siemens Healthineers zu veräußern.
+
+In anderen Branchen wie etwa bei den Lastwagenbauern belasteten neue Zollsorgen, nachdem US-Präsident Donald Trump erhöhte Abgaben ankündigt hatte. Die Anteile von Daimler Truck büßten 1,8 Prozent ein, jene der VW-Tochter Traton verloren 2,6 Prozent. Anders als für europäische Autos, deren Import-Abgaben rückwirkend zum 1. August auf 15 Prozent gesenkt wurden, sollen auf große, schwere Lastwagen ab Oktober US-Zölle in Höhe von 25-Prozent verhängt werden.
+
+Auf Einfuhren von Arzneimitteln in die USA wurden sogar Zölle von 100 Prozent angekündigt. Die Ankündigung steht im Widerspruch zu den bisherigen Handelsabsprachen zwischen den USA und der EU, die eine Zollobergrenze von 15 Prozent vorsieht. „Trump schwingt mal wieder den Zollhammer“, schrieb der Kapitalmarktstratege Jürgen Molnar von RoboMarkets. Aktien deutscher Pharmakonzerne zeigten sich aber gelassen: Die Titel von Bayer endeten kaum verändert, jene der Merck KGaA legten um 0,4 Prozent zu.
+
+Die Stahlwerte Thyssenkrupp und Salzgitter gewannen 3,6 beziehungsweise 5,2 Prozent. Die Europäische Union scheine neue protektionistische Maßnahmen zu planen, schrieben die Helaba-Experten mit Blick auf einen „Handelsblatt“-Bericht. Darin ist unter Bezugnahme auf Brüsseler Beamte von „weitreichenden Schutzzöllen von über 25 bis 50 Prozent gegen chinesischen Stahl und daraus hergestellte Produkte“ die Rede.
+
+Aktien der Lufthansa verteuerten sich um 1,6 Prozent. Die Frankfurter wollen offenbar einige Tausend Stellen streichen, um Kosten zu senken, wie die Nachrichtenagenturen dpa und dpa-AFX am Freitag aus Unternehmenskreisen erfuhren. Lufthansa-Sprecher wollten sich zu den Berichten nicht äußern. Genaueres wird auf dem Kapitalmarkttag am Montag erwartet. Dann will der Lufthansa-Vorstand um Konzernchef Carsten Spohr neue Mittelfristziele für die kommenden Jahre vorstellen."
+Miosga als Wadenbeißer. Doch Wadephul will nicht,2025-09-29,https://www.tichyseinblick.de/feuilleton/medien/miosga-als-wadenbeisser-doch-wadephul-will-nicht/,Gastautor,"Dreist, stiernackig und bisweilen unverschämt versucht Caren Miosga, dem Außenminister möglichst viele möglichst negative Aussagen über Donald Trump zu entlocken. Vergeblich. Johann Wadephul bleibt blass. Und das ist zur Abwechslung mal ganz beruhigend. Von Brunhilde Plog","Eines muss man Caren Miosga lassen: Sie gibt nicht auf. Es kann noch so plump sein, so unbeholfen, so durchschaubar oder schlicht nervtötend – einer Miosga ist einfach nichts zu blöde. Geschlagene zehn Minuten lang versucht die gelernte Nachrichtensprecherin, dem Außenminister ein möglichst plakatives Zitat zu entlocken, irgendeine negative Aussage über Donald Trump und die USA. Sie will auf Krampf eine Schlagzeile produzieren. Doch der Mann geht ihr einfach nicht auf den Leim. Pech gehabt.
+
+Eine Machtdemonstration
+
+Trump attackiert Europa vor den UN: „Eure Länder gehen zum Teufel“
+
+Sie führt Wadephul vor, wie er griesgrämig Trumps Rede vor den Vereinten Nationen lauscht („Haben Sie geguckt, wie Sie gucken?“), sie zitiert Trump, wie er über Deutschland herzieht, die fatale Energiepolitik und die mörderische Massenmigration kritisiert, sie stellt den US-Präsidenten wie gewohnt als Zerstörer der Demokratie dar – doch Wadephul spielt einfach nicht mit. Sah er bei Trumps Rede noch aus wie ein Schluck Wasser in der Kurve, so gibt er heute bei Miosga den Tiefenentspannten. Vielleicht ist er auch einfach nur geschlaucht, schließlich verbringt er momentan ja mehr Zeit in der Luft als anderswo. Ständig pendelt er mit dem Regierungs-Jet zwischen Berlin und New York. An Bord gab es offenbar einen lecker Wattebausch an Sauce Diplomatique.
+
+In Sachen Trump gibt Wadephul den Kreidefresser. Er rechnet es dem US-Präsidenten hoch an, dass er überhaupt da war, dass er vor der UN-Generalversammlung gesprochen und „das Forum ernstgenommen“ habe. „Er macht tatsächlich etwas“, frohlockt Wadephul, und ohnehin erlebe er „die USA als einen sehr verlässlichen Partner“. Deutschland solle lieber „eine gewisse Bescheidenheit zeigen“, denn „wir sind nicht so lange erfolgreich demokratischer Rechtsstaat wie die Vereinigten Staaten von Amerika“. Miosga reicht das nicht. Sie fordert eine angemessene Empörung darüber ein, dass Trump „sich jetzt anschickt, diese Demokratie auszuhöhlen“. Der Minister lässt sie auflaufen: „Ich sage etwas zu Dingen, die Deutschland berühren.“ Die USA oder gar die dortige Innenpolitik zu kommentieren, lehnt er ab. „Wenn ich damit anfange, könnte ich zur Rentenpolitik in Frankreich Vorschläge machen. Dann könnte ich auch etwas sagen zur Frage der Staatsfinanzen in Spanien. Miosga schmollt. „Nee, nee“, ruft sie, „das ist aber doch… ist das nicht jetzt etwas Anderes?“ Keine Chance. Er sei nicht der Meinung, dass er „dazu Stellung nehmen sollte“, salbadert Wadephul. Es sei einfach „nicht im deutschen Interesse, wenn ich als jemand auftrete, der es besser weiß“.
+
+Werkeln am Wahlkreis
+
+USA: „Redistricting“ oder wie Wahlen am Wähler vorbeigehen können
+
+Miosga gibt immer noch nicht auf. Wie ein Wadenbeißer bleibt sie Wadephul am Hacken hängen. „Ist Donald Trump für Sie ein lupenreiner Demokrat?“, will sie wissen. Ja, sagt der, Trump sei Demokrat und demokratisch gewählt. Mist aber auch. Doch weiter geht’s: „Ist er auch ein Verfechter der Demokratie?“ Als Wadephul immer noch nicht spurt, stellt sie schließlich trotzig fest: „Wir nehmen zur Kenntnis, dass Sie nicht mit Ja geantwortet haben.“
+
+Großes Thema sind – wie es uns die Altpapiermedien und der ÖRR seit Wochen einhämmern – mal wieder die unzähligen, sich überraschend häufenden, die erschreckenden und bedrohlichen Drohnensichtungen im Baltikum und über Nordeuropa. Doch während im Einspieler noch korrekt gesagt wird, dass man Russland bislang lediglich „im Verdacht“ habe, wird die ganze Sendung über so getan, als sei es längst eine gesicherte Erkenntnis. Für Miosga und ihre drei Gäste waren es auf jeden Fall russische Drohnen. Dass sich einige angeblich russische Flugobjekte nicht zum ersten Mal als ukrainisch herausgestellt hätten, wird weder erwähnt noch irgendwie in Betracht gezogen.
+
+Stattdessen kommt die Drohnenbedrohung neuerdings schon mit animierten Karten ins Wohnzimmer. Die Miosga-Redaktion hat sich dabei alle Mühe gegeben, lässt Drohnen sogar wie Northorp-B2-Tarnkappenbomber aussehen, die in lausig animierter Geschwaderformation über Europa fliegen. Da kann man es schonmal mit der Angst kriegen. Dazu warnt die dänische Ministerpräsidentin Mette Frederiksen ordnungsgemäß vor Russland, es fallen Buzzwords wie „hybride Angriffe“ oder „Desinformationsangriff“. Dieses Schlagwort bringt Daniela Schwarzer ein. Und damit kennt sie sich bestens aus. Sie wird dem Publikum zwar als harmlose Politikwissenschaftlerin vorgestellt, doch vor allem ist sie Vorstand der Bertelsmannstiftung. Und die wiederum ist für die „Faktenchecks“ bei Facebook bekannt, also jene
+
+berüchtigten Zensurmaßnahmen
+
+, die Desinformation seit der Corona-Plandemie überhaupt erst zur digitalen Kunstform gemacht haben.
+
+Provokation seitens des Kreml:
+
+Drohnenkrieg inmitten Europas: EU in der Zwickmühle der Großmächte
+
+Große Gefahr also, da sind sich alle einig. Von Russland ausgehend, selbstverständlich. Doch auch für Deutschland? Christoph von Marschall winkt zunächst ab: „Der Krieg bricht so jetzt nicht aus“, sagt der Redakteur der
+
+darbenden
+
+Tageszeitung „Der Tagesspiegel“. Miosga wieder: „Leben wir noch im Frieden mit Russland?“ Wieder kein Treffer. „Die NATO lebt noch im Frieden mit Russland, ja“, sagt Wadephul. Doch auch er ist in Sorge: „Russland testet uns. Wir leben nicht mehr in einem vollständigen Frieden.“ Was auch immer das jetzt heißen soll.
+
+Von Marschall ist da eindeutiger und aufgeregter: „Wir sind nicht mehr im Frieden, ganz sicher nicht“, sagt er. Eindeutig aufgeregt. Außerdem sei Deutschland „sehr langsam“ und habe „viel Zeit verschlafen.“ Man müsse die Drohnen unbedingt vom Himmel „runterholen“ und auch selber Drohnen kaufen, am besten in der Ukraine. Und dort auch gleich deutsche Soldaten ausbilden lassen, damit sie wissen, wie man die Dinger fliegt. Marschall wird fast etwas kurzatmig. Die Zeit sei „sehr knapp“, und man müsse jetzt „schnell und entschlossen handeln“.
+
+Ins selbe Horn bläst auch Schwarzer. „Russland müssen wir heute als Bedrohung wahrnehmen. Wer heute Zeitung liest, Medien konsumiert, sieht ja, was tagtäglich passiert“, sagt sie. Dabei seien „unsere Gesellschaften leider nicht ausreichend vorbereitet“. Man stelle sich vor: immer noch nicht ausreichend vorbereitet, obwohl sich die Medien und auch die Bertelsmannstiftung doch so viel Mühe geben…
+
+Dass sich die Gefahr endlich in den Köpfen festsetzt, dafür will auch Wadephul alles tun. Es gebe leider „Parteien wie die AfD oder wie das Bündnis Sarah Wagenknecht, die so tun, als wenn quasi die Ukraine diesen Krieg verschuldet hat.“ Russland sei eben kein „harmloser Partner“, der sich „durch eine Nato-Erweiterung nur bedroht gefühlt hat“, sagt der Minister mit dem Knitterblick. „Nein, es ist andersrum. Wir sind ein defensives Bündnis, und Russland ist der Agressor. In der Ukraine und jetzt eben auch im NATO-Luftraum.“
+
+Wie das Spiel mit der Kriegstüchtigkeit ausgehen kann, wie effizient etwa die nach Litauen verlegte deutsche Brigade arbeiten würde, wenn es ernst wird, das weiß wiederum von Marschall. Amerikanische „Wargamer“ hätten es nämlich in der Theorie längst ausgerechnet: „Das dauert zehn Tage, dann ist die Bundeswehr zu 60 Prozent vernichtet. Die Litauer ebenso. Beide nicht mehr angriffsfähig.“
+
+Oder wie man an Ort und Stelle sagen würde: tot."
+Der nächste Angriff auf Gotteshaus und Christen in den USA: Vier Todesopfer,2025-09-29,https://www.tichyseinblick.de/kolumnen/aus-aller-welt/christen-usa-terror/,Richard Schmitt,Erneut wurde ein Gottesdienst zum Ziel eines Terrorangriffs: In Grand Blanc im US-Bundesstaat Michigan eröffnete am Sonntag ein Mann während einer Messe das Feuer und legte offenbar auch ein Feuer im Kirchengebäude.,"Vier Menschen kamen bei dem Mordanschlag ums Leben, mehrere weitere wurden verletzt. Der mutmaßliche Täter (40) wurde später ebenfalls tot aufgefunden.
+
+Nach Angaben der Polizei starben zwei Opfer an Schussverletzungen. Die beiden anderen Todesopfer sollen bei dem Brand ums Leben gekommen sein, Details nannten die Ermittler bisher nicht. Der Vorfall ereignete sich, als Hunderte Gläubige in der Kirche versammelt waren. Laut Sheriff stand zeitweise das gesamte Gebäude in Flammen, das Feuer konnte jedoch unter Kontrolle gebracht werden.
+
+Ich bin damit einverstanden, dass mir Inhalte von Twitter angezeigt werden.
+
+Der Schock in der Gemeinde ist groß. Auch US-Präsident Donald Trump äußerte sich. Auf seiner Plattform „Truth Social“ sprach er von einem gezielten Angriff auf Christen: „Der Verdächtige ist tot, aber es gibt noch viel zu klären. Diese Epidemie der Gewalt in unserem Land muss sofort beendet werden!“
+
+Vizepräsident JD Vance und Justizministerin Pam Bondi baten auf X um Gebete für die Opfer. Bondi sprach von einer „herzzerreißenden und erschreckenden Tat an einem Ort des Friedens“. Gretchen Whitmer, Gouverneurin von Michigan, verurteilte den Angriff als „inakzeptabel“ und lobte das schnelle Eingreifen der Rettungskräfte.
+
+Der Vorfall reiht sich ein in eine Serie blutiger Angriffe auf Gotteshäuser und christliche Gemeinden in den USA. Erst im August wurde in Minneapolis ein Schulgottesdienst zum Ziel eines Terrorangriffs. Damals feuerte ein Täter durch die Fenster einer Kirche auf Kinder, zwei von ihnen – acht und zehn Jahre alt – starben. Die Bundespolizei FBI stufte die Tat später als potenziellen Terroranschlag ein; der Verdächtige hatte sich in einem Manifest antichristlich, antisemitisch und rassistisch geäußert.
+
+Kein Thema: Die Bedrohung durch den Islam
+
+Christenfeindliche Hysterie im „Spiegel“: Fantasievolle Agitation
+
+Auch in anderen Bundesstaaten kam es in den vergangenen Jahren immer wieder zu Angriffen auf Kirchen und Gläubige – oft mit ideologischen oder religiösen Motiven. Experten sprechen von einem beunruhigenden Trend, der das Sicherheitsgefühl vieler Gläubiger nachhaltig erschüttert.
+
+In Grand Blanc läuft die Suche nach einem Motiv nun auf Hochtouren. Die Ermittler haben die Wohnung des Verdächtigen durchsucht und werten Handy- und Computeraufzeichnungen aus, das FBI unterstützt die Arbeit mit mehr als 100 Beamten. Angesichts der vielen Augenzeugen dürfte die gesamte Aufarbeitung des Falls mehrere Wochen dauern.
+
+Alleine im Jahr 2024 wurden in den Vereinigten Staaten 415 Vorfälle gegen Kirchen registriert, darunter Vandalismus, Brandstiftung, Bombendrohungen, Vorfälle mit Waffen und andere kriminelle Handlungen. Diese betrafen 383 Kirchen in 43 Bundesstaaten. 284 Mal war es Vandalismus, dazu kamen 55 Brandlegungen sowie 28 Vorfälle mit Waffen, 14 Bombendrohungen und 47 sonstige Attacken auf Gotteshäuser."
+"Gegen die Grüne wählten in Köln Schwarze rot, in Bonn Rote schwarz – Richter retten den Parteienstaat nicht",2025-09-29,https://www.tichyseinblick.de/daili-es-sentials/merz-reformen-richter-parlamente/,Fritz Goergen,Verfassungsrichter wollen statt unfähiger Parlamente selbst politisch entscheiden. Den Abtritt des Parteienstaats hält auch das nicht auf.,"In Duisburg, Gelsenkirchen und Hagen konnten „UnsereDemokraten“ CDU, SPD, Grüne und SED-Die-Linke nur vereint die Oberbürgermeister-Kandidaten der AfD in der Stichwahl verhindern.
+
+Grüne und SPD in NRW sind die Verlierer
+
+der Oberbürgermeister-Stichwahlen, die CDU profitiert nur davon. Für die KleiKo in der Bundesregierung und stillen Teilhaber Grüne ist diese Abstrafung durch die Wähler die weitere Garantie für Weiter so, noch mehr Schulden, die versickern, ohne etwas auszurichten.
+
+Der ÖRR tut alles, um die „richtige“ Meinung unters Volk zu bringen, aber wirkt immer weniger.
+
+Ich bin damit einverstanden, dass mir Inhalte von Twitter angezeigt werden.
+
+Der Herbst hat begonnen, Merz’ Reformen sind
+
+zerronnen
+
+, noch bevor’s Winter ist. Am 21. Dezember ist Wintersonnenwende, die Sonne geht spät auf und früh unter, es bleibt lange dunkel. Politisch ist das ganze Jahr jener Herbst, den niemand mag, neblig grau, trüb, feucht, fröstelig, die Stimmung freudlos, verzagt, kaum noch hoffend auf bess’re Zeiten oder schon endzeitlich kapitulierend.
+
+Ich bin damit einverstanden, dass mir Inhalte von Twitter angezeigt werden.
+
+Politisch ist immer Herbst.
+
+Was anderes als die Fortsetzung dieses politischen Gruselherbsts auch im nächsten Kalenderjahr können die rotschwarze KleiKo und ihre stillen Teilhaber Grüne-SED-Die Linke nicht. Die notwendigen Reformen kennt jeder Klarsichtige, aber die einzigen persönlichen Interessen der Handvoll Berufspolitiker, die in Berlin-Mitte das Sagen haben, nämlich an der Macht zu bleiben, verhindern jede Reform. Im eigenen Laden wird gewählt, wer schriller den woken Glauben predigt. Damit ihnen die Wähler das Handwerk nicht legen können sollen, sorgen sie Stück für Stück vor. Von der Brandmauer über den Ausschluss von Kandidaten bei der Wahl nun nicht nur zum AfD-Verbot, sondern zur Durchsetzung nicht mehrheitsfähiger Politik durch das Verfassungsgericht.
+
+Richterstaat.
+
+Zuletzt schoben sie mit dem Winkelzug eines einzige Wahlgangs im Fraktionszwang drei Verfassungsrichter durch, deren eine urteilt, Parlamente könnten keinen Staat machen, weil Abgeordnete aus Angst vor Abwahl zu notwendigen Entscheidungen unfähig sind. Diese Diagnose stellen Kritiker des Parteienstaats schon lange. Aber solche Richter wollen mit dieser Diagnose sich selbst als Therapie der unfähigen Parlamente und Regierungen und „das Richtige“ durch Richterspruch verordnen.
+
+Neue Verfassungsrichterin eins.
+
+Sigrid Emmenegger will nicht – wie vom Grundgesetz geboten – den Staat, also die Politik an Übergriffen auf die Bürger hindern, sondern das Grundgesetz im „Verfassungswandel“ durch Rechtsanwendung – wie jeweils politisch gewünscht – uminterpretieren.
+
+Neue Verfassungsrichterin zwei.
+
+Ann-Katrin Kaufhold will Naturgütern eigene (Grund-)Rechtsfähigkeit geben und damit klassische Freiheitsrechte des Menschen aushebeln: in einer „ökologischen Transformation“ durch eine globale Kontrollinstanz, die Regierungen vorschreibt, was sie zu tun und zu lassen haben. Kaufhold will statt Eigentumsrechten und Marktwirtschaft den Staat zum Alleinerben von Bürgern wie Unternehmen machen.
+
+Macht ohne Mehrheit.
+
+Verfassungsrichter treffen politische Entscheidungen selbst, zu denen Berufspolitiker nicht fähig sind? Der ganze, finanziell sauteure, sozial, wirtschaftlich und kulturell verheerende Parteien-Parlamente-Regierungs-Apparat wäre dann nur noch dazu da, um
+
+Richter als Hohepriester ins Oberste Gericht
+
+zu schicken? Die dann dem entsendenden Parteienstaat diktieren, was er zu tun hat? Lauter Fragen, die am woken Netz selbstverständlich abprallen. Das ist vom klimaneutral energiewendenden, industrie-wirtschafts-und-wohlstands-beendenden heiligen Handeln zutiefst gläubig beseelt – einschließlich der Milliarden für den neuen Wenden-Adel.
+
+Westwind.
+
+Wie man es wendet oder dreht, die einzige Richtung, aus der Hilfe weht für die Wendenwenden, die Land und Leute vor einem Hohepriester-Regime von obersten Richtern retten, sind die Fernwirkungen der Regierung Trump-Vance-Rubio. Welche Fehler die auch immer in Israel und anderswo macht. Westeuropa die Fortsetzung seines Irrweges zu verwehren, liegt im höchst eigenen Interesse der US-Regierung America First. Dieses Interesse wird sie in Europa durchsetzen und nicht aus Liebe zu den Europäern. Aber auf Interessen ist Verlass, „Freundschaft“ gibt es zwischen Staaten und Politikern nicht.
+
+Frankreich bricht mit Macron aus der woken Front, Spanien und Britannien folgen. In Finnland, den baltischen Staaten und Polen hat die US-Regierung eine Militärachse, die auch ohne Westeuropa funktioniert. Und wer weiß, ob diese nicht beim Einfrieren des Ukraine-Krieges eine Rolle in der Westukraine bekommt, die an Litauen-Polen erinnert. Italien, Ungarn und Slowakei sind sowieso bei Trump-Vance-Rubio dabei. Ist alles vorbei, humpelt Nachzügler BRD herbei. Europas Neuordnung ist auf dem Wege.
+
+Der Herbst hat begonnen, Merz’ Reformen sind zerronnen, noch bevor’s Winter wird. Der Parteienstaat ist nun trickreich um das Oberste Gericht als Retter vor dem Volk ergänzt. Überleben kann er trotzdem nicht. Er ist verbissen auf dem Rückzug, hinter sich verbrennt er alle Brücken. Retten vor dem Ende werden ihn auch Richter in ihrer Anmaßung als Hohepriester nicht.
+
+Ein Nachwort zu Köln für Kenner.
+
+Aus der Hochburg des Karnevals verlautet. Die schwarzen „Kölsche“ hätten zum ersten Mal rot gewählt, um im Fastelovend keine Ansprachen einer Grünen hören zu müssen. Tja liebe Kölsche, das hättet ihr euch sparen können, hättet ihr nach 1945 die alten Bräuche wieder hergestellt.
+
+Vor 1933 hatte der Oberbürgermeister weder bei Ernennung noch Proklamation des Dreigestirns eine Rolle – weder bei der Auswahl durch die Karnevalsvereine noch bei der offiziellen Zeremonie. Erst ein NS-Oberbürgermeister „proklamierte“ 1936 in der Kölner Messe das Dreigestirn. Die Kölner versäumten nach 1945, ihren Karneval wieder selbst zu bestimmen. Aber was nicht ist, kann ja noch werden."
+Grüne im Sturzflug – Dortmund fällt: SPD verliert „Herzkammer“ – TE-Wecker am 29. September 2025,2025-09-29,https://www.tichyseinblick.de/podcast/te-wecker-am-29-september-2025/,Holger Douglas,"Der TE-Wecker erscheint montags bis freitags – und bietet Ihnen einen gut informierten Start in den Tag. Ideal für den Frühstückstisch – wir freuen uns, wenn Sie regelmäßig einschalten. An Wochenenden und Feiertagen erscheint der Wecker mit einer Schwerpunktsendung.","Ich bin damit einverstanden, dass mir Inhalte von Soundcloud angezeigt werden.
+
+Abonnieren ▼
+
+iTunes
+
+Amazon
+
+Spotify
+
+Stichwahlen: Grüne kassieren Klatschen, SPD verliert Dortmund, AfD ohne „blaues Wunder +++ SPD zielt aufs Ehegattensplitting – gigantische Steuerkeule für Millionen Paare +++ Lufthansa: Tausende Stellen und deutsche Drehkreuze wackeln +++ China eröffnet höchste Brücke der Welt – Deutschland staut auf maroden Bauten +++ Autopen-Affäre in den USA: Bidens Massenbegnadigungen unter der Lupe +++ TE-Energiewende-Wetterbericht +++
+
+Mit dem Code Wecker20 sparen Sie 20 € ab einem Mindestbestellwert von 65 €. Gültig nur auf der Webseite
+
+www.sioux.de
+
+und nur bis 31.12.2025. Gutschein gilt auch für bereits reduzierte Ware.
+
+Keine Barauszahlung möglich. Pro Bestellung kann der Gutschein nur ein mal eingesetzt werden."

@@ -1,0 +1,429 @@
+"Date","Title","Inhalt","URL"
+"2025-11-09","Die Grenzen der Künstlichen Intelligenz
+Warum Bewusstsein mehr ist als ein Algorithmus","
+				
+					Ein Gastbeitrag von Bodo Neumann
+Künstliche Intelligenz verändert unser Leben schneller, als viele es wahrnehmen. Sie beeinflusst Wirtschaft, Politik, Bildung und wirft grundlegende Fragen über Ethik, Machtverteilung und soziale Gerechtigkeit auf und stellt Gesellschaft und Individuum vor neue Herausforderungen. Diese rasante Entwicklung hat aber nicht nur gesellschaftliche und technische, sondern auch tiefgreifende wissenschaftliche und philosophische Fragen aufgeworfen. Um zu verstehen, wie Maschinen lernen, denken oder sogar Bewusstsein entwickeln könnten, ist der Rückgriff auf psychologische und neurobiologische Grundlagen unerlässlich.
+Für den gesellschaftlichen Diskurs und die breite Öffentlichkeit ist es wichtig, diese Zusammenhänge zu verstehen, da sie direkten Einfluss auf die Gestaltung und den Einsatz von KI und maschinellem Lernen in unserem Alltag haben werden. Das Wissen über die biologischen und psychologischen Grundlagen des Lernens und Denkens bietet daher eine wichtige Grundlage, um den technologischen Fortschritt verantwortungsbewusst zu begleiten und kritisch zu hinterfragen.
+Sowohl die Neuropsychologie als auch die kognitive Psychologie beschäftigen sich mit den Mechanismen geistiger Prozesse, die eine auf der Ebene des Gehirns, die andere auf der Ebene des Denkens. Ihre Erkenntnisse liefern zentrale Anknüpfungspunkte für die Entwicklung und Reflexion moderner KI-Systeme.
+Neuropsychologische Perspektive: Das Gehirn als Inspiration
+Die Neuropsychologie beschäftigt sich mit den Zusammenhängen zwischen Gehirnstrukturen, neuronaler Aktivität und kognitiven Funktionen. Erkenntnisse aus der Hirnforschung, etwa über die Organisation des visuellen Kortex, die Rolle des Hippocampus im Gedächtnis oder die Funktion dopaminer Belohnungssysteme, haben maßgeblich die Entwicklung moderner KI-Systeme inspiriert.
+Künstliche neuronale Netze (KNN) sind ein direktes Produkt dieser biologischen Inspiration. Sie abstrahieren die Arbeitsweise biologischer Neuronen: Signale werden über gewichtete Verbindungen weitergeleitet, summiert und durch Aktivierungsfunktionen transformiert. Während die ersten neuronalen Netze der 1950er Jahre nur einfache Muster erkennen konnten, ermöglichen tief geschichtete Architekturen (Deep Learning) heute komplexe Fähigkeiten wie Bild- und Spracherkennung.
+
+Trotz dieser Ähnlichkeit bleibt ein zentraler Unterschied: KNN sind funktional analog, aber nicht biologisch realistisch. Das menschliche Gehirn arbeitet massiv parallel, nutzt chemische Signalverarbeitung, moduliert Emotionen und integriert sensorische Erfahrungen. All das bleibt in der KI bislang weitgehend unberücksichtigt. Neuropsychologische Erkenntnisse dienen somit als Inspiration, nicht als exakte Vorlage.
+Kognitive Psychologie: Das Modell des Geistes
+Während die Neuropsychologie die neuronalen Grundlagen betont, richtet die kognitive Psychologie ihren Blick auf die mentalen Prozesse selbst, auf Wahrnehmung, Aufmerksamkeit, Gedächtnis, Sprache und Denken. Sie versteht den Menschen als Informationsverarbeitungssystem, das Eingaben (Stimuli) aufnimmt, intern verarbeitet und Ausgaben (Reaktionen) erzeugt.
+Dieses Modell der Informationsverarbeitung bildete die theoretische Basis der symbolischen KI in der zweiten Hälfte des 20. Jahrhunderts. Systeme wie Expertensysteme oder kognitive Architekturen (etwa ACT-R) versuchten, menschliches Denken regelbasiert nachzubilden. Auch aktuelle KI-Forschung profitiert von kognitiven Konzepten: Der „Attention“-Mechanismus in Transformer-Modellen, der etwa in Sprachmodellen wie GPT zum Einsatz kommt, ist direkt von Theorien menschlicher selektiver Aufmerksamkeit beeinflusst.
+Darüber hinaus liefert die kognitive Psychologie Modelle des Lernens und Problemlösens, die maschinelles Lernen beeinflussen. Konzepte wie Verstärkung, Generalisierung oder Gedächtniskonsolidierung finden sich in Ansätzen des Reinforcement Learning oder Transfer Learning wieder. Die Parallelen zeigen, dass KI zunehmend als eine Form „künstlicher Kognition“ verstanden werden kann.
+Neuropsychologische Paradoxien
+Trotz der erheblichen Fortschritte in der Neuropsychologie und Kognitionsforschung bleibt das Bewusstsein eines der größten ungelösten Phänomene der modernen Wissenschaft. Es stellt die Frage, wie subjektives Erleben und Selbstwahrnehmung aus neuronalen Prozessen hervorgehen können, eine Problematik, die der Philosoph und Kognitionswissenschaftler David Chalmers (1995) als die „harte Frage des Bewusstseins“ bezeichnete. Während viele Aspekte des Denkens und Lernens inzwischen rechnerisch modellierbar sind, entzieht sich das bewusste Erleben bislang einer vollständigen wissenschaftlichen Erklärung.
+Besonders eindrucksvoll zeigen Fälle aus der klinischen Neuropsychologie, dass das Bewusstsein selbst bei drastischen strukturellen Einschränkungen des Gehirns erhalten bleiben kann. Der britische Neurologe John Lorber berichtete in den 1970er-Jahren über mehrere Patienten mit Hydrozephalus („Wasserkopf“), bei denen große Teile des Großhirns durch Flüssigkeit ersetzt waren. In einem besonders aufsehenerregenden Fall besaß ein Mathematikstudent nur eine wenige Millimeter dünne Schicht Hirngewebe, zeigte jedoch einen überdurchschnittlichen Intelligenzquotienten und ein völlig normales Bewusstsein.
+Diese Befunde widersprechen der einfachen Annahme, dass Bewusstsein direkt proportional zur Gehirnmasse oder Anzahl der Neuronen ist. Sie legen nahe, dass Bewusstsein auf der funktionalen Organisation und der Vernetzung neuronaler Systeme beruht, nicht auf der bloßen Menge des Gewebes. Moderne Bildgebungsverfahren stützen diese Annahme, indem sie zeigen, dass das Gehirn in der Lage ist, selbst massive strukturelle Defizite durch Plastizität und funktionelle Umorganisation zu kompensieren.
+
+Für die Erforschung künstlicher Intelligenz haben diese neuropsychologischen Erkenntnisse weitreichende Konsequenzen. Wenn Bewusstsein primär von der Art der Informationsverarbeitung abhängt und nicht von der biologischen Substanz, eröffnet dies die theoretische Möglichkeit, dass auch nicht-biologische Systeme eine Form von Bewusstsein entwickeln könnten, vorausgesetzt sie verfügen über vergleichbare Mechanismen der Integration, Selbstbezüglichkeit und globalen Verarbeitung.
+Aktuelle KI-Modelle, etwa große Sprachmodelle oder spezifische neuronale Netzwerke, zeigen zwar zunehmend komplexe Verhaltensmuster, besitzen jedoch kein Bewusstsein im phänomenalen Sinne. Ihnen fehlt die Fähigkeit zur Selbstreflexion, Intentionalität und zum Erleben eigener Zustände. Gleichwohl bieten diese Systeme wertvolle Modelle, um besser zu verstehen, welche funktionalen Voraussetzungen für Bewusstsein notwendig sein könnten.
+Zwischen Geist und Maschine
+Die neuropsychologischen Phänomene des Bewusstseins markieren zugleich die philosophischen Grenzen zwischen Mensch und Maschine. Fälle wie die Hydrozephalus-Patienten zeigen, dass Bewusstsein auch unter extremen biologischen Einschränkungen bestehen kann, was darauf hindeutet, dass es sich um ein wiederholendes Phänomen handelt, das prinzipiell in verschiedenen materiellen Substraten entstehen könnte.
+Damit verschiebt sich die grundlegende Frage: Nicht mehr, ob Maschinen denken können, sondern unter welchen Bedingungen Bewusstsein- biologisch oder künstlich- entstehen kann. Neuropsychologie, Kognitionswissenschaft und KI-Forschung nähern sich hier demselben Kernproblem aus unterschiedlichen Richtungen: dem Versuch, die Grenze zwischen Reizverarbeitung und innerem Erleben zu verstehen.
+Die Verbindung von Psychologie, Neurobiologie und KI betrifft nicht nur Forschung und Technik, sondern auch die Frage, wie wir uns als Menschen verstehen. Die Erkenntnisse über Denken und Bewusstsein verändern unser Selbstbild und unsere gesellschaftlichen Strukturen.
+
+Wenn Intelligenz und Lernen als Informationsverarbeitung verstanden werden, verliert das Denken seinen „mystischen“ Charakter. Der Mensch erscheint zunehmend als ein biologisches System, dessen Prozesse erklärbar und modellierbar sind. Diese Sichtweise kann einerseits zu Demut führen, indem sie die Komplexität und Verletzlichkeit des Bewusstseins verdeutlicht; andererseits kann sie zu einer Reduktion des Menschenbildes verleiten, wenn Bewusstsein auf Berechnung reduziert wird.
+Gerade hier ist es wichtig, jene Dimensionen zu bewahren, die bislang keine Maschine nachbilden kann: Emotion, Empathie, moralische Verantwortung und die Fähigkeit, Sinn zu schaffen.
+Chancen und Risiken für die Gesellschaft
+KI-Technologien eröffnen enorme Möglichkeiten u. a. in Medizin, Bildung und Kommunikation. Neuropsychologische Modelle helfen, Lernprozesse zu optimieren und individuelle Förderung zu gestalten. Doch dieselben Technologien bergen nicht unerhebliche Risiken:
+
+Verlust von Autonomie, wenn algorithmische Entscheidungen menschliches Urteil ersetzen;
+Manipulationspotenzial, etwa durch gezielte Beeinflussung von Aufmerksamkeit und Verhalten;
+und eine kulturelle Erosion des Denkens, wenn Menschen ihre kognitive Eigenleistung zunehmend an Maschinen delegieren.
+
+Hoffen wir, dass „die Büchse der Pandora“ als moderne Mythos-Adaption nicht zum Tragen kommt. Wenn ja, wäre Alan Turing eine Art „Göttervater“, der den Grundstein für die moderne Künstliche Intelligenz gelegt und die Grundlagen geschaffen hat, auf denen viele KI-Systeme aufbauen. Sam Altman, als einer der führenden Köpfe hinter OpenAI, könnte als moderner Prometheus gesehen werden, der den Menschen nicht nur Wissen, sondern auch eine mächtige Technologie zugänglich macht, mit allen potenziellen Risiken und Gefahren, die diese Technologie mit sich bringen könnte. Pandora wäre dann, das KI-System selbst: Ein riesiges, mächtiges System, das das Potenzial hat, sowohl das Gute als auch das Böse zu entfesseln.
+„Quo vadis“?
+Die Verbindung von Neuropsychologie, kognitiver Psychologie und Künstlicher Intelligenz verdeutlicht, dass das Verständnis von Intelligenz und Bewusstsein nur interdisziplinär möglich ist. Während die Neuropsychologie die biologischen Grundlagen beschreibt und die kognitive Psychologie funktionale Modelle liefert, versucht die KI, diese Prinzipien technisch umzusetzen und zu erweitern.
+Die Grenzen der KI zeigen jedoch, dass menschliche Intelligenz und Bewusstsein mehr ist als reine Informationsverarbeitung. Emotion, Körpererfahrung, Selbstreflexion und subjektives Erleben bilden Dimensionen, die bislang außerhalb künstlicher Systeme liegen. Dennoch lehrt die Auseinandersetzung mit der KI nicht nur, wie Maschinen lernen sondern auch, was den Menschen als bewusstes Wesen im Kern ausmacht.
+
+Während Maschinen Muster erkennen und optimieren können, bleibt der Mensch das einzige Wesen, das Bedeutung erleben und Sinn stiften kann.
+Das Bewusstsein, mit all seiner Subjektivität und Tiefe, bleibt der Kern der menschlichen Existenz und zugleich der Prüfstein dafür, was „intelligent“ im eigentlichen Sinne bedeutet.
+Die Forschung an künstlicher Intelligenz ist letztlich mehr als ein technisches Projekt, sie ist ein Spiegel der Menschheit. Sie zeigt uns, was Denken ist, indem sie uns zeigt, was Denken nicht ist. Je besser wir verstehen, wie Bewusstsein und Intelligenz funktionieren, desto größer wird unsere Verantwortung, dieses Wissen mit Weisheit, Ethik und Mitgefühl zu nutzen.
+Denn die entscheidende Frage lautet nicht, ob Maschinen Bewusstsein erlangen können, sondern welche Art von Bewusstsein und welche Werte wir in ihnen widerspiegeln wollen.
+Zum Abschluss soll die komplexe und ernste Thematik etwas aufgelockert werden mit Helge Schneider, dem künstlerischen Multitalent, der auch ein Talent dafür hat, tiefgründige oder gesellschaftliche Themen mit seinem Humor auf den Kopf zu stellen, ohne es allzu ernst zu meinen:
+„Künstliche Doofheit ist die neuste Erfindung der Menschheit und vielleicht ihre letzte“.
+Bleiben wir wachsam!
+
+HELFEN SIE MIT –
+DAMIT DIESE STIMME HÖRBAR BLEIBT!
+Im Dezember 2019 ging meine Seite an den Start. Heute erreicht sie Millionen Leser im Monat – mit Themen, die andere lieber unter den Teppich kehren.
+Mein Ziel: 
+Sie kritisch durch den Wahnsinn unserer Zeit zu lotsen.
+Ideologiefrei, unabhängig, furchtlos.
+Ohne Zwangsgebühren, ohne Steuergelder oder Abo‑Zwang. Ohne irgendjemanden zur Kasse zu bitten. Nur mit Herzblut – und mit Ihnen an meiner Seite. Jede Geste, ob groß oder klein, trägt mich weiter. Sie zeigt: Mein Engagement – mit all seinen Risiken und schlaflosen Nächten – ist nicht vergeblich.
+Der direkteste Weg (ohne Abzüge) ist die Banküberweisung:
+IBAN: DE30 6805 1207 0000 3701 71.
+Alternativ sind (wieder) Zuwendungen via Kreditkarte, Apple Pay etc. möglich – allerdings werden dabei Gebühren fällig. 
+		Über diesen Link
+	
+
+Auch PayPal ist wieder möglich.
+Nicht direkt – aber über Bande, dank Ko-fi: 
+		Über diesen Link
+	
+
+(BITCOIN-Empfängerschlüssel: bc1qmdlseela8w4d7uykg0lsgm3pjpqk78fc4w0vlx)
+Wenn Ihr Geld aktuell knapp ist – behalten Sie es bitte. Niemand muss zahlen, um kritisch informiert zu bleiben. Mir ist es wichtig, dass jeder hier mitlesen kann – ohne Ausnahme. Gleichzeitig bin ich umso dankbarer für jede Unterstützung, die keinen Verzicht abverlangt. Jede Geste, ob groß oder klein, ist für mich ein wertvolles Geschenk und trägt mich weiter.
+Dafür: Ein großes Dankeschön– von ganzem Herzen!
+
+Meine neuesten Videos und Livestreams
+CDU-Außenminister gibt jetzt die Baerbock – Moral-Wahn statt Vernunft, und wir alle zahlen den Preis
+
+
+
+
+
+
+Sie sehen gerade einen Platzhalterinhalt von YouTube. Um auf den eigentlichen Inhalt zuzugreifen, klicken Sie auf die Schaltfläche unten. Bitte beachten Sie, dass dabei Daten an Drittanbieter weitergegeben werden.
+ Mehr Informationen 
+ Inhalt entsperren Erforderlichen Service akzeptieren und Inhalte entsperren 
+
+
+
+Heute Bolz – morgen Sie? Warum diese Hausdurchsuchung ein gezieltes Warnsignal an uns alle ist
+!function(r,u,m,b,l,e){r._Rumble=b,r[b]||(r[b]=function(){(r[b]._=r[b]._||[]).push(arguments);if(r[b]._.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)[0],l.async=1,l.src=""https://rumble.com/embedJS/u4""+(arguments[1].video?'.'+arguments[1].video:'')+""/?url=""+encodeURIComponent(location.href)+""&args=""+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, ""script"", ""Rumble"");
+Heute Bolz – morgen Sie? Warum diese Hausdurchsuchung ein gezieltes Warnsignal an uns alle ist0:00 / 0:0015 seconds15 secondsLoading
+
+Rumble(""play"", {""video"":""v6yhvn6"",""div"":""rumble_v6yhvn6""});
+Real-Satire pur: Von der Leyen lobt Freiheit – und vor ihren Augen nimmt Polizei Kritiker fest
+!function(r,u,m,b,l,e){r._Rumble=b,r[b]||(r[b]=function(){(r[b]._=r[b]._||[]).push(arguments);if(r[b]._.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)[0],l.async=1,l.src=""https://rumble.com/embedJS/u4""+(arguments[1].video?'.'+arguments[1].video:'')+""/?url=""+encodeURIComponent(location.href)+""&args=""+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, ""script"", ""Rumble"");
+Real-Satire pur: Von der Leyen lobt Freiheit – und vor ihren Augen nimmt Polizei Kritiker fest0:00 / 0:0015 seconds15 secondsLoading
+
+Rumble(""play"", {""video"":""v6wfa04"",""div"":""rumble_v6wfa04""});
+
+Gastbeiträge geben immer die Meinung des Autors wieder, nicht meine. Ich schätze meine Leser als erwachsene Menschen und will ihnen unterschiedliche Blickwinkel bieten, damit sie sich selbst eine Meinung bilden können.
+
+Bodo Neumann ist promovierter Diplompsychologe. Er verfügt über langjährige Beratungs- und Forschungserfahrungen, die er einsetzt für Menschen in Veränderungssituationen, die ihre Signatur-Stärken entfalten wollen und somit lernen, ihre Erfolgspotentiale zu erkennen und zu entwickeln. Sein neuestes Buch Charachtertest Corona finden Sie hier.
+
+Bild: Shutterstock
+
+Bitte beachten Sie die aktualisierten Kommentar-Regeln – nachzulesen hier. Insbesondere bitte ich darum, sachlich und zum jeweiligen Thema zu schreiben, und die Kommentarfunktion nicht für Pöbeleien gegen die Kommentar-Regeln zu missbrauchen. Solche Kommentare müssen wir leider löschen – um die Kommentarfunktion für die 99,9 Prozent konstruktiven Kommentatoren offen zu halten.
+
+
+Mehr von Bodo Neumann auf reitschuster.de
+
+			
+		
+					
+	
+		
+				
+			Bewusstseinswandel in einer krisenhaften Welt		
+						
+			Klimahysterie, Kriege, technologische Überforderung, Unterdrückung der Meinungsfreiheit: Ängste und Sinnverlust greifen um sich. Die geistig-spirituelle Psychologie zeigt, wie Krisen zur Chance für Bewusstheit und Reifung werden können. 		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Wie mit rhetorischen Kampftechniken „unsere Demokratie“ verteidigt wird		
+						
+			Der Begriff „Kampf gegen rechts“ ist zur Waffe gegen Abweichler geworden. Psychologische Techniken stigmatisieren Kritiker und zerstören den offenen demokratischen Diskurs. Von Bodo Neumann.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Folie à Deux – Wenn der Wahnsinn kollektiv wird		
+						
+			Was einst als Ideal begann, kippt ins Dogma: Sprache wird zur Waffe, Kritik zur Ketzerei. Ein psychiatrisches Phänomen erklärt, wie Ideologie den Verstand kolonisiert. Von Bodo Neumann.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Die RKI-Protokolle und das Eingeständnis des Jens Spahn		
+						
+			Spahns Corona-Politik hat großes Leid über Millionen Menschen gebracht. Jetzt zeigt er sich offen für eine Corona-Aufarbeitung. Doch ist er auch für weitere Schritte bereit? Von Bodo Neumann.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Der Kampf um unsere Köpfe		
+						
+			Angst als Machtinstrument: Inmitten von Krisen wird das menschliche Verhalten gezielt beeinflusst. Wie die Angststrategien unsere Psyche manipulieren und den Geist erobern sollen! Von Bodo Neumann.		
+			
+
+
+
+
+
+			
+		
+					
+	
+		
+				
+			Make-up für die Seele		
+						
+			Die Maske ist zum Symbol des entleerten Gesichts geworden. Obwohl fast überall die Maskenpflicht aufgehoben wurde, tragen sie dennoch viele – besonders junge – Menschen freiwillig weiter. Warum? Das Phänomen erklärt der Psychologe Dr. Bodo Neumann.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Vergeben, verzeihen, verdrängen		
+						
+			Die Lehre aus über zwei Jahren gesellschaftlichen Versagens in der Pandemie ist, dass die nötigen Impulse zur Aufarbeitung nur aus der Zivilgesellschaft selbst kommen können und nicht durch die Institutionen mit ihren Akteuren. Von Bodo Neumann		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Seelische Spaltung und ihre Folgen in der „Corona-Pandemie“		
+						
+			Bei extrem hohen Belastungen, wie denen in der Corona-Pandemie, schaltet die menschliche Psyche archaische Schutzmechanismen ein. Einer davon ist Spaltungsabwehr. Durch ein infantiles Gut-Böse-Schema werden Relativierungen und Zweifel erfolgreich abgespaltet und Gefühle auf die notwendigen reduziert. Von Bodo Neumann.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Charaktertest Corona		
+						
+			In großen Krisen fallen die Masken und es zeigt sich der wahre Charakter des Menschen. Wie und warum sie bei vielen aus den gesellschaftlichen Eliten aktuell in so hoher Geschwindigkeit gefallen sind, erklärt der Psychologe Dr. Bodo Neumann.		
+			
+
+
+
+
+
+						
+						jQuery(document).ready(function($) {
+							$.post('https://reitschuster.de/wp-admin/admin-ajax.php', {action: 'wpt_view_count', id: '398681'});
+						});
+						
+		 
+		(function(w,q){w[q]=w[q]||[];w[q].push([""_mgc.load""])})(window,""_mgq"");
+
+					
+				","https://reitschuster.de/post/die-grenzen-der-kuenstlichen-intelligenz/"
+"2025-11-09","Wir hätten mitgemacht
+Wie sich der neue Autoritarismus freiwillig etabliert – im Namen des „Guten""","
+				
+					Als ich den Artikel über die Kündigung eines Unternehmers durch die Consorsbank geschrieben hatte, kamen bei mir plötzlich die alten Wunden wieder zum Vorschein. Da waren sie wieder, die Kündigungen der eigenen Konten durch die eigenen Banken. Die Schikanen, die Ermittlungsverfahren, die Prügel durch die Polizei, die Beamten, die mich mit Gewalt festhielten. Die Ameisen unter der Haut. Dieses flaue Gefühl im Bauch.
+Ich ertappte ich mich bei einem Gedanken, dass der Text nicht weit genug gegangen ist. Nicht tief genug schürfte. Dass noch etwas hinterher geschickt werden muss, das zeigt, dass alles viel tiefer geht als der konkrete Fall, in dem einem Mann mit 70 Angestellten das Konto, die Kreditkarte und der Dispo gelöscht wurden – nachdem er seinen Mitgliedsbeitrag an die AfD überwiesen hat. Denn so schlimm allein das ist – es ist nicht mal das Verstörendste.
+Was mich an diesem und ähnlichen Fällen, auch meinem, so besonders erschüttert – und was ein eigenes Thema ist – das ist dieser neue, glatte, saubere, korrekt gebügelte Konformismus. Dieser vorauseilende Gehorsam ohne Kommando. Ein System, das nicht mehr schreien muss – weil seine Akteure längst wissen, was erwartet wird. Und liefern. Aus Überzeugung.
+
+Früher brauchte man Terror, um Regime zu stabilisieren. Heute reichen ESG-Kriterien, Schulungskataloge und ein richtig gesetzter Hashtag.
+Die neuen Normen kommen nicht mit der Faust.
+Sie kommen mit der Filterblase.
+Mit dem „Team-Meeting“.
+Mit der Diversity-Richtlinie.
+Mit der stillen Angst, die falsche Mail zu lesen oder den falschen Tweet zu liken.
+Die Gesinnungsgrenzen werden von oben vorgegeben – durch Medien, Politik, NGOs, globale Narrative. Aber sie werden bis auf wenige Ausnahmen nicht mit Gewalt durchgesetzt. Sondern mit vorauseilendem Gehorsam. Wo früher Diktaturen Gewalt brauchten, Menschen folterten und in Gulags wegsperrten, um alle gleichzuschalten, marschieren heute Medien, Banken, Behörden und Firmen wie von selbst im Gleichschritt. Nicht gezwungen. Nicht unter Druck. Sondern bereitwillig. Enthusiastisch. Innerlich überzeugt.
+Ja, wer den Mund aufmacht, lebt auch heute gefährlich – nicht was das Leben angeht, meistens auch nicht in Sachen Freiheit, aber in Sachen Existenz und Gesellschaft. Aber, und das ist entscheidend: Wer sich selbst bereitwillig zum Rädchen im System macht, dem droht kaum Gefahr. Bei der Consorsbank hätte wohl niemand mit Repressalien rechnen müssen, hätte er nicht den Kündigungsprozess ausgelöst. Die Polizisten, die mich schlugen und festhielten, hätten nichts riskiert, wen sie das nicht gemacht hätten. Die Staatsanwälte, die gegen mich ermittelten, taten das nicht unter Gewaltandrohung.
+Ich habe mich oft gefragt, wie ich mich in den 30er-Jahren verhalten hätte. Ob ich zu früh, zu spät oder gar nicht gemerkt hätte, wie sich die Dinge verschieben. Ob ich mitmarschiert wäre. Weggesehen hätte. Oder geschwiegen. Ich bin so vermessen, zu glauben, dass mir die Corona-Zeit und mein Verhalten in dieser eine Antwort gegeben hat. Und dass ich mich damals so verhalten habe, hat sehr viel damit zu tun, dass ich mir eben immer diese Frage gestellt habe – was hättest Du damals getan?
+Und dann erlebe ich heute Polizisten, die drauf los prügeln, Staatsanwälte und Richter, die stramm nach Gesinnung vorgehen, Institutionen wie der Consorsbank, Menschen, die kommentarlos kündigen und Gendersternchen verschicken und dabei auf die Grundrechte pfeifen. Da beginne ich zu ahnen, wie viele damals ganz selbstverständlich mitgemacht haben. Nicht, weil sie mussten. Sondern weil sie wollten. Weil sie sich dabei für moralisch überlegen hielten. Weil damals eben braun modern war, schick, in – nicht grün.
+
+Lassen Sie es uns klar und deutlich benennen: Was wir heute erleben, ist ein neuer Autoritarismus. Schlimmer noch: Während der klassische Autoritarismus oft technokratisch oder ideologiefrei daherkam, erleben wir heute einen Autoritarismus, der auf totalitärem Denken basiert – und auf einer gruseligen Mischung aus alten Geheimdienstmethoden wie Zersetzung und Propaganda sowie neuer Überwachungstechnologie und Algorithmen. Der große russische Denker Alexander Herzen warnte einst vor einem Dschingis Khan mit Telegrafenmasten. Das war dann Stalin. Heute haben wir einen grünen Moral-Götzen mit WLAN, Google-Datenkralle und KI.
+Er kommt nicht mit Stiefeln, sondern mit Schulungen.
+Er hat kein Parteibuch, sondern ein Zertifikat.
+Er braucht keinen Geheimdienst, weil sich alle selbst beobachten.
+Er braucht keine Parteiversammlungen, weil es LinkedIn gibt.
+Er braucht keinen Terror, weil es Karrierbesessenheit gibt.
+Und das Erschreckendste: Er braucht keinen Zwang. Keine Vorschrift. Keine Gewalt. Nur ein System, das sich für das „Gute“ hält. Und Mitläufer, die glauben, Teil davon zu sein.
+Wie viele heute würden wieder mitmachen?
+Fast alle.
+Sie bräuchten kein Mandat. Kein Parteiamt.
+Nur das Gefühl, auf der richtigen Seite zu stehen.
+Nur das kleine Nicken des Chefs.
+Nur das Lob auf Social Media.
+Die meisten würden auf Andersdenkende wohl nicht schießen. Würden sie nicht schlagen. Nicht mit Patronen oder Fäusten. Aber sie schießen und Schlagen sozial. Indem sie Konten kündigen. Löschen. Isolieren. Melden. Denunzieren. Ausgrenzen. Und all das „mit freundlichen Grüßen“.
+
+Und genau deshalb, finde ich, müssen wir darüber reden. Nicht hysterisch, nicht aufgeregt – sondern klar und kantig. Denn ein System, das sich selbst für so moralisch hält, dass es keinen Widerspruch mehr duldet, ist nicht gut. Es ist gefährlich. Gerade weil es sich für so gut hält, das es keinen Widerspruch aushält. Und es ist – historisch betrachtet – kein Fortschritt, sondern ein Rückfall in das alte Muster. Nur in neuer Verpackung.
+Wenn ein Bundespräsident – und sinngleich ein Vizekanzler – unser Land zum „besten Deutschland aller Zeiten“ erklären, ist das eine Diagnose. Ein Warnsignal. Und ein klares Zeichen: Da sind die falschen Leute zur falschen Zeit am falschen Platz.
+Das größte Versagen der viel gepriesenen deutschen „Vergangenheitsbewältigung“ ist, dass man den Menschen den Eindruck vermittelt hat, ihre Eltern, Großeltern und Urgroßeltern hätten 1933 bewusst für das „Böse“ gestimmt.
+Aus heutiger Sicht mag das zutreffen – aber nicht aus der Sicht der Menschen im Jahre 1933.
+Damals waren die Nationalsozialisten für sehr viele – in ihrer ideologischen Verblendung – das „Gute“. Sie standen in ihren Augen für Ordnung. Für Gerechtigkeit. Für Zukunft. Für Erlösung.
+Sie glaubten, auf der richtigen Seite zu stehen. Und viele andere sahen apathisch zu. Oder machten aus Opportunismus mit. Viel zu wenige wagten es, sich der Welle zu widersetzen.
+Stalin musste in der Sowjetunion Millionen in Lager pferchen und grausam ermorden, um seine Macht zu sichern. Hitler genügten zur Etablierung der Diktatur ein paar Tausend Verhaftungen und wenige spektakuläre Gewaltakte. Der Rest machte freiwillig mit. Oder schwieg. Stalin brauchte Terror. Hitler bekam Anpassung. Und genau das ist die eigentliche deutsche Tragödie. Vielleicht gerade deshalb wird dieser Aspekt so gut wie nie thematisiert. Ja mehr noch: Er wird gezielt vernebelt. Etwa, wenn heute so getan wird, als hätten die Deutschen das Kriegsende als „Befreiung“ empfunden. Schön wär’s. Schön wär’s. Aber das ist Legende. Und Geschichtsglättung. Und sie schützt genau die Mechanismen, die heute wieder greifen.
+Aus all diesen Gründen – und gerade wegen der deutschen Neigung zum vorauseilenden Gehorsam und Obrigkeitshörigkeit – hat es damals funktioniert.
+Und genau deshalb funktioniert es heute wieder.
+Weil auch heute wieder viele glauben, sie seien auf der richtigen Seite. Weil sie denken, wer „das Richtige“ meint, darf mehr.
+Darf zensieren. Darf ausgrenzen. Darf canceln.
+Darf Grundrechte relativieren – so lange es „die Richtigen“ trifft.
+Und am Ende? Darf man dann auch schweigen.
+Weil man ja nichts getan hat.
+Nur mitgemacht.
+„Nie wieder“ ist nur „nie wieder“, wenn es auch auf Ausgrenzung, Zensur und Schikanen bezieht. Dass diejenigen, die am lautesten „nie wieder“ schreien, genau darauf setzen, ist einer der bittersten Treppenwitze der Geschichte. Und eine Tragödie für unser Land.
+
+Vielleicht liegt genau hier das Grundproblem unserer sogenannten „Vergangenheitsbewältigung“, für die wir uns so gern selbst feiern.
+Dass sie zwar die Schrecken analysiert hat – aber nicht die Mechanismen, die zu ihnen führten.
+Dass sie die Konzentrationslager und den Holocaust zum Maßstab erklärt hat – und nicht die schleichende Entmenschlichung davor.
+Dass sie lehrte: Solange niemand verhaftet wird, sind wir frei.
+Solange es keine Lager gibt, ist alles in Ordnung.
+Aber das ist ein trügerischer Maßstab. Der unseren Kompass verschoben hat.
+Denn Autoritarismus beginnt nicht im Lager. Sondern im Kopf. Im Denken. Im Urteilen. Im Sortieren. Im Schweigen.
+Doch genau diese Erkenntnis wurde uns vorenthalten – und ersetzt durch ritualisierte Mahnformeln ohne echte Reflexion. Und nur deshalb ist es heute möglich, dass Menschen mit der Losung „Nie wieder“ beginnen, wieder auszugrenzen, zu schikanieren – und zu glauben, sie seien damit die Guten.
+Wer heute Andersdenkende als „Nazis“ diffamiert, zeigt nicht Geschichtsbewusstsein, sondern historische Blindheit – und liegt im Denken gefährlich nah bei dem, was er zu bekämpfen vorgibt. Oder polemisch gesagt: Die Uniform hat gewechselt. Der Geist ist geblieben.
+
+HELFEN SIE MIT –
+DAMIT DIESE STIMME HÖRBAR BLEIBT!
+Im Dezember 2019 ging meine Seite an den Start. Heute erreicht sie Millionen Leser im Monat – mit Themen, die andere lieber unter den Teppich kehren.
+Mein Ziel: 
+Sie kritisch durch den Wahnsinn unserer Zeit zu lotsen.
+Ideologiefrei, unabhängig, furchtlos.
+Ohne Zwangsgebühren, ohne Steuergelder oder Abo‑Zwang. Ohne irgendjemanden zur Kasse zu bitten. Nur mit Herzblut – und mit Ihnen an meiner Seite. Jede Geste, ob groß oder klein, trägt mich weiter. Sie zeigt: Mein Engagement – mit all seinen Risiken und schlaflosen Nächten – ist nicht vergeblich.
+Der direkteste Weg (ohne Abzüge) ist die Banküberweisung:
+IBAN: DE30 6805 1207 0000 3701 71.
+Alternativ sind (wieder) Zuwendungen via Kreditkarte, Apple Pay etc. möglich – allerdings werden dabei Gebühren fällig. 
+		Über diesen Link
+	
+
+Auch PayPal ist wieder möglich.
+Nicht direkt – aber über Bande, dank Ko-fi: 
+		Über diesen Link
+	
+
+(BITCOIN-Empfängerschlüssel: bc1qmdlseela8w4d7uykg0lsgm3pjpqk78fc4w0vlx)
+Wenn Ihr Geld aktuell knapp ist – behalten Sie es bitte. Niemand muss zahlen, um kritisch informiert zu bleiben. Mir ist es wichtig, dass jeder hier mitlesen kann – ohne Ausnahme. Gleichzeitig bin ich umso dankbarer für jede Unterstützung, die keinen Verzicht abverlangt. Jede Geste, ob groß oder klein, ist für mich ein wertvolles Geschenk und trägt mich weiter.
+Dafür: Ein großes Dankeschön– von ganzem Herzen!
+
+Meine neuesten Videos und Livestreams
+CDU-Außenminister gibt jetzt die Baerbock – Moral-Wahn statt Vernunft, und wir alle zahlen den Preis
+
+
+
+
+
+
+Sie sehen gerade einen Platzhalterinhalt von YouTube. Um auf den eigentlichen Inhalt zuzugreifen, klicken Sie auf die Schaltfläche unten. Bitte beachten Sie, dass dabei Daten an Drittanbieter weitergegeben werden.
+ Mehr Informationen 
+ Inhalt entsperren Erforderlichen Service akzeptieren und Inhalte entsperren 
+
+
+
+Heute Bolz – morgen Sie? Warum diese Hausdurchsuchung ein gezieltes Warnsignal an uns alle ist
+!function(r,u,m,b,l,e){r._Rumble=b,r[b]||(r[b]=function(){(r[b]._=r[b]._||[]).push(arguments);if(r[b]._.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)[0],l.async=1,l.src=""https://rumble.com/embedJS/u4""+(arguments[1].video?'.'+arguments[1].video:'')+""/?url=""+encodeURIComponent(location.href)+""&args=""+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, ""script"", ""Rumble"");
+Heute Bolz – morgen Sie? Warum diese Hausdurchsuchung ein gezieltes Warnsignal an uns alle ist0:00 / 0:0015 seconds15 secondsLoading
+
+Rumble(""play"", {""video"":""v6yhvn6"",""div"":""rumble_v6yhvn6""});
+Real-Satire pur: Von der Leyen lobt Freiheit – und vor ihren Augen nimmt Polizei Kritiker fest
+!function(r,u,m,b,l,e){r._Rumble=b,r[b]||(r[b]=function(){(r[b]._=r[b]._||[]).push(arguments);if(r[b]._.length==1){l=u.createElement(m),e=u.getElementsByTagName(m)[0],l.async=1,l.src=""https://rumble.com/embedJS/u4""+(arguments[1].video?'.'+arguments[1].video:'')+""/?url=""+encodeURIComponent(location.href)+""&args=""+encodeURIComponent(JSON.stringify([].slice.apply(arguments))),e.parentNode.insertBefore(l,e)}})}(window, document, ""script"", ""Rumble"");
+Real-Satire pur: Von der Leyen lobt Freiheit – und vor ihren Augen nimmt Polizei Kritiker fest0:00 / 0:0015 seconds15 secondsLoading
+
+Rumble(""play"", {""video"":""v6wfa04"",""div"":""rumble_v6wfa04""});
+
+Bild: Shutterstock.com
+
+Bitte beachten Sie die aktualisierten Kommentar-Regeln – nachzulesen hier. Insbesondere bitte ich darum, sachlich und zum jeweiligen Thema zu schreiben, und die Kommentarfunktion nicht für Pöbeleien gegen die Kommentar-Regeln zu missbrauchen. Solche Kommentare müssen wir leider löschen – um die Kommentarfunktion für die 99,9 Prozent konstruktiven Kommentatoren offen zu halten.
+
+Mehr zum Thema auf reitschuster.de
+
+			
+		
+					
+	
+		
+				
+			Sie wollen meine Seite vernichten: Google verbietet Werbung auf reitschuster.de		
+						
+			Ein Schlag nach dem anderen! Die neueste Hiobsbotschaft: Google streicht mich aus der ""News""-Suche und blockiert Reklame auf meiner Seite. Das Ziel ist offensichtlich: Kritischen Journalisten soll die Existenz zerstört werden.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Die Machbarkeit eines AfD-Verbots		
+						
+			Der linksgrüne polit-mediale Komplex träumt von einem AfD-Verbot. Da es mit bestehendem Rechtsrahmen äußerst schwierig umzusetzen wäre, wäre ein erheblicher Eingriff in die demokratische Ordnung nötig. Eine Analyse von Thomas Rießinger.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Bundestag verweigert fünf AfD-Mitarbeitern dauerhaft den Zugang zu Gebäude und IT		
+						
+			Fünf Mitarbeitern der AfD-Fraktion wurde der Zutritt zum Parlament verwehrt – offiziell aus Sicherheitsgründen. Der Fall zeigt die brisante Schnittstelle von Recht, Politik und Macht. Von Klaus Kelle.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Funke-Medien verweigern AfD-Mann letzte Würde		
+						
+			Ein Mensch stirbt. Doch weil er AfD-Mitglied war, darf nicht einmal um ihn getrauert werden. Die Funke-Zeitung lehnt die Todesanzeige ab. Ein Moment, der mehr über dieses Land sagt als jede Sonntagsrede zur Menschenwürde.		
+			
+
+
+
+			
+		
+					
+	
+		
+				
+			Hechingen wirft AfD aus Stadthalle – trotz gültigem Mietvertrag		
+						
+			Mit einem durchsichtigen Manöver stellen die selbsternannten „Parteien der Mitte“ ihr ganz eigenes Verständnis von Demokratie und Rechtsstaat unter Beweis. Die Partei prüft rechtliche Schritte, während sich das Rathaus plötzlich wortkarg zeigt. Von Kai Rebmann.		
+			
+
+
+
+
+						
+						jQuery(document).ready(function($) {
+							$.post('https://reitschuster.de/wp-admin/admin-ajax.php', {action: 'wpt_view_count', id: '398641'});
+						});
+						
+		 
+		(function(w,q){w[q]=w[q]||[];w[q].push([""_mgc.load""])})(window,""_mgq"");
+
+					
+				","https://reitschuster.de/post/wir-haetten-mitgemacht/"

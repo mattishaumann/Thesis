@@ -33,3 +33,5 @@ mattis_eda.ipynb
 .DS_Store
 BERTopic/outputs/*.joblib
 1b_TopicClassification/classification_trial_results_gpt5mini.csv
+2a_NER/*.csv
+2a_NER/outputs/*.csv

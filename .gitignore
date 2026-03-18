@@ -1,5 +1,7 @@
 # Local Python environment
 .venv/
+.env
+.env.*
 
 # Python cache artifacts
 __pycache__/
@@ -30,3 +32,4 @@ mattis_eda.ipynb
 .mplconfig/
 .DS_Store
 BERTopic/outputs/*.joblib
+1b_TopicClassification/classification_trial_results_gpt5mini.csv

@@ -21,6 +21,7 @@ data/processed/
 data/experiments/tagesschau_crawl/data/raw/tagesschau/
 data/experiments/tagesschau_crawl/data/raw/tagesschau/
 1a_BERTopic/outputs/
+1a_BERTopic/local_outputs/
 1a_BERTopic/outputsdk_model/
 
 mattis_eda.ipynb

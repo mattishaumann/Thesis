@@ -4,20 +4,24 @@ Master thesis repository for preprocessing, exploratory topic modeling, and supp
 
 ## Repository Layout
 
-- `data preprocessing/`
-  Contains the main outlet-level preprocessing and BERTopic notebooks.
-- `BERTopic/`
+- `00_Initial EDA/`
+  Early exploratory notebooks and outlet-level draft analyses.
+- `00_Thesis_EDA/`
+  Thesis-facing EDA notebooks and exported figures/tables intended for the written thesis.
+- `1a_BERTopic/`
   Shared BERTopic pipeline code, configuration, stopword handling, and saved model outputs.
-- `Initial EDA/`
-  Early exploratory notebooks and draft analyses.
-- `data/`
+- `1b_TopicClassification/`
+  Topic-classification experiments and prompt material.
+- `2a_NER/`
+  Named-entity analysis notebooks.
+- `data source/`
   Raw, processed, and experimental data folders.
 - `code/`
   Additional scripts and analysis code used alongside the notebooks.
 
 ## Main Notebook Workflow
 
-The current preprocessing/topic-modeling workflow is centered in `data preprocessing/`:
+The current preprocessing/topic-modeling workflow is centered in `00_Initial EDA/`:
 
 - `01_RT.ipynb`
 - `02_Compact.ipynb`
@@ -33,7 +37,7 @@ These notebooks:
 2. export a cleaned CSV used for downstream combination,
 3. run exploratory BERTopic modeling for that outlet,
 4. apply final outlier reduction on the selected BERTopic model,
-5. save the reduced final BERTopic model to `BERTopic/outputs/`.
+5. save the reduced final BERTopic model to `1a_BERTopic/outputs/`.
 
 The combined notebook is:
 
@@ -41,9 +45,18 @@ The combined notebook is:
 
 This notebook loads the cleaned outlet CSVs and builds the overall cross-outlet corpus.
 
+## Thesis-Facing EDA Workflow
+
+Use `00_Thesis_EDA/` when you want outputs that are likely to be shown or cited in the thesis text.
+
+- `01_Final_Corpus_EDA.ipynb`
+  Build final corpus description figures and tables for Section 3.3.
+- `02_Preprocessing_Audit.ipynb`
+  Build methodological support tables and diagnostics for Section 3.4 and, if needed, the appendix.
+
 ## Cleaned Outlet Data
 
-The cleaned corpora currently expected by the overall notebook are stored in `data preprocessing/`:
+The cleaned corpora currently expected by the overall notebook are currently stored in `00_Initial EDA/`:
 
 - `rt_de_clean.csv`
 - `compact_clean.csv`
@@ -57,18 +70,18 @@ The cleaned corpora currently expected by the overall notebook are stored in `da
 
 The shared BERTopic components live in:
 
-- `BERTopic/bertopic_pipeline.py`
-- `BERTopic/bertopic_pipelinev2.py`
-- `BERTopic/bertopic_config.py`
-- `BERTopic/stopwords_de.py`
+- `1a_BERTopic/bertopic_pipeline.py`
+- `1a_BERTopic/bertopic_pipelinev2.py`
+- `1a_BERTopic/bertopic_config.py`
+- `1a_BERTopic/stopwords_de.py`
 
-Saved topic-model outputs are written under `BERTopic/outputs/`.
+Saved topic-model outputs are written under `1a_BERTopic/outputs/`.
 
 ## Minimal Run Order
 
 If the cleaned corpora or topic models need to be regenerated, the current practical order is:
 
-1. run the outlet notebooks in `data preprocessing/` to refresh cleaned CSVs and outlet-specific BERTopic outputs,
+1. run the outlet notebooks in `00_Initial EDA/` to refresh cleaned CSVs and outlet-specific BERTopic outputs,
 2. rerun `07_OverallTM.ipynb` to build the combined corpus and overall topic model.
 
 ## Environment

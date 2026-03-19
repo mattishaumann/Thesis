@@ -66,9 +66,19 @@ def _require_dependency(package_name: str, install_hint: str):
 
     try:
         return importlib.import_module(package_name)
+    except ModuleNotFoundError as exc:
+        if exc.name == package_name:
+            raise ImportError(
+                f"Missing optional dependency '{package_name}'. Install it with '{install_hint}'."
+            ) from exc
+        raise ImportError(
+            f"Failed to import optional dependency '{package_name}' because a nested dependency "
+            f"is missing: '{exc.name}'. Original error: {exc}"
+        ) from exc
     except ImportError as exc:
         raise ImportError(
-            f"Missing optional dependency '{package_name}'. Install it with '{install_hint}'."
+            f"Failed to import optional dependency '{package_name}'. "
+            f"The package is installed, but one of its imports failed: {exc}"
         ) from exc
 
 

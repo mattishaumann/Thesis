@@ -6,7 +6,7 @@ Master thesis repository for preprocessing, exploratory topic modeling, and supp
 
 - `00_Initial EDA/`
   Early exploratory notebooks and outlet-level draft analyses.
-- `00_Thesis_EDA/`
+- `00_Initial EDA/90_Thesis_EDA/`
   Thesis-facing EDA notebooks and exported figures/tables intended for the written thesis.
 - `1a_BERTopic/`
   Shared BERTopic pipeline code, configuration, stopword handling, and saved model outputs.
@@ -47,7 +47,7 @@ This notebook loads the cleaned outlet CSVs and builds the overall cross-outlet 
 
 ## Thesis-Facing EDA Workflow
 
-Use `00_Thesis_EDA/` when you want outputs that are likely to be shown or cited in the thesis text.
+Use `00_Initial EDA/90_Thesis_EDA/` when you want outputs that are likely to be shown or cited in the thesis text.
 
 - `01_Final_Corpus_EDA.ipynb`
   Build final corpus description figures and tables for Section 3.3.
@@ -82,7 +82,8 @@ Saved topic-model outputs are written under `1a_BERTopic/outputs/`.
 If the cleaned corpora or topic models need to be regenerated, the current practical order is:
 
 1. run the outlet notebooks in `00_Initial EDA/` to refresh cleaned CSVs and outlet-specific BERTopic outputs,
-2. rerun `07_OverallTM.ipynb` to build the combined corpus and overall topic model.
+2. rerun `07_OverallTM.ipynb` to build the combined corpus and overall topic model,
+3. build thesis-ready figures and tables in `00_Initial EDA/90_Thesis_EDA/`.
 
 ## Environment
 

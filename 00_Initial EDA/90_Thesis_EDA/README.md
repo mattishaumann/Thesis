@@ -2,10 +2,12 @@
 
 This folder is reserved for the exploratory data analysis outputs that are intended to support the written thesis directly.
 
-Keep this folder separate from:
+This folder lives inside [`00_Initial EDA/`](../), but it has a narrower purpose than the rest of that workspace.
 
-- [`00_Initial EDA/`](../00_Initial%20EDA/), which contains earlier exploratory notebooks and outlet-level draft work
-- [`1a_BERTopic/`](../1a_BERTopic/), which contains the actual topic-modeling pipeline and shared BERTopic code
+Keep it separate from:
+
+- the earlier exploratory notebooks and outlet-level draft work in the parent folder
+- [`1a_BERTopic/`](../../1a_BERTopic/), which contains the actual topic-modeling pipeline and shared BERTopic code
 
 ## Recommended Use
 

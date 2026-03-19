@@ -1,5 +1,12 @@
 from dataclasses import dataclass, field, replace
 from pathlib import Path
+import sys
+import types
+
+
+# Support direct loading via spec_from_file_location(...)+exec_module(...)
+# even when the caller does not register the module in sys.modules first.
+sys.modules.setdefault(__name__, types.ModuleType(__name__)).__dict__.update(globals())
 
 
 @dataclass(slots=True)
@@ -45,7 +52,7 @@ class BERTopicConfig:
     hdbscan_prediction_data: bool = True
 
     random_state: int = 42
-    output_dir: Path = Path("BERTopic/outputs")
+    output_dir: Path = Path("1a_BERTopic/local_outputs")
     extra_stopwords: tuple[str, ...] = field(default_factory=tuple)
 
 

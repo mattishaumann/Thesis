@@ -58,7 +58,6 @@ The cleaned corpora currently expected by the overall notebook are stored in `da
 The shared BERTopic components live in:
 
 - `BERTopic/bertopic_pipeline.py`
-- `BERTopic/bertopic_pipelinev2.py`
 - `BERTopic/bertopic_config.py`
 - `BERTopic/stopwords_de.py`
 

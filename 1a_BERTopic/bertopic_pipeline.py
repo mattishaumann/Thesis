@@ -12,6 +12,10 @@ import random
 import numpy as np
 import pandas as pd
 
+MODULE_DIR = Path(__file__).resolve().parent
+if str(MODULE_DIR) not in sys.path:
+    sys.path.insert(0, str(MODULE_DIR))
+
 try:
     from .bertopic_config import BERTopicConfig
     from .stopwords_de import get_german_stopwords
@@ -312,6 +316,5 @@ def run_bertopic_pipeline(
         "topic_info": topic_info,
         "doc_info": doc_info,
     }
-
 
 

@@ -36,3 +36,8 @@ BERTopic/outputs/*.joblib
 1b_TopicClassification/classification_trial_results_gpt5mini.csv
 2a_NER/*.csv
 2a_NER/outputs/*.csv
+
+# Large fine-tuned model weights (download with Sentiment_Analysis/download_model_weights.py)
+Sentiment_Analysis/models/**/*.bin
+Sentiment_Analysis/models/**/*.safetensors
+Sentiment_Analysis/outputs/

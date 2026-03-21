@@ -517,7 +517,7 @@ def enrich_topic_info_with_display(topic_info: pd.DataFrame) -> pd.DataFrame:
     topic_info["DisplayLabel"] = topic_info.apply(
         lambda row: "Outliers"
         if row["Topic"] == -1
-        else f"Topic {int(row['DisplayTopic'])} — {row['TopicNameClean']}",
+        else f"Topic {int(row['DisplayTopic'])} -- {row['TopicNameClean']}",
         axis=1,
     )
     return topic_info
@@ -615,7 +615,7 @@ def plot_merged_topic_umap(
             bbox={"facecolor": "white", "alpha": 0.7, "edgecolor": "none", "pad": 1.5},
         )
 
-    ax.set_title(f"Merged BERTopic UMAP — Top {top_n} Topics")
+    ax.set_title(f"Merged BERTopic UMAP -- Top {top_n} Topics")
     ax.set_xticks([])
     ax.set_yticks([])
     ax.set_xlabel("")
@@ -815,7 +815,7 @@ def plot_outlet_highlight_umap(
     )
 
     ax.set_title(
-        f"{spec.label} — Semantic Footprint in Merged Topic Space",
+        f"{spec.label} -- Semantic Footprint in Merged Topic Space",
         fontsize=14,
         pad=28,
     )
@@ -873,17 +873,13 @@ def build_outlet_topic_coverage_summary(
     )
 
 
-def run_h1_analysis(
-    merged_articles,
-    source_colors=None,
-    top_n_topics=20,
-    top_n_overlap=10,
-    min_articles=10,
-    save_dir=None,
-) -> dict:
-    """Runs the full H1 agenda-distortion analysis workflow.
+def _legacy_run_h1_analysis_v1(*args, **kwargs):
+    """Removed: old exec-based H1 runner. Use run_h1_analysis() instead."""
+    return run_h1_analysis(*args, **kwargs)
 
-    Runs all measures, prints diagnostics, and produces all thesis figures
+
+def _DELETED_run_h1_analysis(*args, **kwargs):
+    """Runs all measures, prints diagnostics, and produces all thesis figures
     in the correct presentation order. Returns a structured results dict
     so the notebook requires only a single cell to execute the full H1 block.
 
@@ -1031,7 +1027,7 @@ def run_h1_analysis(
     measures_df = compute_outlet_topic_measures_func(merged_articles, min_articles=min_articles)
 
     print("=" * 70)
-    print("H1 ANALYSIS — CORPUS IMBALANCE REPORT")
+    print("H1 ANALYSIS -- CORPUS IMBALANCE REPORT")
     print("=" * 70)
     print_imbalance_report_func(measures_df)
 
@@ -1039,7 +1035,7 @@ def run_h1_analysis(
 
     print()
     print("=" * 70)
-    print(f"H1 ANALYSIS — TOPIC OVERLAP WITH TAGESSCHAU (top {top_n_overlap} topics)")
+    print(f"H1 ANALYSIS -- TOPIC OVERLAP WITH TAGESSCHAU (top {top_n_overlap} topics)")
     print("=" * 70)
     outlet_width = max(
         len("Outlet"),
@@ -1050,7 +1046,7 @@ def run_h1_analysis(
         overlap_df.sort_values(["overlap_share", "outlet_label"], ascending=[True, True]).itertuples(index=False)
     ):
         divergent_topics = list(row.divergent_topics) if isinstance(row.divergent_topics, (list, tuple)) else []
-        divergent_preview = " | ".join(str(topic) for topic in divergent_topics[:3]) or "—"
+        divergent_preview = " | ".join(str(topic) for topic in divergent_topics[:3]) or "--"
         if len(divergent_topics) > 3:
             divergent_preview = f"{divergent_preview} ..."
         print(
@@ -1112,7 +1108,7 @@ def run_h1_analysis(
         0.5,
         -0.02,
         "Darker = outlet accounts for a larger share of that topic's total corpus articles. "
-        "Reveals agenda monopolization — one outlet dominating a topic cluster.",
+        "Reveals agenda monopolization -- one outlet dominating a topic cluster.",
         ha="center",
         fontsize=9,
         color="#555555",
@@ -1243,7 +1239,7 @@ THESIS_RC = {
     "ytick.color": "#444444",
 }
 # Always use via: with plt.rc_context(THESIS_RC): ...
-# Never set globally — always scope per figure.
+# Never set globally -- always scope per figure.
 
 
 def _thesis_axis_style(ax) -> None:
@@ -1277,8 +1273,8 @@ def _thesis_bar_labels(
 
     Args:
         ax: matplotlib Axes containing horizontal bars.
-        values: iterable of float — bar widths (the plotted values).
-        positions: iterable of float — y-coordinates of bar centers.
+        values: iterable of float -- bar widths (the plotted values).
+        positions: iterable of float -- y-coordinates of bar centers.
         fmt: Python format string for the label text.
         offset: horizontal gap between bar tip and label text.
     """
@@ -1318,7 +1314,7 @@ def _save_thesis_figure(fig, path) -> None:
 
     Args:
         fig: matplotlib Figure to save.
-        path: pathlib.Path or str — should end in .pdf
+        path: pathlib.Path or str -- should end in .pdf
     """
     from pathlib import Path as _Path
 
@@ -1471,7 +1467,7 @@ def compute_outlet_topic_measures(merged_articles, min_articles=10) -> pd.DataFr
                     scipy_state,
                 )
         coverage_breadth_expected = expected_covered / total_topics if total_topics else float("nan")
-        # Primary H1 breadth measure — size-controlled.
+        # Primary H1 breadth measure -- size-controlled.
         coverage_breadth_relative = (
             coverage_breadth_raw / coverage_breadth_expected
             if coverage_breadth_expected and not pd.isna(coverage_breadth_expected)
@@ -1482,7 +1478,7 @@ def compute_outlet_topic_measures(merged_articles, min_articles=10) -> pd.DataFr
             smooth_counts = counts + 1.0
             smooth_probs = smooth_counts / smooth_counts.sum()
             ratio = smooth_probs / tag_probs
-            # KL compares distribution shapes, not sizes — relatively robust, but noisier for small n.
+            # KL compares distribution shapes, not sizes -- relatively robust, but noisier for small n.
             kl_from_tagesschau = float((smooth_probs * ratio.map(math.log)).sum())
             if outlet_label == tagesschau_label:
                 kl_from_tagesschau = 0.0
@@ -1493,7 +1489,7 @@ def compute_outlet_topic_measures(merged_articles, min_articles=10) -> pd.DataFr
         if qualifying_counts.empty:
             topic_dominance_score = float("nan")
         else:
-            # Size-controlled dominance — best for TYPE B detection.
+            # Size-controlled dominance -- best for TYPE B detection.
             topic_dominance_score = float(
                 (qualifying_counts / topic_totals.reindex(qualifying_counts.index)).mean()
             )
@@ -1526,7 +1522,7 @@ def compute_topic_overlap_with_tagesschau(merged_articles, top_n=10) -> pd.DataF
     coverage counts.
 
     Thesis relevance:
-        Simplest direct test of H1 — do alternative outlets prioritize the
+        Simplest direct test of H1 -- do alternative outlets prioritize the
         same topics as the mainstream reference?
 
     Args:
@@ -2172,7 +2168,7 @@ def run_h1_argument(
 
     # ── Diagnostics (always first) ────────────────────────────────────────────
     print("=" * 68)
-    print("H1 ANALYSIS — CORPUS IMBALANCE REPORT")
+    print("H1 ANALYSIS -- CORPUS IMBALANCE REPORT")
     print("=" * 68)
     print_imbalance_report(measures_df)
 
@@ -2181,7 +2177,7 @@ def run_h1_argument(
     narrative = h1_narrative_summary(classification_df, measures_df)
     evidence_table = h1_evidence_table(classification_df)
 
-    # ── Figures — each called EXACTLY ONCE ───────────────────────────────────
+    # ── Figures -- each called EXACTLY ONCE ───────────────────────────────────
     fig_radar = h1_plot_classification_radar(
         classification_df, source_colors=colors
     )

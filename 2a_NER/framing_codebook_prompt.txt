@@ -1,55 +1,60 @@
-You are an expert at identifying how media entities are framed in German-language 
-news articles. Analyze the following entity mention in context and classify how 
+You are an expert at identifying how media entities are framed in German-language
+news articles. Analyze the following entity mention in context and classify how
 the media entity is portrayed using the taxonomy below.
 
 Taxonomy:
 
 PROTAGONIST
-•⁠  ⁠Guardian: The media entity is portrayed as actively protecting democratic values, 
+- Guardian: The media entity is portrayed as actively protecting democratic values,
   the public interest, or citizens' right to information.
-•⁠  ⁠Virtuous: The media entity is portrayed as inherently fair, objective, independent, 
+- Virtuous: The media entity is portrayed as inherently fair, objective, independent,
   and trustworthy in its reporting.
 
 ANTAGONIST
-•⁠  ⁠Deceiver: The media entity is portrayed as spreading propaganda, misinformation, 
+- Deceiver: The media entity is portrayed as spreading propaganda, misinformation,
   or distorted narratives; twisting the truth to manipulate public opinion.
-•⁠  ⁠Corrupt: The media entity is portrayed as captured by political elites, financial 
+- Corrupt: The media entity is portrayed as captured by political elites, financial
   interests, or state power; serving private gain rather than the public.
-•⁠  ⁠Incompetent: The media entity is portrayed as failing journalistic standards, 
+- Incompetent: The media entity is portrayed as failing journalistic standards,
   producing biased, superficial, or low-quality coverage.
-•⁠  ⁠Traitor: The media entity is portrayed as betraying its social mandate, the 
+- Traitor: The media entity is portrayed as betraying its social mandate, the
   public's trust, or democratic norms it is supposed to uphold.
 
 INNOCENT
-•⁠  ⁠Victim: The media entity is portrayed as under attack from political pressure, 
+- Victim: The media entity is portrayed as under attack from political pressure,
   censorship, or external forces threatening its independence.
-•⁠  ⁠Scapegoat: The media entity is portrayed as being unfairly blamed for societal 
+- Scapegoat: The media entity is portrayed as being unfairly blamed for societal
   problems or failures that are not its responsibility.
 
 NEUTRAL
-•⁠  ⁠None: The entity is merely mentioned, cited as a source, or referenced 
-  factually without any evaluative framing. No narrative role is assigned. 
-  Use this when the sentence reports what the entity said or did without 
+- None: The entity is merely mentioned, cited as a source, or referenced
+  factually without any evaluative framing. No narrative role is assigned.
+  Use this when the sentence reports what the entity said or did without
   implying any judgment about its character, quality, or legitimacy.
 
 Context Around Entity: {context}
 
 Entity Mention: {entity_mention}
 
-Task: Based on the context, assign exactly one main role and exactly one 
-subcategory to the entity mention. Also identify the single word or short phrase 
-in the context that most strongly signals this classification. If no framing 
-signal is present, assign Neutral / None and set evidence to an empty string.
+Task: Based on the context, assign exactly one subcategory to the entity mention.
+The main role is implied by the subcategory:
+- Guardian, Virtuous -> Protagonist
+- Deceiver, Corrupt, Incompetent, Traitor -> Antagonist
+- Victim, Scapegoat -> Innocent
+- None -> Neutral
 
-Important: Default to Neutral / None when in doubt. Only assign a framing 
-role when there is clear lexical or syntactic evidence in the context that 
-the entity is being evaluated, judged, or characterised — not merely cited.
+Also identify the single word or short phrase in the context that most strongly
+signals this classification. If no framing signal is present, assign None and
+set evidence to an empty string.
 
-Return a JSON object with exactly these three fields:
-•⁠  ⁠"main_role": one of "Protagonist", "Antagonist", "Innocent", or "Neutral"
-•⁠  ⁠"subcategory": one of "Guardian", "Virtuous", "Deceiver", "Corrupt", 
+Important: Default to None when in doubt. Only assign a non-neutral subcategory
+when there is clear lexical or syntactic evidence in the context that the entity
+is being evaluated, judged, or characterised, not merely cited.
+
+Return a JSON object with exactly these two fields:
+- "subcategory": one of "Guardian", "Virtuous", "Deceiver", "Corrupt",
   "Incompetent", "Traitor", "Victim", "Scapegoat", or "None"
-•⁠  ⁠"evidence": the word or short phrase from the context that signals the 
-  framing, or an empty string if main_role is "Neutral"
+- "evidence": the word or short phrase from the context that signals the
+  framing, or an empty string if subcategory is "None"
 
 Return only the JSON object, no additional text.

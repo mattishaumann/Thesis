@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Full-corpus GELECTRA discrete emotion inference on article titles (Widmann & Wich 2023).
+Full-corpus GELECTRA discrete emotion inference (Widmann & Wich 2023).
 
-Unlike the inspiration pipeline, each row's Title is a single sentence and the document —
-no sentence splitting or aggregation.
+By default each row's `Title` is the document. Use `--text-column` (or `EMOTION_TEXT_COLUMN`)
+to run on full article text or any other string column. Long texts are truncated to 512 tokens
+at inference; see `emotion_utils` docstring for caveats.
 
-Run after validating with `emotion_sample_test.py`.
+Run after validating with `03a_emotion_sample_test.py`.
 """
 
 from __future__ import annotations
@@ -18,9 +19,11 @@ import pandas as pd
 
 from emotion_utils import (
     assert_model_files,
+    effective_min_words,
+    effective_text_column,
     get_dominant_emotion,
     get_device,
-    load_and_clean_titles,
+    load_and_clean_texts,
     load_model_and_tokenizer,
     resolve_outlet_column,
     run_emotion_inference,
@@ -45,16 +48,20 @@ def run_pipeline(
     model_dir: Path | None = None,
     output_path: Path | None = None,
     batch_size: int = 32,
+    text_column: str | None = None,
+    min_words: int | None = None,
 ) -> pd.DataFrame:
     data_path = Path(data_path or os.environ.get("EMOTION_DATA_PATH", DEFAULT_DATA))
     model_dir = Path(model_dir or os.environ.get("EMOTION_MODEL_DIR", DEFAULT_MODEL_DIR))
     output_path = Path(output_path or os.environ.get("EMOTION_OUTPUT_PATH", DEFAULT_OUT))
+    col = effective_text_column(text_column)
+    mw = effective_min_words(min_words)
 
     print(f"Loading data from {data_path}...", flush=True)
-    df = load_and_clean_titles(data_path)
+    df = load_and_clean_texts(data_path, text_column=col, min_words=mw)
     outlet_col = resolve_outlet_column(df)
     print(
-        f"Cleaned titles: {len(df)} rows; outlet column: {outlet_col!r}",
+        f"Cleaned rows: {len(df)}; text column: {col!r} (min_words={mw}); outlet: {outlet_col!r}",
         flush=True,
     )
 
@@ -63,8 +70,8 @@ def run_pipeline(
     print(f"Loading model from {model_dir} (device: {device})...", flush=True)
     model, tokenizer, _labels = load_model_and_tokenizer(model_dir)
 
-    texts = df["Title"].tolist()
-    print(f"Running inference on {len(texts)} titles...", flush=True)
+    texts = df[col].tolist()
+    print(f"Running inference on {len(texts)} documents...", flush=True)
     probs = run_emotion_inference(
         texts, model, tokenizer, batch_size=batch_size, device=device
     )
@@ -84,12 +91,26 @@ def main() -> None:
     p.add_argument("--model-dir", type=Path, default=None, help="Dir with pytorch_model.bin")
     p.add_argument("--output", type=Path, default=None, help="Output CSV path")
     p.add_argument("--batch-size", type=int, default=32)
+    p.add_argument(
+        "--text-column",
+        type=str,
+        default=None,
+        help="CSV column to classify (default: Title, or EMOTION_TEXT_COLUMN)",
+    )
+    p.add_argument(
+        "--min-words",
+        type=int,
+        default=None,
+        help="Drop rows with fewer than this many words after cleaning (default: 3, or EMOTION_MIN_WORDS)",
+    )
     args = p.parse_args()
     run_pipeline(
         data_path=args.data,
         model_dir=args.model_dir,
         output_path=args.output,
         batch_size=args.batch_size,
+        text_column=args.text_column,
+        min_words=args.min_words,
     )
 
 

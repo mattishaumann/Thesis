@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-Stratified sample (>=500 titles, >=5 per outlet where possible) to validate the pipeline.
-Run this before `emotion_pipeline.py` on the full corpus.
+Stratified sample to validate the pipeline before the full corpus run.
+Use `--text-column` / `EMOTION_TEXT_COLUMN` to match `03_emotion_pipeline.py`.
 """
 
 from __future__ import annotations
 
+import argparse
 import os
 from pathlib import Path
 
@@ -15,10 +16,12 @@ from emotion_utils import (
     EMOTION_COLS,
     EMOTION_LABELS,
     assert_model_files,
+    effective_min_words,
+    effective_text_column,
     get_device,
     get_dominant_emotion,
     get_stratified_sample,
-    load_and_clean_titles,
+    load_and_clean_texts,
     load_model_and_tokenizer,
     resolve_outlet_column,
     run_emotion_inference,
@@ -45,44 +48,72 @@ def _print_mean_probs(by_outlet: pd.DataFrame, title: str) -> None:
     print(sub.to_string(float_format=lambda x: f"{x:.3f}"))
 
 
-def _top_titles_per_emotion(
-    df: pd.DataFrame, text_col: str = "Title", k: int = 5
+def _top_snippets_per_emotion(
+    df: pd.DataFrame, text_col: str, k: int = 5, preview_chars: int = 200
 ) -> None:
     for i, emo in enumerate(EMOTION_LABELS):
         col = EMOTION_COLS[i]
         if col not in df.columns:
             continue
         top = df.nlargest(k, col)
-        print(f"\n=== Top {k} titles for: {emo} ===")
+        print(f"\n=== Top {k} snippets for: {emo} ===")
         for rank, (_, row) in enumerate(top.iterrows(), start=1):
-            title = str(row[text_col])[:200]
+            snippet = str(row[text_col])[:preview_chars]
             score = float(row[col])
-            print(f'{rank}. "{title}" ({score:.3f})')
+            print(f'{rank}. "{snippet}" ({score:.3f})')
 
 
 def main() -> None:
-    data_path = Path(os.environ.get("EMOTION_DATA_PATH", DEFAULT_DATA))
-    model_dir = Path(os.environ.get("EMOTION_MODEL_DIR", DEFAULT_MODEL_DIR))
+    p = argparse.ArgumentParser(description="Stratified-sample emotion inference (sanity check)")
+    p.add_argument("--data", type=Path, default=None, help="Input CSV (default: EMOTION_DATA_PATH)")
+    p.add_argument("--model-dir", type=Path, default=None, help="Model dir (default: EMOTION_MODEL_DIR)")
+    p.add_argument(
+        "--text-column",
+        type=str,
+        default=None,
+        help="CSV column to classify (default: Title, or EMOTION_TEXT_COLUMN)",
+    )
+    p.add_argument(
+        "--min-words",
+        type=int,
+        default=None,
+        help="Min word count after cleaning (default: 3, or EMOTION_MIN_WORDS)",
+    )
+    args = p.parse_args()
+
+    data_path = Path(
+        args.data if args.data is not None else os.environ.get("EMOTION_DATA_PATH", DEFAULT_DATA)
+    )
+    model_dir = Path(
+        args.model_dir
+        if args.model_dir is not None
+        else os.environ.get("EMOTION_MODEL_DIR", DEFAULT_MODEL_DIR)
+    )
+    text_col = effective_text_column(args.text_column)
+    min_w = effective_min_words(args.min_words)
 
     print(f"Loading data from {data_path}...")
-    df_full = load_and_clean_titles(data_path)
+    df_full = load_and_clean_texts(data_path, text_column=text_col, min_words=min_w)
     outlet_col = resolve_outlet_column(df_full)
     n_original = len(df_full)
-    print(f"Cleaned titles: {n_original} rows across {df_full[outlet_col].nunique()} outlets")
+    print(
+        f"Cleaned rows: {n_original} (column={text_col!r}, min_words={min_w}); "
+        f"{df_full[outlet_col].nunique()} outlets"
+    )
 
     sample = get_stratified_sample(
         df_full, outlet_col, n_total=10000, min_per_outlet=100, seed=42
     )
-    print(f"\nStratified sample: {len(sample)} titles (min 5 per outlet where available)\n")
+    print(f"\nStratified sample: {len(sample)} rows (min 5 per outlet where available)\n")
     print("Sample distribution:")
     for name, cnt in sample[outlet_col].value_counts().sort_index().items():
-        print(f"  {name}: {cnt} titles")
+        print(f"  {name}: {cnt} rows")
 
     assert_model_files(model_dir)
     device = get_device()
-    print(f"\nRunning GELECTRA emotion inference on {len(sample)} titles (device: {device})...")
+    print(f"\nRunning GELECTRA emotion inference on {len(sample)} rows (device: {device})...")
     model, tokenizer, _ = load_model_and_tokenizer(model_dir)
-    texts = sample["Title"].tolist()
+    texts = sample[text_col].tolist()
     probs = run_emotion_inference(
         texts, model, tokenizer, batch_size=32, device=device
     )
@@ -106,7 +137,7 @@ def main() -> None:
     ct = pd.crosstab(result[outlet_col], result["emotion_dominant"])
     print(ct.to_string())
 
-    _top_titles_per_emotion(result, text_col="Title", k=5)
+    _top_snippets_per_emotion(result, text_col=text_col, k=5)
 
     SAMPLE_OUT.parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(SAMPLE_OUT, index=False, encoding="utf-8")

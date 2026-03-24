@@ -1,6 +1,10 @@
 """
 Shared utilities for GELECTRA-based discrete emotion classification (Widmann & Wich 2023).
-Each title is one sentence and one document — no sentence splitting or aggregation.
+
+Each row is one document: by default the `Title` column (one short string). You can instead
+point the pipeline at a full-text column; the tokenizer still uses truncation at 512 subword
+tokens (`run_emotion_inference`), so long articles only use the start of the text. The model
+was trained on sentence-level political German text — full-body use is exploratory.
 """
 
 from __future__ import annotations
@@ -32,6 +36,29 @@ EMOTION_LABELS: list[str] = [
 
 EMOTION_COLS: list[str] = [f"emotion_{e}" for e in EMOTION_LABELS]
 
+# Override with CLI or environment when running pipelines.
+DEFAULT_TEXT_COLUMN = "Title"
+TEXT_COLUMN_ENV = "EMOTION_TEXT_COLUMN"
+MIN_WORDS_ENV = "EMOTION_MIN_WORDS"
+
+
+def effective_text_column(cli_value: str | None) -> str:
+    """CLI `--text-column` wins; else `EMOTION_TEXT_COLUMN`; else Title."""
+    if cli_value is not None and str(cli_value).strip():
+        return str(cli_value).strip()
+    env = os.environ.get(TEXT_COLUMN_ENV, "").strip()
+    return env or DEFAULT_TEXT_COLUMN
+
+
+def effective_min_words(cli_value: int | None) -> int:
+    """CLI `--min-words` wins; else `EMOTION_MIN_WORDS`; else 3."""
+    if cli_value is not None:
+        return max(0, int(cli_value))
+    raw = os.environ.get(MIN_WORDS_ENV, "").strip()
+    if raw:
+        return max(0, int(raw))
+    return 3
+
 
 def _read_csv_utf8(path: Path) -> pd.DataFrame:
     try:
@@ -61,32 +88,44 @@ def resolve_outlet_column(df: pd.DataFrame) -> str:
     )
 
 
-def load_and_clean_titles(filepath: str | Path) -> pd.DataFrame:
+def load_and_clean_texts(
+    filepath: str | Path,
+    text_column: str = DEFAULT_TEXT_COLUMN,
+    min_words: int = 3,
+) -> pd.DataFrame:
     """
-    Load CSV and return a copy with cleaned `Title` column.
-    Drops empty/invalid titles and rows with fewer than 3 words.
+    Load CSV and return rows with cleaned text in `text_column`.
+    Drops empty/invalid cells and rows with fewer than `min_words` words (whitespace-split).
     """
     path = Path(filepath)
     if not path.is_file():
         raise FileNotFoundError(f"Input file not found: {path}")
 
     df = _read_csv_utf8(path).copy()
-    if "Title" not in df.columns:
-        raise KeyError(f"Expected column 'Title' in {path}; got {list(df.columns)}")
+    if text_column not in df.columns:
+        raise KeyError(
+            f"Expected column {text_column!r} in {path}; got {list(df.columns)}"
+        )
 
-    # Stringify and strip (NaN -> "nan" then drop)
-    df["Title"] = df["Title"].fillna("").astype(str).str.strip()
+    col = df[text_column].fillna("").astype(str).str.strip()
+    df = df.copy()
+    df[text_column] = col
     mask_bad = (
-        (df["Title"] == "")
-        | (df["Title"].str.lower() == "nan")
-        | (df["Title"].str.lower() == "none")
+        (df[text_column] == "")
+        | (df[text_column].str.lower() == "nan")
+        | (df[text_column].str.lower() == "none")
     )
     df = df.loc[~mask_bad].copy()
 
-    n_words = df["Title"].str.split().str.len()
-    df = df.loc[n_words >= 3].copy()
+    n_words = df[text_column].str.split().str.len()
+    df = df.loc[n_words >= min_words].copy()
     df.reset_index(drop=True, inplace=True)
     return df
+
+
+def load_and_clean_titles(filepath: str | Path) -> pd.DataFrame:
+    """Backward-compatible alias: same as `load_and_clean_texts(..., text_column='Title')`."""
+    return load_and_clean_texts(filepath, text_column=DEFAULT_TEXT_COLUMN, min_words=3)
 
 
 def load_emotion_label_order(model_dir: Path) -> list[str]:

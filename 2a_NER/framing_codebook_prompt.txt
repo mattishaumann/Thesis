@@ -3,25 +3,25 @@ Sie sind Experte darin, zu erkennen, wie Medienunternehmen in deutschsprachigen 
 Taxonomie:
 
 POSITIONS-/PARTEILICHKEITS-BIAS
-Der Medienakteur wird beschuldigt, bestimmten Interessen zu DIENEN oder politische Loyalitäten zu haben.
+Der Medienakteur wird beschuldigt, bestimmten Interessen zu dienen oder politische Loyalitäten zu haben.
 Umfasst: Dienst an politischen Parteien/Politikern/Regierungen; Förderung bestimmter Ideologien (links/rechts/globalistisch/Establishment); systematische Bevorzugung bestimmter sozialer Gruppen; Kontrolle durch oder Dienst an externen Mächten (Staat, Konzerne, WEF); Schutz von Eliten/Establishment statt der Bürger.
 Wichtige Indikatoren: „Sprachrohr“, „Systemmedien“, „dient den Interessen von“, Hinweise auf Kontrolle, Vereinnahmung oder Loyalität.
 Beispiel: „Die Tagesschau ist der verlängerte Arm der Ampelkoalition“ → dient der Regierungskoalition.
 
 VERZERRUNG/MANIPULATION
-Dem Medienunternehmen wird vorgeworfen, die Realität durch seine Berichterstattungsmethoden absichtlich zu VERZERREN.
+Dem Medienunternehmen wird vorgeworfen, die Realität durch seine Berichterstattungsmethoden absichtlich zu verzerren.
 Dazu gehören: selektive Berichterstattung (Auswahl bestimmter Geschichten); Verschleierung/Auslassung entscheidender Informationen („Lückenpresse“); Entkontextualisierung von Ereignissen; Verwendung von tendenziöser/manipulativer Sprache; strategische Hervorhebung/Herunterspielung; Framing zur Meinungsbildung.
 Wichtige Indikatoren: „verschweigt“, „verdreht die Fakten“, „einseitige Berichterstattung“, „Propaganda-Sprache“, „aus dem Kontext gerissen“.
 Beispiel: „ARD berichtet über Messerangriffe, verschweigt aber die Herkunft der Täter“ → Verschleierung von Informationen.
 
-DISINFORMATION/FALSCHHEITEN
-Dem Medienunternehmen wird vorgeworfen, LÜGEN oder FALSCHE Informationen zu verbreiten.
+DISINFORMATION/FALSCHDARSTELLUNG
+Dem Medienunternehmen wird vorgeworfen, Lügen oder falsche Informationen zu verbreiten.
 Dazu gehören: Veröffentlichung nachweislich falscher Behauptungen; Erfindung von Ereignissen/Zitaten; wissentliche Verbreitung von Propaganda; Belügen der Öffentlichkeit.
 Wichtige Indikatoren: „Lügenpresse“, „Fake News“, „Desinformation“, „erfindet“, „Lügen verbreiten“, direkte Widerspruchsbehauptungen („X ist falsch“).
 Beispiel: „Die Impf-Berichterstattung der öffentlich-rechtlichen Medien war eine gigantische Lüge“ → Lügen über Impfstoffe.
 
 VERSAGEN/INKOMPETENZ
-Dem Medienunternehmen wird vorgeworfen, seine Arbeit SCHLECHT ZU MACHEN, anstatt böswillig zu sein.
+Dem Medienunternehmen wird vorgeworfen, seine Arbeit schlecht zu machen, anstatt böswillig zu sein.
 Dazu gehören: schlechte journalistische Standards; minderwertige Berichterstattung; oberflächliche Berichterstattung; Mangel an kritischer Hinterfragung; unprofessionelles Verhalten; gebrochene Versprechen/nicht erfüllter Auftrag.
 Schlüsselindikatoren: „versagt“, „oberflächlich“, „unkritisch“, „mangelnde Qualität“, „hat seine Aufgabe verfehlt“.
 Anmerkung: Deutet eher auf Schwäche als auf Böswilligkeit hin – keine absichtliche Voreingenommenheit oder Lüge.
@@ -44,12 +44,11 @@ Erwähnung der Entität: {entity_mention}
 Aufgabe: Weisen Sie der Erwähnung der Entität basierend auf dem Kontext genau eine Kategorie zu. Identifizieren Sie außerdem das einzelne Wort oder die kurze Phrase im Kontext, die diese Klassifizierung am deutlichsten signalisiert. Wenn kein Framing-Signal vorhanden ist (Neutral oder Irrelevant), setzen Sie „evidence“ auf eine leere Zeichenfolge.
 
 Wichtige Richtlinien:
-•⁠  ⁠Weisen Sie eine Bias-Kategorie nur dann zu, wenn es eindeutige lexikalische oder syntaktische Hinweise darauf gibt, dass die Entität kritisiert oder beschuldigt wird, und nicht nur zitiert
 •⁠  ⁠Wenn sich die übereinstimmende Zeichenfolge in diesem Kontext semantisch nicht auf Medien bezieht, weisen Sie „Irrelevant“ zu, auch wenn der reguläre Ausdruck technisch eine Übereinstimmung gefunden hat
-•⁠  ⁠Wenn mehrere Bias-Typen vorhanden zu sein scheinen, wählen Sie die DOMINANTE oder PRIMÄRE Anschuldigung basierend auf den stärksten sprachlichen Hinweisen
+•⁠  ⁠Wenn mehrere Bias-Typen vorhanden zu sein scheinen, wählen Sie die dominante oder primäre Anschuldigung basierend auf den stärksten sprachlichen Hinweisen
 
 Geben Sie ein JSON-Objekt mit genau diesen beiden Feldern zurück:
-•⁠  ⁠„category“: entweder „POSITIONS-/PARTEILICHKEITS-BIAS“, „Distortion/Manipulation Bias“, „Disinformation/Falsehood Bias“, „Failure/Incompetence“, „Neutral“ oder „Irrelevant“
+•⁠  ⁠„category“: entweder „POSITIONS-/PARTEILICHKEITS-BIAS”, „VERZERRUNG/MANIPULATION“, „DISINFORMATION/FALSCHDARSTELLUNG“, „VERSAGEN/INKOMPETENZ“, „NEUTRAL“ oder „IRRELEVANT“
 •⁠  ⁠„evidence“: das Wort oder die kurze Phrase aus dem Kontext, die auf den Vorwurf der Voreingenommenheit hindeutet, oder eine leere Zeichenfolge, wenn die Kategorie „Neutral“ oder „Irrelevant“ ist
 
 Gib nur das JSON-Objekt zurück, keinen zusätzlichen Text.

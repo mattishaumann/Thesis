@@ -1,4 +1,4 @@
-Sie sind Experte darin, zu erkennen, wie Medienunternehmen in deutschsprachigen Nachrichtenartikeln dargestellt werden. Analysieren Sie die folgende Erwähnung eines Medienunternehmens im Kontext und ordnen Sie die Art des Vorwurfs der Voreingenommenheit (falls vorhanden), der gegen das Medienunternehmen erhoben wird, anhand der untenstehenden Taxonomie ein.
+Sie sind Experte darin, zu erkennen, wie Medienunternehmen in deutschsprachigen Nachrichtenartikeln dargestellt werden. Analysieren Sie die folgende Erwähnungen der Medienakteure im Kontext und ordnen Sie die Art des Vorwurfs der Voreingenommenheit (falls vorhanden), der gegen die Medienakteure erhoben wird, anhand der untenstehenden Taxonomie ein.
 
 Taxonomie:
 
@@ -38,14 +38,15 @@ Verwenden Sie diese Kategorie immer dann, wenn die Übereinstimmung semantisch �
 
 ---
 
-Kontext um die Entität: {context}
-Erwähnung der Entität: {entity_mention}
+Kontext um die Medienerwähnung(en): {context}
+Erkannte Medienerwähnung(en): {entity_mention}
 
-Aufgabe: Weisen Sie der Erwähnung der Entität basierend auf dem Kontext genau eine Kategorie zu. Identifizieren Sie außerdem das einzelne Wort oder die kurze Phrase im Kontext, die diese Klassifizierung am deutlichsten signalisiert. Wenn kein Framing-Signal vorhanden ist (Neutral oder Irrelevant), setzen Sie „evidence“ auf eine leere Zeichenfolge.
+Aufgabe: Weisen Sie der Erwähnung der Entitäten basierend auf dem Kontext genau eine Kategorie zu. Identifizieren Sie außerdem das einzelne Wort oder die kurze Phrase im Kontext, die diese Klassifizierung am deutlichsten signalisiert. Wenn kein Framing-Signal vorhanden ist (Neutral oder Irrelevant), setzen Sie „evidence“ auf eine leere Zeichenfolge.
 
 Wichtige Richtlinien:
 •⁠  ⁠Wenn sich die übereinstimmende Zeichenfolge in diesem Kontext semantisch nicht auf Medien bezieht, weisen Sie „Irrelevant“ zu, auch wenn der reguläre Ausdruck technisch eine Übereinstimmung gefunden hat
 •⁠  ⁠Wenn mehrere Bias-Typen vorhanden zu sein scheinen, wählen Sie die dominante oder primäre Anschuldigung basierend auf den stärksten sprachlichen Hinweisen
+•⁠  ⁠Wenn mehrere Medienreferenzen in einem Kontext genannt werden, klassifizieren Sie das dominante Framing des Kontextfensters insgesamt, nicht jede Erwähnung einzeln.
 
 Geben Sie ein JSON-Objekt mit genau diesen beiden Feldern zurück:
 •⁠  ⁠„category“: entweder „POSITIONS-/PARTEILICHKEITS-BIAS”, „VERZERRUNG/MANIPULATION“, „DISINFORMATION/FALSCHDARSTELLUNG“, „VERSAGEN/INKOMPETENZ“, „NEUTRAL“ oder „IRRELEVANT“

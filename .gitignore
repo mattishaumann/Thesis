@@ -43,3 +43,5 @@ Sentiment_Analysis/outputs/
 3a_Sentiment_Analysis/models/**/*.bin
 3a_Sentiment_Analysis/models/**/*.safetensors
 3a_Sentiment_Analysis/outputs/
+
+2a_NER/outputs/*.csv

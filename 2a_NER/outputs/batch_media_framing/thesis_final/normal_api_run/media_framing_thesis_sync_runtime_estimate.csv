@@ -1,2 +1,0 @@
-scope,requests,estimated_input_tokens,doc_rpm_limit,doc_tpm_limit,target_requests_per_minute,target_input_tokens_per_minute,request_bound_minutes,token_bound_minutes,lower_bound_minutes,estimated_minutes_with_overhead,estimated_hours_with_overhead
-full,11975,20266739,500,500000,200,250000,59.88,81.07,81.07,141.87,2.36

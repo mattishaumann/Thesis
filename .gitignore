@@ -47,3 +47,4 @@ Sentiment_Analysis/outputs/
 
 2a_NER/outputs/*.csv
 experiments/**/*.executed.ipynb
+experiments/**/outputs/

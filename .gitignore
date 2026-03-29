@@ -5,6 +5,7 @@
 
 # Python cache artifacts
 __pycache__/
+**/__pycache__/
 *.pyc
 
 # Raw and processed datasets (never commit local data dumps)

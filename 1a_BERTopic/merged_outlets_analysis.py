@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 import html
+import os
 import re
 import sys
 import warnings
@@ -12,9 +13,32 @@ from typing import Callable
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from umap import UMAP
 
 MODULE_DIR = Path(__file__).resolve().parent
+DEFAULT_PROJECT_ROOT = MODULE_DIR.parent
+
+
+def configure_runtime_environment(project_root: Path | None = None) -> dict[str, Path]:
+    """Point caches at writable repo-local directories before heavy imports happen."""
+
+    root = (project_root or DEFAULT_PROJECT_ROOT).resolve()
+    numba_cache_dir = root / ".numba_cache"
+    mpl_config_dir = root / ".mplconfig"
+    numba_cache_dir.mkdir(parents=True, exist_ok=True)
+    mpl_config_dir.mkdir(parents=True, exist_ok=True)
+    os.environ.setdefault("NUMBA_CACHE_DIR", str(numba_cache_dir))
+    os.environ.setdefault("MPLCONFIGDIR", str(mpl_config_dir))
+    return {
+        "project_root": root,
+        "numba_cache_dir": numba_cache_dir,
+        "mpl_config_dir": mpl_config_dir,
+    }
+
+
+RUNTIME_ENV = configure_runtime_environment()
+
+from umap import UMAP
+
 if str(MODULE_DIR) not in sys.path:
     sys.path.insert(0, str(MODULE_DIR))
 
@@ -23,6 +47,9 @@ from bertopic_pipeline import prepare_documents
 
 
 EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+MERGED_MODEL_SUBDIR = "merged_all_outlets_model"
+TOPIC_NAME_OVERRIDES_FILENAME = "merged_topic_name_overrides.csv"
+MERGED_ARTICLES_BASENAME = "merged_articles_with_topics"
 
 TICHYS_EXTRA_STOPWORDS = (
     "amazon",
@@ -60,6 +87,34 @@ def find_project_root(start: Path) -> Path:
         if (candidate / ".git").exists():
             return candidate
     raise FileNotFoundError("Could not find project root containing .git")
+
+
+def get_local_output_dir(project_root: Path) -> Path:
+    output_dir = project_root / "1a_BERTopic" / "local_outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
+
+def resolve_embedding_model_reference() -> str:
+    """Prefer the newest cached local snapshot, otherwise fall back to the model name."""
+
+    snapshots_dir = (
+        Path.home()
+        / ".cache"
+        / "huggingface"
+        / "hub"
+        / "models--sentence-transformers--paraphrase-multilingual-MiniLM-L12-v2"
+        / "snapshots"
+    )
+    if snapshots_dir.exists():
+        snapshots = sorted(
+            (path for path in snapshots_dir.iterdir() if path.is_dir()),
+            key=lambda path: path.stat().st_mtime,
+            reverse=True,
+        )
+        if snapshots:
+            return str(snapshots[0])
+    return EMBEDDING_MODEL_NAME
 
 
 def resolve_raw_data_root(project_root: Path) -> Path:
@@ -518,6 +573,25 @@ def resolve_model_paths(candidates: list[Path]) -> dict[str, Path]:
     }
 
 
+def resolve_merged_model_path(project_root: Path) -> Path:
+    candidates = [
+        get_local_output_dir(project_root),
+        project_root / "1a_BERTopic" / "outputs",
+        project_root / "BERTopic" / "outputs",
+    ]
+    return resolve_model_path(MERGED_MODEL_SUBDIR, candidates)
+
+
+def load_saved_merged_model(project_root: Path):
+    """Load the locally saved merged BERTopic model with a stable embedding reference."""
+
+    from bertopic import BERTopic
+
+    model_path = resolve_merged_model_path(project_root)
+    embedding_model = resolve_embedding_model_reference()
+    return BERTopic.load(model_path, embedding_model=embedding_model), model_path, embedding_model
+
+
 def prepare_outlet_documents(project_root: Path, key: str) -> pd.DataFrame:
     spec = OUTLET_SPECS[key]
     df = spec.loader(project_root)
@@ -567,6 +641,85 @@ def enrich_topic_info_with_display(topic_info: pd.DataFrame) -> pd.DataFrame:
     return topic_info
 
 
+def build_topic_name_reference(merged_topic_info: pd.DataFrame) -> pd.DataFrame:
+    """Prepare a topic label table that can later receive hand-written names."""
+
+    topic_ref = merged_topic_info.loc[merged_topic_info["Topic"] != -1].copy()
+    topic_ref = topic_ref[
+        ["Topic", "DisplayTopic", "TopicNameClean", "DisplayLabel", "Count"]
+    ].rename(
+        columns={
+            "Topic": "merged_topic",
+            "DisplayTopic": "merged_display_topic",
+            "TopicNameClean": "keyword_label",
+            "DisplayLabel": "display_label",
+            "Count": "article_count",
+        }
+    )
+    topic_ref["manual_topic_name"] = pd.NA
+    topic_ref["topic_label"] = topic_ref["display_label"]
+    return topic_ref
+
+
+def ensure_topic_name_overrides_template(
+    project_root: Path,
+    merged_topic_info: pd.DataFrame,
+    *,
+    overwrite: bool = False,
+) -> Path:
+    """Write a CSV template for optional hand-curated topic names."""
+
+    output_path = get_local_output_dir(project_root) / TOPIC_NAME_OVERRIDES_FILENAME
+    if output_path.exists() and not overwrite:
+        return output_path
+
+    topic_reference = build_topic_name_reference(merged_topic_info)
+    topic_reference.to_csv(output_path, index=False)
+    return output_path
+
+
+def load_topic_name_overrides(project_root: Path) -> pd.DataFrame | None:
+    """Read the optional topic-name override file if the user has filled it in."""
+
+    csv_path = get_local_output_dir(project_root) / TOPIC_NAME_OVERRIDES_FILENAME
+    if not csv_path.exists():
+        return None
+
+    overrides = pd.read_csv(csv_path)
+    required = {"merged_topic", "manual_topic_name"}
+    if not required.issubset(overrides.columns):
+        missing = ", ".join(sorted(required - set(overrides.columns)))
+        raise ValueError(f"Topic name override file is missing required columns: {missing}")
+
+    overrides = overrides.loc[:, [col for col in overrides.columns if col in {"merged_topic", "manual_topic_name"}]].copy()
+    overrides["merged_topic"] = overrides["merged_topic"].astype(int)
+    overrides["manual_topic_name"] = overrides["manual_topic_name"].astype("string").str.strip()
+    overrides = overrides.loc[overrides["manual_topic_name"].notna() & (overrides["manual_topic_name"] != "")]
+    return overrides if not overrides.empty else None
+
+
+def apply_topic_name_overrides(
+    merged_topic_info: pd.DataFrame,
+    overrides: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    """Replace keyword-heavy display labels with optional manual topic names."""
+
+    enriched = merged_topic_info.copy()
+    enriched["topic_label"] = enriched["DisplayLabel"]
+    enriched["manual_topic_name"] = pd.NA
+    if overrides is None or overrides.empty:
+        return enriched
+
+    override_map = overrides.set_index("merged_topic")["manual_topic_name"].to_dict()
+    enriched["manual_topic_name"] = enriched["Topic"].map(override_map).astype("string")
+    named_mask = enriched["manual_topic_name"].notna() & (enriched["Topic"] != -1)
+    enriched.loc[named_mask, "topic_label"] = enriched.loc[named_mask].apply(
+        lambda row: f"Topic {int(row['DisplayTopic'])} — {row['manual_topic_name']}",
+        axis=1,
+    )
+    return enriched
+
+
 def build_merged_article_frame(
     merged_model,
     combined_prepared: pd.DataFrame,
@@ -601,6 +754,124 @@ def build_merged_article_frame(
     frame["umap_x"] = coords[:, 0]
     frame["umap_y"] = coords[:, 1]
     return frame, merged_topic_info, reducer
+
+
+def build_article_topic_dataset(
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    topic_name_overrides: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    """Return a clean article-level table with one matched merged topic per article."""
+
+    topic_info = apply_topic_name_overrides(merged_topic_info, topic_name_overrides)
+    topic_columns = topic_info[
+        ["Topic", "DisplayTopic", "TopicNameClean", "DisplayLabel", "topic_label", "manual_topic_name"]
+    ].rename(
+        columns={
+            "Topic": "merged_topic",
+            "DisplayTopic": "merged_display_topic",
+            "TopicNameClean": "topic_keyword_label",
+            "DisplayLabel": "topic_display_label",
+        }
+    )
+
+    article_topic_df = merged_articles.merge(
+        topic_columns,
+        on=["merged_topic", "merged_display_topic"],
+        how="left",
+    )
+
+    article_topic_df["topic_label"] = article_topic_df["topic_label"].fillna("Outliers")
+    article_topic_df["topic_keyword_label"] = article_topic_df["topic_keyword_label"].fillna("Outliers")
+    article_topic_df["topic_display_label"] = article_topic_df["topic_display_label"].fillna("Outliers")
+
+    preferred_columns = [
+        "document_id",
+        "source_name",
+        "outlet_key",
+        "outlet_label",
+        "Title",
+        "Date",
+        "URL",
+        "document",
+        "document_length",
+        "token_count",
+        "merged_topic",
+        "merged_display_topic",
+        "topic_keyword_label",
+        "manual_topic_name",
+        "topic_label",
+        "topic_display_label",
+        "merged_probability",
+        "umap_x",
+        "umap_y",
+        "source_file",
+    ]
+    ordered_columns = [col for col in preferred_columns if col in article_topic_df.columns]
+    trailing_columns = [col for col in article_topic_df.columns if col not in ordered_columns]
+    return article_topic_df.loc[:, ordered_columns + trailing_columns].copy()
+
+
+def save_dataframe_exports(
+    df: pd.DataFrame,
+    output_base: Path,
+) -> dict[str, Path]:
+    """Persist a dataframe as CSV and, when available, parquet."""
+
+    output_base.parent.mkdir(parents=True, exist_ok=True)
+    saved_paths: dict[str, Path] = {}
+
+    csv_path = output_base.with_suffix(".csv")
+    df.to_csv(csv_path, index=False)
+    saved_paths["csv"] = csv_path
+
+    try:
+        parquet_path = output_base.with_suffix(".parquet")
+        df.to_parquet(parquet_path, index=False)
+        saved_paths["parquet"] = parquet_path
+    except Exception:
+        pass
+
+    return saved_paths
+
+
+def export_article_topic_dataset(
+    project_root: Path,
+    article_topic_df: pd.DataFrame,
+    *,
+    basename: str = MERGED_ARTICLES_BASENAME,
+) -> dict[str, Path]:
+    """Write the merged article-topic dataframe to local_outputs for reuse."""
+
+    output_base = get_local_output_dir(project_root) / basename
+    return save_dataframe_exports(article_topic_df, output_base)
+
+
+def load_exported_article_topic_dataset(
+    project_root: Path,
+    *,
+    basename: str = MERGED_ARTICLES_BASENAME,
+) -> pd.DataFrame | None:
+    """Load a previously saved merged article-topic dataframe when available."""
+
+    output_dir = get_local_output_dir(project_root)
+    parquet_path = output_dir / f"{basename}.parquet"
+    csv_path = output_dir / f"{basename}.csv"
+    if parquet_path.exists():
+        return pd.read_parquet(parquet_path)
+    if csv_path.exists():
+        loaded = pd.read_csv(csv_path, low_memory=False)
+        if "Date" in loaded.columns:
+            loaded["Date"] = pd.to_datetime(loaded["Date"], errors="coerce", utc=True).dt.tz_convert(None)
+        for column in ("merged_topic", "merged_display_topic"):
+            if column in loaded.columns:
+                loaded[column] = pd.to_numeric(loaded[column], errors="coerce").astype("Int64")
+        for column in ("umap_x", "umap_y", "merged_probability"):
+            if column in loaded.columns:
+                loaded[column] = pd.to_numeric(loaded[column], errors="coerce")
+        return loaded
+    return None
 
 
 def plot_merged_topic_umap(
@@ -915,3 +1186,214 @@ def build_outlet_topic_coverage_summary(
         .sort_values(["Merged_Topics_Covered", "Articles", "Outlet"], ascending=[False, False, True])
         .reset_index(drop=True)
     )
+
+
+def build_topic_prevalence_by_outlet(
+    article_topic_df: pd.DataFrame,
+    *,
+    include_outliers: bool = False,
+) -> pd.DataFrame:
+    """Count topic prevalence within each outlet and convert counts to within-outlet shares."""
+
+    prevalence_df = article_topic_df.copy()
+    if not include_outliers:
+        prevalence_df = prevalence_df.loc[prevalence_df["merged_topic"] != -1].copy()
+
+    counts = (
+        prevalence_df.groupby(
+            ["outlet_key", "outlet_label", "merged_topic", "merged_display_topic", "topic_keyword_label", "topic_label"],
+            dropna=False,
+        )
+        .size()
+        .rename("article_count")
+        .reset_index()
+    )
+
+    outlet_totals = (
+        prevalence_df.groupby(["outlet_key", "outlet_label"], dropna=False)
+        .size()
+        .rename("outlet_total_articles")
+        .reset_index()
+    )
+
+    counts = counts.merge(outlet_totals, on=["outlet_key", "outlet_label"], how="left")
+    counts["article_share"] = counts["article_count"] / counts["outlet_total_articles"]
+    return counts.sort_values(
+        ["outlet_label", "article_share", "article_count", "merged_display_topic"],
+        ascending=[True, False, False, True],
+    ).reset_index(drop=True)
+
+
+def build_outlet_focus_metrics(
+    prevalence_df: pd.DataFrame,
+    *,
+    total_topic_count: int | None = None,
+) -> pd.DataFrame:
+    """Summarize how broad or concentrated each outlet's topic distribution is."""
+
+    rows: list[dict[str, object]] = []
+    if total_topic_count is None:
+        total_topic_count = int(prevalence_df["merged_topic"].nunique())
+
+    for (outlet_key, outlet_label), group in prevalence_df.groupby(["outlet_key", "outlet_label"], dropna=False):
+        shares = group["article_share"].astype(float).to_numpy()
+        shares = shares[shares > 0]
+        if shares.size == 0:
+            continue
+
+        shannon_entropy = float(-(shares * np.log(shares)).sum())
+        normalized_entropy = (
+            shannon_entropy / np.log(total_topic_count)
+            if total_topic_count and total_topic_count > 1
+            else np.nan
+        )
+        concentration_hhi = float(np.square(shares).sum())
+        effective_topic_count = float(1.0 / concentration_hhi) if concentration_hhi > 0 else np.nan
+
+        rows.append(
+            {
+                "outlet_key": outlet_key,
+                "outlet_label": outlet_label,
+                "covered_topic_count": int(group["merged_topic"].nunique()),
+                "coverage_share": int(group["merged_topic"].nunique()) / total_topic_count if total_topic_count else np.nan,
+                "top_5_topic_share": float(group["article_share"].nlargest(min(5, len(group))).sum()),
+                "shannon_entropy": shannon_entropy,
+                "normalized_entropy": normalized_entropy,
+                "topic_concentration_hhi": concentration_hhi,
+                "effective_topic_count": effective_topic_count,
+            }
+        )
+
+    return pd.DataFrame(rows).sort_values(
+        ["coverage_share", "normalized_entropy", "effective_topic_count"],
+        ascending=[False, False, False],
+    ).reset_index(drop=True)
+
+
+def build_outlet_vs_baseline_prevalence(
+    prevalence_df: pd.DataFrame,
+    *,
+    outlet_key: str,
+    baseline_key: str = "tagesschau",
+) -> pd.DataFrame:
+    """Compare one outlet's topic shares against a baseline outlet such as Tagesschau."""
+
+    outlet_df = prevalence_df.loc[prevalence_df["outlet_key"] == outlet_key].copy()
+    baseline_df = prevalence_df.loc[prevalence_df["outlet_key"] == baseline_key].copy()
+    if outlet_df.empty:
+        raise ValueError(f"No prevalence data found for outlet '{outlet_key}'.")
+    if baseline_df.empty:
+        raise ValueError(f"No prevalence data found for baseline '{baseline_key}'.")
+
+    comparison = outlet_df.merge(
+        baseline_df[
+            [
+                "merged_topic",
+                "merged_display_topic",
+                "topic_keyword_label",
+                "topic_label",
+                "article_count",
+                "outlet_total_articles",
+                "article_share",
+            ]
+        ].rename(
+            columns={
+                "article_count": "baseline_article_count",
+                "outlet_total_articles": "baseline_total_articles",
+                "article_share": "baseline_article_share",
+                "topic_label": "baseline_topic_label",
+            }
+        ),
+        on=["merged_topic", "merged_display_topic", "topic_keyword_label"],
+        how="outer",
+    )
+
+    outlet_label = OUTLET_SPECS[outlet_key].label
+    baseline_label = OUTLET_SPECS[baseline_key].label
+
+    comparison["outlet_key"] = outlet_key
+    comparison["outlet_label"] = outlet_label
+    comparison["baseline_key"] = baseline_key
+    comparison["baseline_label"] = baseline_label
+    comparison["topic_label"] = comparison["topic_label"].fillna(comparison["baseline_topic_label"])
+    comparison["article_count"] = comparison["article_count"].fillna(0).astype(int)
+    comparison["baseline_article_count"] = comparison["baseline_article_count"].fillna(0).astype(int)
+    comparison["outlet_total_articles"] = comparison["outlet_total_articles"].fillna(
+        int(outlet_df["outlet_total_articles"].iloc[0])
+    )
+    comparison["baseline_total_articles"] = comparison["baseline_total_articles"].fillna(
+        int(baseline_df["outlet_total_articles"].iloc[0])
+    )
+    comparison["article_share"] = comparison["article_count"] / comparison["outlet_total_articles"]
+    comparison["baseline_article_share"] = (
+        comparison["baseline_article_count"] / comparison["baseline_total_articles"]
+    )
+    comparison["share_diff"] = comparison["article_share"] - comparison["baseline_article_share"]
+
+    comparison["share_ratio"] = np.where(
+        comparison["baseline_article_share"] > 0,
+        comparison["article_share"] / comparison["baseline_article_share"],
+        np.nan,
+    )
+    comparison["comparison_bucket"] = np.where(
+        comparison["share_diff"] > 0,
+        "Amplified vs baseline",
+        np.where(
+            comparison["share_diff"] < 0,
+            "Substituted away from baseline",
+            "Same prevalence",
+        ),
+    )
+
+    return comparison.sort_values(
+        ["share_diff", "article_share", "baseline_article_share"],
+        ascending=[False, False, False],
+    ).reset_index(drop=True)
+
+
+def plot_outlet_vs_baseline_prevalence(
+    comparison_df: pd.DataFrame,
+    *,
+    top_n: int = 15,
+    figsize: tuple[int, int] = (12, 8),
+    positive_color: str = "#c62828",
+    negative_color: str = "#1565c0",
+):
+    """Plot the largest share differences against a baseline as a diverging bar chart."""
+
+    plot_df = comparison_df.copy()
+    plot_df = plot_df.loc[plot_df["merged_topic"] != -1].copy()
+    plot_df["absolute_share_diff"] = plot_df["share_diff"].abs()
+    plot_df = plot_df.sort_values(
+        ["absolute_share_diff", "share_diff", "article_share"],
+        ascending=[False, False, False],
+    ).head(top_n)
+    plot_df = plot_df.sort_values("share_diff", ascending=True).reset_index(drop=True)
+    plot_df["share_diff_pct"] = plot_df["share_diff"] * 100
+    colors = np.where(plot_df["share_diff"] >= 0, positive_color, negative_color)
+
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.barh(plot_df["topic_label"], plot_df["share_diff_pct"], color=colors, alpha=0.85)
+    ax.axvline(0, color="#333333", linewidth=1.0)
+    ax.set_xlabel("Percentage-point difference in topic share")
+    ax.set_ylabel("")
+    ax.set_title(
+        f"{plot_df['outlet_label'].iloc[0]} vs {plot_df['baseline_label'].iloc[0]}: amplification (+) and substitution (-)"
+    )
+
+    for _, row in plot_df.iterrows():
+        annotation = f"{row['article_share']:.1%} vs {row['baseline_article_share']:.1%}"
+        x_pos = row["share_diff_pct"]
+        x_text = x_pos + 0.2 if x_pos >= 0 else x_pos - 0.2
+        ax.text(
+            x_text,
+            row["topic_label"],
+            annotation,
+            va="center",
+            ha="left" if x_pos >= 0 else "right",
+            fontsize=9,
+            color="#333333",
+        )
+
+    fig.tight_layout()
+    return fig, ax

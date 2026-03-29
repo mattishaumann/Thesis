@@ -536,3 +536,156 @@ def load_iteration(output_dir: Path, iteration_id: str) -> IterationResult:
         outlier_rates=meta["outlier_rates"],
         duration_seconds=meta["duration_seconds"],
     )
+
+
+def _first_non_empty(series: pd.Series) -> object:
+    """Return the first non-null, non-empty value from a series."""
+
+    for value in series:
+        if pd.isna(value):
+            continue
+        if isinstance(value, str) and not value.strip():
+            continue
+        return value
+    return np.nan
+
+
+def build_topic_info_from_article_frame(
+    merged_articles: pd.DataFrame,
+) -> pd.DataFrame:
+    """Reconstruct topic-level metadata from the saved article frame.
+
+    This is a lightweight fallback for experiment notebooks when the
+    dedicated `merged_topic_info.csv` file is missing but the article-level
+    export from `1a_BERTopic/local_outputs/` is available.
+    """
+
+    frame = merged_articles.copy()
+    frame["merged_topic"] = pd.to_numeric(frame["merged_topic"], errors="coerce").astype("Int64")
+    if "merged_display_topic" in frame.columns:
+        frame["merged_display_topic"] = pd.to_numeric(
+            frame["merged_display_topic"], errors="coerce"
+        ).astype("Int64")
+
+    topic_info = (
+        frame.groupby("merged_topic", dropna=False)
+        .agg(
+            Count=("merged_topic", "size"),
+            DisplayTopic=("merged_display_topic", _first_non_empty),
+            KeywordLabel=("topic_keyword_label", _first_non_empty),
+            TopicLabel=("topic_label", _first_non_empty),
+            DisplayLabel=("topic_display_label", _first_non_empty),
+            ManualTopicName=("manual_topic_name", _first_non_empty),
+            MergedDisplayLabel=("merged_display_label", _first_non_empty),
+        )
+        .reset_index()
+        .rename(columns={"merged_topic": "Topic"})
+    )
+
+    topic_info["DisplayTopic"] = pd.to_numeric(
+        topic_info["DisplayTopic"], errors="coerce"
+    ).astype("Int64")
+    topic_info["KeywordLabel"] = topic_info["KeywordLabel"].fillna(topic_info["TopicLabel"])
+    topic_info["DisplayLabel"] = topic_info["DisplayLabel"].fillna(
+        topic_info["MergedDisplayLabel"]
+    )
+    topic_info["TopicLabel"] = topic_info["TopicLabel"].fillna(topic_info["DisplayLabel"])
+    topic_info["Name"] = topic_info["KeywordLabel"].fillna(topic_info["DisplayLabel"])
+    topic_info["Representation"] = topic_info["KeywordLabel"].fillna("").astype(str).str.split("_")
+
+    ordered_columns = [
+        "Topic",
+        "DisplayTopic",
+        "Count",
+        "Name",
+        "Representation",
+        "KeywordLabel",
+        "TopicLabel",
+        "DisplayLabel",
+        "ManualTopicName",
+    ]
+    topic_info = topic_info.loc[:, ordered_columns]
+    topic_info = topic_info.sort_values(
+        ["Topic", "DisplayTopic"],
+        ascending=[True, True],
+        na_position="last",
+    ).reset_index(drop=True)
+    return topic_info
+
+
+def ensure_iteration_outputs(
+    project_root: Path,
+    output_dir: Path,
+    *,
+    preferred_iteration_id: str = "v2",
+    fallback_iteration_id: str = "v1",
+) -> tuple[str, pd.DataFrame, pd.DataFrame, Path]:
+    """Return experiment CSVs, materializing `preferred_iteration_id` when needed.
+
+    Resolution order:
+    1. Existing `outputs/<preferred>/merged_articles.csv`
+    2. Rebuild `outputs/<preferred>/` from
+       `1a_BERTopic/local_outputs/merged_articles_with_topics.csv`
+    3. Existing `outputs/<fallback>/merged_articles.csv`
+    """
+
+    preferred_dir = output_dir / preferred_iteration_id
+    fallback_dir = output_dir / fallback_iteration_id
+
+    preferred_articles = preferred_dir / "merged_articles.csv"
+    preferred_topics = preferred_dir / "merged_topic_info.csv"
+    fallback_articles = fallback_dir / "merged_articles.csv"
+    fallback_topics = fallback_dir / "merged_topic_info.csv"
+
+    if preferred_articles.exists() and preferred_topics.exists():
+        return (
+            preferred_iteration_id,
+            pd.read_csv(preferred_articles, low_memory=False),
+            pd.read_csv(preferred_topics, low_memory=False),
+            preferred_dir,
+        )
+
+    _setup_paths(project_root)
+    from merged_outlets_analysis import load_exported_article_topic_dataset
+
+    local_articles = load_exported_article_topic_dataset(project_root)
+    if local_articles is None:
+        if fallback_articles.exists() and fallback_topics.exists():
+            return (
+                fallback_iteration_id,
+                pd.read_csv(fallback_articles, low_memory=False),
+                pd.read_csv(fallback_topics, low_memory=False),
+                fallback_dir,
+            )
+        raise FileNotFoundError(
+            "Could not find experiment outputs (v2/v1) or the local merged article export."
+        )
+
+    topic_info = build_topic_info_from_article_frame(local_articles)
+    preferred_dir.mkdir(parents=True, exist_ok=True)
+    local_articles.to_csv(preferred_articles, index=False)
+    topic_info.to_csv(preferred_topics, index=False)
+
+    outlet_summary = _compute_outlet_summary(local_articles)
+    meta = {
+        "iteration_id": preferred_iteration_id,
+        "params": IterationParams(
+            min_similarity=0.7,
+            outlier_strategy="none",
+            outlier_threshold=0.0,
+        ).to_dict(),
+        "n_topics": int(topic_info.loc[topic_info["Topic"] != -1, "Topic"].nunique()),
+        "outlier_rates": {
+            label: stats["outlier_rate"] for label, stats in outlet_summary.items()
+        },
+        "outlet_summary": outlet_summary,
+        "duration_seconds": 0.0,
+        "source_note": (
+            "Reconstructed from 1a_BERTopic/local_outputs/merged_articles_with_topics.csv"
+        ),
+    }
+    with open(preferred_dir / "meta.json", "w") as handle:
+        json.dump(meta, handle, indent=2, ensure_ascii=False)
+
+    print(f"Materialized '{preferred_iteration_id}' in {preferred_dir}")
+    return preferred_iteration_id, local_articles, topic_info, preferred_dir

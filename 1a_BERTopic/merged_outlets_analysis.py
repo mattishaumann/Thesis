@@ -10,11 +10,101 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.patches import Rectangle
 from matplotlib.ticker import PercentFormatter
+
+THESIS_COLORS = {
+    "Tagesschau": "#4C4C4C",
+    "RT": "#D4603A",
+    "Antispiegel": "#C85735",
+    "Compact": "#B94F30",
+    "Deutschlandkurier": "#A8462B",
+    "Nius": "#4A90D9",
+    "Tichys Einblick": "#2F6DB2",
+    "Pro-Russian / right-extremist": "#D4603A",
+    "Populist-alternative": "#4A90D9",
+    "Convergence": "#B0B0B0",
+    "Near parity": "#B0B0B0",
+}
+
+THESIS_RC = {
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+    "savefig.facecolor": "white",
+    "axes.edgecolor": "#CFCFCF",
+    "axes.linewidth": 0.8,
+    "axes.grid": True,
+    "grid.color": "#E9E9E9",
+    "grid.linewidth": 0.8,
+    "grid.alpha": 1.0,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.labelsize": 11,
+    "axes.titlesize": 13,
+    "xtick.color": "#444444",
+    "ytick.color": "#444444",
+    "xtick.labelsize": 10,
+    "ytick.labelsize": 10,
+    "legend.frameon": False,
+    "font.family": "DejaVu Sans",
+}
+
+
+def _thesis_axis_style(ax: plt.Axes) -> plt.Axes:
+    """Apply a clean, thesis-ready axis treatment."""
+
+    ax.set_facecolor("white")
+    for spine_name in ("top", "right"):
+        ax.spines[spine_name].set_visible(False)
+    for spine_name in ("left", "bottom"):
+        ax.spines[spine_name].set_color("#D5D5D5")
+        ax.spines[spine_name].set_linewidth(0.8)
+    ax.tick_params(axis="both", colors="#444444", labelsize=10)
+    ax.grid(True, axis="both", color="#ECECEC", linewidth=0.8, zorder=0)
+    ax.set_axisbelow(True)
+    return ax
+
+
+def _thesis_bar_labels(
+    ax: plt.Axes,
+    values: np.ndarray | pd.Series | list[float],
+    positions: np.ndarray | pd.Series | list[float],
+    *,
+    fmt: str = "{:.2f}",
+    offset: float | None = None,
+    color: str = "#444444",
+    fontsize: int = 9,
+) -> None:
+    """Annotate bar ends for simple horizontal bar charts."""
+
+    values_array = np.asarray(values, dtype=float)
+    positions_array = np.asarray(positions, dtype=float)
+    if values_array.size == 0:
+        return
+
+    if offset is None:
+        max_abs = float(np.nanmax(np.abs(values_array))) if values_array.size else 0.0
+        offset = max(max_abs * 0.015, 0.01)
+
+    for value, position in zip(values_array, positions_array):
+        if np.isnan(value):
+            continue
+        x_pos = value + offset if value >= 0 else value - offset
+        ha = "left" if value >= 0 else "right"
+        ax.text(
+            x_pos,
+            position,
+            fmt.format(value),
+            va="center",
+            ha=ha,
+            fontsize=fontsize,
+            color=color,
+        )
 
 MODULE_DIR = Path(__file__).resolve().parent
 DEFAULT_PROJECT_ROOT = MODULE_DIR.parent

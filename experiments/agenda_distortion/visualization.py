@@ -7,11 +7,17 @@ All figures use consistent thesis styling and are PDF-exportable.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.lines import Line2D
+from matplotlib.patches import Rectangle
+from matplotlib.ticker import MultipleLocator, PercentFormatter
 
 # Import thesis design constants from the shared library
 import sys
@@ -28,12 +34,160 @@ from merged_outlets_analysis import (
     _thesis_bar_labels,
 )
 
+ALT_OUTLET_CATEGORY_MAP = {
+    "rt": "Pro-Russian / right-extremist",
+    "antispiegel": "Pro-Russian / right-extremist",
+    "compact": "Pro-Russian / right-extremist",
+    "deutschlandkurier": "Pro-Russian / right-extremist",
+    "nius": "Populist-alternative",
+    "tichys": "Populist-alternative",
+}
+
+AGENDA_SCATTER_COLORS = {
+    "Pro-Russian / right-extremist": "#D4603A",
+    "Populist-alternative": "#4A90D9",
+    "Convergence": "#B0B0B0",
+}
+
+TOPIC_LABEL_EXACT = {
+    "ukraine_putin_selenskyj_trump": "Ukraine / Putin",
+    "russland_ukraine_russischen_russische": "Russian Ukraine framing",
+    "ukraine_russland_russischen_ukrainische": "Russia-Ukraine war",
+    "spiegel_bellingcat_journalisten_occrp": "Media criticism",
+    "afd_bsw_partei_spd": "AfD / BSW parties",
+    "merz_kanzler_afd_stadtbild": "Merz / chancellor race",
+    "dobrindt_asylbewerber_grenzkontrollen_geflüchtete": "Migration / border controls",
+    "social media_media_jugendliche_social": "Social media / youth",
+    "bundesanwaltschaft_gericht_haft_prozess": "Courts / criminal cases",
+    "buchmesse_messe_kirk_halle": "Book fair debate",
+    "moderator_studio_radio_abend": "TV / radio commentary",
+    "venezuela_maduro_trump_venezuelas": "Venezuela / Maduro",
+    "babis_türkei_chp_partei": "Turkey / CHP politics",
+    "co2_strom_reiche_energiewende": "Energy / climate policy",
+    "trump_epstein_trumps_demokraten": "Trump / Epstein",
+    "grönland_trump_nato_dänemark": "Greenland / NATO",
+    "wirtschaft_ifo_deutsche wirtschaft_wachstum": "German economy",
+    "china_xi_indien_trump": "China / India",
+}
+
+TOPIC_TOKEN_MAP = {
+    "afd": "AfD",
+    "bsw": "BSW",
+    "spd": "SPD",
+    "cdu": "CDU",
+    "csu": "CSU",
+    "ukraine": "Ukraine",
+    "russland": "Russia",
+    "russischen": "Russia",
+    "russische": "Russia",
+    "ukrainische": "Ukraine",
+    "putin": "Putin",
+    "selenskyj": "Zelenskyy",
+    "trump": "Trump",
+    "merz": "Merz",
+    "kanzler": "Chancellor",
+    "israel": "Israel",
+    "hamas": "Hamas",
+    "gazastreifen": "Gaza",
+    "gaza": "Gaza",
+    "bundesanwaltschaft": "Federal prosecutor",
+    "gericht": "Courts",
+    "prozess": "Trials",
+    "haft": "Detention",
+    "social": "Social media",
+    "media": "Media",
+    "jugendliche": "Youth",
+    "asylbewerber": "Asylum",
+    "grenzkontrollen": "Borders",
+    "geflüchtete": "Refugees",
+    "migration": "Migration",
+    "bellingcat": "Bellingcat",
+    "journalisten": "Journalists",
+    "strom": "Electricity",
+    "energiewende": "Energy transition",
+    "wirtschaft": "Economy",
+    "wachstum": "Growth",
+    "ifo": "IFO",
+    "venezuela": "Venezuela",
+    "maduro": "Maduro",
+    "buchmesse": "Book fair",
+    "messe": "Fair",
+    "radio": "Radio",
+    "moderator": "Host",
+    "studio": "Studio",
+    "abend": "Evening show",
+    "türkei": "Turkey",
+    "chp": "CHP",
+    "partei": "Party politics",
+    "co2": "CO2",
+    "grönland": "Greenland",
+    "nato": "NATO",
+    "dänemark": "Denmark",
+}
+
+TOPIC_TOKEN_STOPWORDS = {
+    "und",
+    "der",
+    "die",
+    "das",
+    "des",
+    "den",
+    "dem",
+    "eu",
+    "euro",
+    "deutsche",
+    "deutschen",
+    "deutschland",
+    "deutschlands",
+}
+
 
 def _save_fig(fig, path: Path | None) -> None:
     if path is not None:
         path.parent.mkdir(parents=True, exist_ok=True)
         fig.savefig(path, bbox_inches="tight", dpi=300, facecolor="white")
         print(f"Saved: {path}")
+
+
+def _clean_topic_source_label(value: object) -> str:
+    if pd.isna(value) or value is None:
+        return ""
+    text = str(value).strip()
+    text = re.sub(r"^Topic\s+\d+\s+[—-]\s+", "", text)
+    return text.strip()
+
+
+def suggest_short_topic_label(raw_label: object) -> str:
+    """Turn BERTopic keyword labels into short, reviewable plot labels."""
+
+    cleaned = _clean_topic_source_label(raw_label).lower()
+    if not cleaned:
+        return "Unlabeled topic"
+    if cleaned in TOPIC_LABEL_EXACT:
+        return TOPIC_LABEL_EXACT[cleaned]
+
+    tokens = [token for token in re.split(r"[_\s/]+", cleaned) if token]
+    seen: set[str] = set()
+    words: list[str] = []
+    for token in tokens:
+        if token in TOPIC_TOKEN_STOPWORDS:
+            continue
+        mapped = TOPIC_TOKEN_MAP.get(token, token.replace("-", " ").strip())
+        key = mapped.lower()
+        if key in seen or not mapped:
+            continue
+        seen.add(key)
+        if mapped.islower():
+            mapped = mapped.title()
+        words.append(mapped)
+        if len(words) >= 3:
+            break
+
+    if not words:
+        fallback = cleaned.replace("_", " ").strip()
+        return fallback.title() if fallback else "Unlabeled topic"
+
+    return " / ".join(words)
 
 
 # ---------------------------------------------------------------------------
@@ -654,4 +808,460 @@ def plot_distortion_radar(
         fig.tight_layout()
 
     _save_fig(fig, save_path)
+    return fig
+
+
+# ---------------------------------------------------------------------------
+# 10. Substitution-amplification scatter for H1
+# ---------------------------------------------------------------------------
+
+
+def _canonical_topic_info(topic_info_df: pd.DataFrame) -> pd.DataFrame:
+    """Normalize topic-info columns from either BERTopic or article-export sources."""
+
+    renamed = topic_info_df.rename(
+        columns={
+            "Topic": "merged_topic",
+            "DisplayTopic": "merged_display_topic",
+            "KeywordLabel": "topic_keyword_label",
+            "TopicLabel": "topic_label",
+            "DisplayLabel": "topic_display_label",
+            "ManualTopicName": "manual_topic_name",
+        }
+    ).copy()
+
+    for column in ("merged_topic", "merged_display_topic"):
+        if column in renamed.columns:
+            renamed[column] = pd.to_numeric(renamed[column], errors="coerce").astype("Int64")
+
+    return renamed
+
+
+def build_topic_label_review(
+    topic_info_df: pd.DataFrame,
+    *,
+    override_path: Path | None = None,
+) -> pd.DataFrame:
+    """Create a reviewable topic-label mapping and optional override template."""
+
+    info = _canonical_topic_info(topic_info_df)
+    info = info.loc[info["merged_topic"] != -1].copy()
+
+    raw_label = (
+        info.get("manual_topic_name")
+        .fillna("")
+        .astype(str)
+        .where(lambda s: s.str.strip() != "", other=np.nan)
+        .fillna(info.get("topic_label"))
+        .fillna(info.get("topic_keyword_label"))
+    )
+
+    review = info.copy()
+    review["raw_label"] = raw_label
+    review["suggested_plot_label"] = review["raw_label"].map(suggest_short_topic_label)
+    review["manual_plot_label"] = pd.Series(pd.NA, index=review.index, dtype="object")
+
+    if override_path is not None:
+        override_path.parent.mkdir(parents=True, exist_ok=True)
+        if override_path.exists():
+            overrides = pd.read_csv(override_path)
+            if "merged_topic" in overrides.columns:
+                overrides["merged_topic"] = pd.to_numeric(
+                    overrides["merged_topic"], errors="coerce"
+                ).astype("Int64")
+                manual_cols = [col for col in overrides.columns if col == "manual_plot_label"]
+                merge_cols = ["merged_topic"] + manual_cols
+                review = review.merge(overrides[merge_cols], on="merged_topic", how="left", suffixes=("", "_override"))
+                if "manual_plot_label_override" in review.columns:
+                    review["manual_plot_label"] = review["manual_plot_label_override"].combine_first(
+                        review["manual_plot_label"]
+                    )
+                    review = review.drop(columns=["manual_plot_label_override"])
+        else:
+            template = review[
+                [
+                    "merged_topic",
+                    "merged_display_topic",
+                    "topic_keyword_label",
+                    "raw_label",
+                    "suggested_plot_label",
+                ]
+            ].copy()
+            template["manual_plot_label"] = ""
+            template.to_csv(override_path, index=False)
+
+    review["final_plot_label"] = review["manual_plot_label"].fillna("").astype(str)
+    review["final_plot_label"] = review["final_plot_label"].where(
+        review["final_plot_label"].str.strip() != "",
+        review["suggested_plot_label"],
+    )
+
+    ordered = [
+        "merged_topic",
+        "merged_display_topic",
+        "topic_keyword_label",
+        "raw_label",
+        "suggested_plot_label",
+        "manual_plot_label",
+        "final_plot_label",
+    ]
+    return review.loc[:, [col for col in ordered if col in review.columns]].sort_values(
+        ["merged_display_topic", "merged_topic"],
+        ascending=[True, True],
+        na_position="last",
+    ).reset_index(drop=True)
+
+
+def _zone_from_shares(
+    tagesschau_share: float,
+    outlet_share: float,
+    *,
+    substitution_cutoff: float = 0.02,
+    amplification_multiplier: float = 1.5,
+) -> str:
+    """Classify a topic point into the requested conceptual zones."""
+
+    if tagesschau_share < substitution_cutoff:
+        return "Substitution"
+    if outlet_share > amplification_multiplier * tagesschau_share:
+        return "Amplification"
+    return "Near parity"
+
+
+def select_signature_topics(
+    all_comparisons_df: pd.DataFrame,
+    topic_label_review_df: pd.DataFrame,
+    *,
+    outlet_keys: tuple[str, ...] = ("rt", "antispiegel", "compact", "deutschlandkurier", "nius", "tichys"),
+    min_signature_share: float = 0.03,
+    substitution_cutoff: float = 0.02,
+    amplification_multiplier: float = 1.5,
+) -> pd.DataFrame:
+    """Pick one signature topic per alternative outlet."""
+
+    label_map = (
+        topic_label_review_df[["merged_topic", "final_plot_label"]]
+        .drop_duplicates(subset=["merged_topic"])
+        .set_index("merged_topic")["final_plot_label"]
+        .to_dict()
+    )
+
+    top5_map = {}
+    for outlet_key in outlet_keys:
+        outlet_rows = all_comparisons_df.loc[
+            (all_comparisons_df["outlet_key"] == outlet_key)
+            & (all_comparisons_df["merged_topic"] != -1)
+        ].copy()
+        top5_map[outlet_key] = (
+            outlet_rows.sort_values(["article_share", "share_diff"], ascending=[False, False])
+            .head(5)["merged_topic"]
+            .astype("Int64")
+            .tolist()
+        )
+
+    rows: list[dict[str, object]] = []
+    for outlet_key in outlet_keys:
+        outlet_rows = all_comparisons_df.loc[
+            (all_comparisons_df["outlet_key"] == outlet_key)
+            & (all_comparisons_df["merged_topic"] != -1)
+        ].copy()
+        outlet_rows = outlet_rows.sort_values(
+            ["share_diff", "article_share", "baseline_article_share"],
+            ascending=[False, False, False],
+        ).reset_index(drop=True)
+
+        visible_rows = outlet_rows.loc[outlet_rows["article_share"] >= min_signature_share].copy()
+        used_visibility_fallback = False
+        if not visible_rows.empty:
+            chosen = visible_rows.iloc[0]
+            if int(chosen["merged_topic"]) != int(outlet_rows.iloc[0]["merged_topic"]):
+                used_visibility_fallback = True
+        else:
+            chosen = outlet_rows.iloc[0]
+
+        merged_topic = int(chosen["merged_topic"])
+        overlapping_outlets = [
+            other_key
+            for other_key, top_topics in top5_map.items()
+            if other_key != outlet_key and merged_topic in top_topics
+        ]
+        rows.append(
+            {
+                "outlet_key": outlet_key,
+                "outlet_label": chosen["outlet_label"],
+                "category": ALT_OUTLET_CATEGORY_MAP.get(outlet_key, "Other"),
+                "merged_topic": merged_topic,
+                "merged_display_topic": int(chosen["merged_display_topic"]),
+                "raw_label": chosen["topic_keyword_label"],
+                "plot_label": label_map.get(merged_topic, suggest_short_topic_label(chosen["topic_keyword_label"])),
+                "outlet_share": float(chosen["article_share"]),
+                "tagesschau_share": float(chosen["baseline_article_share"]),
+                "share_difference": float(chosen["share_diff"]),
+                "zone": _zone_from_shares(
+                    float(chosen["baseline_article_share"]),
+                    float(chosen["article_share"]),
+                    substitution_cutoff=substitution_cutoff,
+                    amplification_multiplier=amplification_multiplier,
+                ),
+                "signature_rank_by_difference": int(outlet_rows.index[outlet_rows["merged_topic"] == merged_topic][0]) + 1,
+                "used_visibility_fallback": used_visibility_fallback,
+                "overlap_with_other_top5": ", ".join(overlapping_outlets),
+            }
+        )
+
+    return pd.DataFrame(rows).sort_values(
+        ["category", "share_difference"],
+        ascending=[True, False],
+    ).reset_index(drop=True)
+
+
+def select_convergence_topics(
+    prevalence_df: pd.DataFrame,
+    topic_label_review_df: pd.DataFrame,
+    *,
+    baseline_key: str = "tagesschau",
+    alt_outlet_keys: tuple[str, ...] = ("rt", "antispiegel", "compact", "deutschlandkurier", "nius", "tichys"),
+    n_topics: int = 3,
+    min_baseline_share: float = 0.015,
+    min_mean_share: float = 0.012,
+    min_all_share: float = 0.003,
+) -> pd.DataFrame:
+    """Identify topics where all outlets sit relatively close together."""
+
+    label_map = (
+        topic_label_review_df[["merged_topic", "final_plot_label"]]
+        .drop_duplicates(subset=["merged_topic"])
+        .set_index("merged_topic")["final_plot_label"]
+        .to_dict()
+    )
+
+    all_keys = [baseline_key, *alt_outlet_keys]
+    wide = (
+        prevalence_df.loc[prevalence_df["merged_topic"] != -1]
+        .pivot_table(index="merged_topic", columns="outlet_key", values="article_share", fill_value=0)
+        .reindex(columns=all_keys, fill_value=0)
+    )
+    wide["alt_mean_share"] = wide[list(alt_outlet_keys)].mean(axis=1)
+    wide["alt_std_share"] = wide[list(alt_outlet_keys)].std(axis=1)
+    wide["alt_range_share"] = wide[list(alt_outlet_keys)].max(axis=1) - wide[list(alt_outlet_keys)].min(axis=1)
+    wide["diagonal_gap"] = (wide["alt_mean_share"] - wide[baseline_key]).abs()
+    wide["mean_all_share"] = wide[all_keys].mean(axis=1)
+    wide["min_all_share"] = wide[all_keys].min(axis=1)
+
+    candidates = wide.loc[
+        (wide[baseline_key] >= min_baseline_share)
+        & (wide["mean_all_share"] >= min_mean_share)
+        & (wide["min_all_share"] >= min_all_share)
+    ].copy()
+
+    info_cols = (
+        prevalence_df[["merged_topic", "merged_display_topic", "topic_keyword_label"]]
+        .drop_duplicates(subset=["merged_topic"])
+    )
+    candidates = (
+        candidates.reset_index()
+        .merge(info_cols, on="merged_topic", how="left")
+        .sort_values(["diagonal_gap", "alt_std_share", "mean_all_share"], ascending=[True, True, False])
+        .head(n_topics)
+        .reset_index(drop=True)
+    )
+
+    candidates["plot_label"] = candidates["merged_topic"].map(label_map).fillna(
+        candidates["topic_keyword_label"].map(suggest_short_topic_label)
+    )
+    candidates["outlet_label"] = "All outlets"
+    candidates["category"] = "Convergence"
+    candidates["tagesschau_share"] = candidates[baseline_key].astype(float)
+    candidates["outlet_share"] = candidates["alt_mean_share"].astype(float)
+    return candidates
+
+
+def build_substitution_amplification_points(
+    signature_df: pd.DataFrame,
+    convergence_df: pd.DataFrame,
+) -> pd.DataFrame:
+    """Combine signature and convergence topics into one plotting dataframe."""
+
+    signature_points = signature_df.copy()
+    signature_points["point_type"] = "signature"
+    signature_points["point_color"] = signature_points["category"].map(AGENDA_SCATTER_COLORS).fillna("#888888")
+    signature_points["point_size"] = 120 + (signature_points["outlet_share"] * 1200)
+
+    convergence_points = convergence_df.copy()
+    convergence_points["point_type"] = "convergence"
+    convergence_points["point_color"] = AGENDA_SCATTER_COLORS["Convergence"]
+    convergence_points["point_size"] = 115 + (convergence_points["outlet_share"] * 1000)
+    convergence_points["zone"] = "Convergence"
+
+    points = pd.concat([signature_points, convergence_points], ignore_index=True, sort=False)
+    points["x_share"] = points["tagesschau_share"].astype(float)
+    points["y_share"] = points["outlet_share"].astype(float)
+    return points
+
+
+def plot_substitution_amplification_scatter(
+    points_df: pd.DataFrame,
+    *,
+    colors: dict[str, str] | None = None,
+    save_path: Path | None = None,
+    png_preview_path: Path | None = None,
+    figsize: tuple[float, float] = (11.5, 8.5),
+) -> plt.Figure:
+    """Render the publication-style substitution-amplification scatter."""
+
+    colors = colors or AGENDA_SCATTER_COLORS
+    plot_df = points_df.copy()
+    if plot_df.empty:
+        raise ValueError("No points available for substitution-amplification scatter.")
+
+    axis_limit = float(max(plot_df["x_share"].max(), plot_df["y_share"].max()))
+    axis_limit = max(axis_limit * 1.12, 0.08)
+
+    with plt.rc_context(THESIS_RC):
+        fig, ax = plt.subplots(figsize=figsize, dpi=150)
+        fig.patch.set_facecolor("white")
+        _thesis_axis_style(ax)
+        ax.grid(False)
+
+        custom_offsets = {
+            ("Russian Ukraine framing", "Antispiegel"): (18, -2, "left", "top"),
+            ("Russian Ukraine framing", "RT"): (8, 4, "left", "bottom"),
+            ("AfD / BSW parties", "Deutschlandkurier"): (8, 6, "left", "bottom"),
+            ("TV / radio commentary", "Nius"): (10, 8, "left", "bottom"),
+            ("Book fair debate", "Compact"): (10, -2, "left", "top"),
+            ("Merz / chancellor race", "Tichys Einblick"): (10, 8, "left", "bottom"),
+            ("Greenland / NATO", "All outlets"): (8, 8, "left", "bottom"),
+            ("Turkey / CHP politics", "All outlets"): (8, -2, "left", "top"),
+            ("Energy / climate policy", "All outlets"): (8, -10, "left", "top"),
+        }
+
+        zone_rectangles = [
+            (
+                Rectangle(
+                    (0.0, axis_limit * 0.56),
+                    axis_limit * 0.34,
+                    axis_limit * 0.40,
+                    facecolor="#F4EDE7",
+                    edgecolor="none",
+                    alpha=0.85,
+                    zorder=0,
+                ),
+                "Substitution zone\nNot in mainstream",
+                (axis_limit * 0.03, axis_limit * 0.93),
+            ),
+            (
+                Rectangle(
+                    (axis_limit * 0.36, axis_limit * 0.56),
+                    axis_limit * 0.56,
+                    axis_limit * 0.40,
+                    facecolor="#F5F1E8",
+                    edgecolor="none",
+                    alpha=0.85,
+                    zorder=0,
+                ),
+                "Amplification zone\nSame topic, much higher weight",
+                (axis_limit * 0.53, axis_limit * 0.93),
+            ),
+            (
+                Rectangle(
+                    (axis_limit * 0.50, 0.0),
+                    axis_limit * 0.42,
+                    axis_limit * 0.28,
+                    facecolor="#EEF1EB",
+                    edgecolor="none",
+                    alpha=0.90,
+                    zorder=0,
+                ),
+                "Mainstream only",
+                (axis_limit * 0.63, axis_limit * 0.17),
+            ),
+        ]
+        for rectangle, label, (x_text, y_text) in zone_rectangles:
+            ax.add_patch(rectangle)
+            ax.text(
+                x_text,
+                y_text,
+                label,
+                ha="left",
+                va="top",
+                fontsize=11,
+                color="#6B6B6B",
+                zorder=1,
+            )
+
+        ax.plot([0, axis_limit], [0, axis_limit], ls=(0, (4, 4)), lw=1.2, color="#C9C9C9", zorder=1)
+        ax.text(axis_limit * 0.98, axis_limit * 0.98, "parity", ha="left", va="bottom", fontsize=10, color="#8D8D8D")
+
+        ax.scatter(
+            plot_df["x_share"],
+            plot_df["y_share"],
+            s=plot_df["point_size"],
+            c=plot_df["point_color"],
+            edgecolors="white",
+            linewidths=1.2,
+            alpha=0.95,
+            zorder=3,
+        )
+
+        for _, row in plot_df.iterrows():
+            dx, dy, ha, va = custom_offsets.get(
+                (str(row["plot_label"]), str(row["outlet_label"])),
+                (
+                    8,
+                    8 if row["y_share"] >= row["x_share"] else -10,
+                    "left",
+                    "bottom" if row["y_share"] >= row["x_share"] else "top",
+                ),
+            )
+            ax.annotate(
+                str(row["plot_label"]),
+                xy=(float(row["x_share"]), float(row["y_share"])),
+                xytext=(dx, dy),
+                textcoords="offset points",
+                ha=ha,
+                va=va,
+                fontsize=11,
+                color="#2F2F2F",
+                zorder=4,
+            )
+            ax.annotate(
+                str(row["outlet_label"]),
+                xy=(float(row["x_share"]), float(row["y_share"])),
+                xytext=(dx, dy - 14 if dy > 0 else dy + 14),
+                textcoords="offset points",
+                ha=ha,
+                va=va,
+                fontsize=9,
+                color="#7A7A7A",
+                zorder=4,
+            )
+
+        ax.set_xlim(0, axis_limit)
+        ax.set_ylim(0, axis_limit)
+        tick_step = 0.05 if axis_limit >= 0.15 else 0.02
+        ax.xaxis.set_major_locator(MultipleLocator(tick_step))
+        ax.yaxis.set_major_locator(MultipleLocator(tick_step))
+        ax.xaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
+        ax.yaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
+        ax.set_xlabel("Tagesschau topic prevalence →", fontsize=12)
+        ax.set_ylabel("Outlet topic prevalence →", fontsize=12)
+        ax.set_title("Substitution and amplification of topic prevalence vs Tagesschau", pad=16)
+
+        legend_handles = [
+            Line2D([0], [0], marker="o", color="w", label="Pro-Russian / right-extremist", markerfacecolor=colors["Pro-Russian / right-extremist"], markersize=12),
+            Line2D([0], [0], marker="o", color="w", label="Populist-alternative", markerfacecolor=colors["Populist-alternative"], markersize=12),
+            Line2D([0], [0], marker="o", color="w", label="Near parity", markerfacecolor=colors["Convergence"], markersize=12),
+        ]
+        ax.legend(
+            handles=legend_handles,
+            loc="upper center",
+            bbox_to_anchor=(0.5, -0.10),
+            ncol=3,
+            frameon=False,
+            fontsize=10,
+        )
+        fig.tight_layout()
+
+    _save_fig(fig, save_path)
+    _save_fig(fig, png_preview_path)
     return fig

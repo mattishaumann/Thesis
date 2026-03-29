@@ -45,3 +45,5 @@ Sentiment_Analysis/outputs/
 3a_Sentiment_Analysis/outputs/
 
 2a_NER/outputs/*.csv
+experiments/agenda_distortion/outputs/
+experiments/agenda_distortion/*.executed.ipynb

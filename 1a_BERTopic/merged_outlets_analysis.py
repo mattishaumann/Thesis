@@ -62,6 +62,28 @@ def find_project_root(start: Path) -> Path:
     raise FileNotFoundError("Could not find project root containing .git")
 
 
+def resolve_raw_data_root(project_root: Path) -> Path:
+    candidates = [
+        project_root / "data" / "raw",
+        project_root / "data source" / "raw",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    raise FileNotFoundError(
+        "Could not find raw data root. Tried: " + ", ".join(str(candidate) for candidate in candidates)
+    )
+
+
+def resolve_existing_path(*candidates: Path) -> Path:
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    raise FileNotFoundError(
+        "Could not find any expected path. Tried: " + ", ".join(str(candidate) for candidate in candidates)
+    )
+
+
 def read_csv_resilient(csv_path: Path) -> pd.DataFrame:
     for encoding in ("utf-8", "utf-8-sig", "latin-1"):
         try:
@@ -166,7 +188,10 @@ def _remove_trailing_nius_reference(text: object) -> object:
 
 
 def load_rt_dataframe(project_root: Path) -> pd.DataFrame:
-    rt_file = project_root / "data" / "raw" / "Alternative Medien" / "RT_de.xlsx"
+    raw_root = resolve_raw_data_root(project_root)
+    rt_file = resolve_existing_path(
+        raw_root / "Alternative Medien" / "RT_de.xlsx",
+    )
     df = pd.read_excel(rt_file)
     df["source"] = "RT_de"
     df["source_file"] = rt_file.name
@@ -193,7 +218,10 @@ def load_rt_dataframe(project_root: Path) -> pd.DataFrame:
 
 
 def load_compact_dataframe(project_root: Path) -> pd.DataFrame:
-    base_dir = project_root / "data" / "raw" / "Alternative Medien" / "Compact"
+    raw_root = resolve_raw_data_root(project_root)
+    base_dir = resolve_existing_path(
+        raw_root / "Alternative Medien" / "Compact",
+    )
     df = _load_csv_tree(base_dir, "Compact")
     df_clean = df.copy()
     dates = pd.to_datetime(df_clean["Date"], errors="coerce")
@@ -207,7 +235,11 @@ def load_compact_dataframe(project_root: Path) -> pd.DataFrame:
 
 
 def load_nius_dataframe(project_root: Path) -> pd.DataFrame:
-    base_dir = project_root / "data" / "raw" / "Alternative Medien" / "Nius_Rohdaten_neu"
+    raw_root = resolve_raw_data_root(project_root)
+    base_dir = resolve_existing_path(
+        raw_root / "Alternative Medien" / "Nius_Rohdaten_neu",
+        raw_root / "Alternative Medien" / "Nius",
+    )
     df = _load_csv_tree(base_dir, "Nius")
 
     df_clean = df[["title", "categories", "day", "authors", "article_text", "url", "source", "source_file"]].copy()
@@ -240,7 +272,10 @@ def load_nius_dataframe(project_root: Path) -> pd.DataFrame:
 
 
 def load_tichys_dataframe(project_root: Path) -> pd.DataFrame:
-    base_dir = project_root / "data" / "raw" / "Alternative Medien" / "Tichy's Einblick"
+    raw_root = resolve_raw_data_root(project_root)
+    base_dir = resolve_existing_path(
+        raw_root / "Alternative Medien" / "Tichy's Einblick",
+    )
     df = _load_csv_tree(base_dir, "Tichys_Einblick")
 
     df_clean = df.rename(
@@ -276,7 +311,10 @@ def load_tichys_dataframe(project_root: Path) -> pd.DataFrame:
 
 
 def load_antispiegel_dataframe(project_root: Path) -> pd.DataFrame:
-    base_dir = project_root / "data" / "raw" / "Alternative Medien" / "Antispiegel"
+    raw_root = resolve_raw_data_root(project_root)
+    base_dir = resolve_existing_path(
+        raw_root / "Alternative Medien" / "Antispiegel",
+    )
     df = _load_csv_tree(base_dir, "Antispiegel")
 
     df_clean = df.copy()
@@ -300,7 +338,10 @@ def load_antispiegel_dataframe(project_root: Path) -> pd.DataFrame:
 
 
 def load_tagesschau_dataframe(project_root: Path) -> pd.DataFrame:
-    base_dir = project_root / "data" / "raw" / "Alternative Medien" / "Tagesschau"
+    raw_root = resolve_raw_data_root(project_root)
+    base_dir = resolve_existing_path(
+        raw_root / "Alternative Medien" / "Tagesschau",
+    )
     df = _load_csv_tree(base_dir, "Tagesschau")
 
     df = df.rename(columns={"updateCheckUrl": "URL"})
@@ -339,7 +380,10 @@ def load_tagesschau_dataframe(project_root: Path) -> pd.DataFrame:
 
 
 def load_deutschlandkurier_dataframe(project_root: Path) -> pd.DataFrame:
-    base_dir = project_root / "data" / "raw" / "Alternative Medien" / "Deutschlandkurier"
+    raw_root = resolve_raw_data_root(project_root)
+    base_dir = resolve_existing_path(
+        raw_root / "Alternative Medien" / "Deutschlandkurier",
+    )
     df = _load_csv_tree(base_dir, "Deutschlandkurier")
 
     df_clean = df[["title", "categories", "created", "article_text", "url", "source", "source_file"]].copy()

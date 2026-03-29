@@ -22,16 +22,16 @@ cells = [
         """
         # Topic Prevalence Map vs Tagesschau
 
-        This notebook maps each merged topic in a two-axis prevalence space:
+        This notebook builds the screenshot-style prevalence map:
 
         - **x-axis:** `Tagesschau` topic prevalence
-        - **y-axis:** selected outlet topic prevalence
+        - **y-axis:** outlet topic prevalence
+        - **diagonal:** parity
+        - **top-left:** substitution zone
+        - **upper-above-diagonal:** amplification zone
+        - **bottom-right:** mainstream-only
 
-        Interpretation:
-        - points **above** the diagonal indicate **amplification** relative to `Tagesschau`
-        - points **below** the diagonal indicate **substitution away from** the mainstream agenda
-
-        The notebook is designed for fast iteration. It loads the saved article-level merged-topic dataframe if available and only rebuilds it when explicitly requested.
+        The primary chart is a **salient multi-outlet map**. It places selected topic-outlet points from across the alternative outlets into that shared x/y space, which is closer to your sketch than a separate scatter for one outlet only.
         """
     ),
     code(
@@ -46,9 +46,34 @@ cells = [
 
         REBUILD_ARTICLE_TOPIC_EXPORT = False
         OUTLET_TO_COMPARE = "rt"
-        LABEL_COUNT_PER_SIDE = 6
-        MIN_LABEL_SHARE_DIFF = 0.01
         SAVE_FIGURES = False
+
+        # These thresholds define the screenshot-style zones.
+        SUBSTITUTION_BASELINE_MAX = 0.035
+        SUBSTITUTION_OUTLET_MIN = 0.07
+        AMPLIFICATION_BASELINE_MIN = 0.03
+        AMPLIFICATION_MARGIN = 0.01
+        AMPLIFICATION_Y_MIN = 0.08
+        MAINSTREAM_ONLY_BASELINE_MIN = 0.045
+        MAINSTREAM_ONLY_MARGIN = 0.01
+        MAINSTREAM_ONLY_OUTLET_MAX = 0.045
+        PARITY_MARGIN = 0.006
+        PARITY_MIN_BASELINE_SHARE = 0.045
+        POINTS_PER_ZONE = 4
+
+        # Edit this mapping if you want different outlet-family labels or colors.
+        OUTLET_GROUP_MAP = {
+            "rt": "Pro-Russian / right-extremist",
+            "antispiegel": "Pro-Russian / right-extremist",
+            "compact": "Pro-Russian / right-extremist",
+            "deutschlandkurier": "Pro-Russian / right-extremist",
+            "nius": "Populist-alternative",
+            "tichys": "Populist-alternative",
+        }
+        OUTLET_GROUP_COLORS = {
+            "Pro-Russian / right-extremist": "#d67a4d",
+            "Populist-alternative": "#5c8fd6",
+        }
 
         PROJECT_ROOT = Path.cwd().resolve()
         while not (PROJECT_ROOT / ".git").exists():
@@ -70,14 +95,13 @@ cells = [
 
         print(f"Project root: {PROJECT_ROOT}")
         print(f"Local outputs: {moa.get_local_output_dir(PROJECT_ROOT)}")
-        print(f"Compare outlet: {OUTLET_TO_COMPARE}")
         """
     ),
     md(
         """
         ## 1. Load The Article-Level Merged Topic Dataset
 
-        This is the working dataframe with one matched merged topic per article.
+        This is the saved dataframe with one matched merged topic per article.
         """
     ),
     code(
@@ -106,16 +130,14 @@ cells = [
 
         print(f"Article-topic rows: {len(article_topic_df):,}")
         print(f"Distinct outlets: {article_topic_df['outlet_label'].nunique()}")
-        print("Saved article-topic exports:")
         for kind, path in article_topic_exports.items():
-            print(f"  {kind}: {path}")
+            print(f"{kind}: {path}")
 
         display(
             article_topic_df[
                 [
                     "outlet_label",
                     "Title",
-                    "merged_topic",
                     "merged_display_topic",
                     "topic_label",
                 ]
@@ -125,29 +147,28 @@ cells = [
     ),
     md(
         """
-        ## 2. Build Topic Prevalence Tables
+        ## 2. Build The Shared Prevalence Space
 
-        Each topic share is the within-outlet share of articles assigned to that merged topic.
+        `all_comparisons_df` contains one row per outlet-topic comparison against `Tagesschau`.
         """
     ),
     code(
         """
         prevalence_df = moa.build_topic_prevalence_by_outlet(article_topic_df)
-        comparison_df = moa.build_outlet_vs_baseline_prevalence(
+        all_comparisons_df = moa.build_all_outlet_vs_baseline_prevalence(
             prevalence_df,
-            outlet_key=OUTLET_TO_COMPARE,
             baseline_key="tagesschau",
         )
 
+        all_comparisons_df["outlet_group"] = all_comparisons_df["outlet_key"].map(OUTLET_GROUP_MAP).fillna("Other")
         display(
-            comparison_df[
+            all_comparisons_df[
                 [
-                    "merged_display_topic",
+                    "outlet_label",
                     "topic_label",
                     "article_share",
                     "baseline_article_share",
                     "share_diff",
-                    "comparison_bucket",
                 ]
             ].head(12)
         )
@@ -155,100 +176,137 @@ cells = [
     ),
     md(
         """
-        ## 3. Main Prevalence Map
+        ## 3. Select Salient Points For The Screenshot-Style Map
 
-        This is the core substitution/amplification chart.
+        This step intentionally does **not** plot every single topic-outlet pair. Instead it picks the most salient points in each conceptual zone so the map stays interpretable.
         """
     ),
     code(
         """
-        fig, ax = moa.plot_outlet_vs_baseline_prevalence_scatter(
-            comparison_df,
-            label_count_per_side=LABEL_COUNT_PER_SIDE,
-            min_label_share_diff=MIN_LABEL_SHARE_DIFF,
+        salient_points_df = moa.build_salient_prevalence_map_points(
+            all_comparisons_df,
+            substitution_baseline_max=SUBSTITUTION_BASELINE_MAX,
+            substitution_outlet_min=SUBSTITUTION_OUTLET_MIN,
+            amplification_baseline_min=AMPLIFICATION_BASELINE_MIN,
+            amplification_margin=AMPLIFICATION_MARGIN,
+            mainstream_only_baseline_min=MAINSTREAM_ONLY_BASELINE_MIN,
+            mainstream_only_margin=MAINSTREAM_ONLY_MARGIN,
+            parity_margin=PARITY_MARGIN,
+            parity_min_baseline_share=PARITY_MIN_BASELINE_SHARE,
+            points_per_zone=POINTS_PER_ZONE,
+        )
+        salient_points_df["outlet_group"] = salient_points_df["outlet_key"].map(OUTLET_GROUP_MAP).fillna("Other")
+
+        display(
+            salient_points_df[
+                [
+                    "map_zone",
+                    "outlet_label",
+                    "topic_short_label",
+                    "baseline_article_share",
+                    "article_share",
+                    "share_diff",
+                ]
+            ].sort_values(["map_zone", "share_diff"], ascending=[True, False])
+        )
+        """
+    ),
+    md(
+        """
+        ## 4. Screenshot-Style Prevalence Map
+
+        This is the chart closest to your sketch.
+        """
+    ),
+    code(
+        """
+        fig, ax = moa.plot_salient_prevalence_map(
+            salient_points_df,
+            reference_df=all_comparisons_df,
+            group_col="outlet_group",
+            color_map=OUTLET_GROUP_COLORS,
+            substitution_baseline_max=SUBSTITUTION_BASELINE_MAX,
+            substitution_outlet_min=SUBSTITUTION_OUTLET_MIN,
+            amplification_baseline_min=AMPLIFICATION_BASELINE_MIN,
+            amplification_y_min=AMPLIFICATION_Y_MIN,
+            mainstream_only_baseline_min=MAINSTREAM_ONLY_BASELINE_MIN,
+            mainstream_only_outlet_max=MAINSTREAM_ONLY_OUTLET_MAX,
         )
         plt.show()
         """
     ),
     md(
         """
-        ## 4. Strongest Amplified And Substituted Topics
+        ## 5. Detailed Tables Behind The Map
 
-        These tables surface the largest deviations from the `Tagesschau` topic distribution.
+        These are useful when you want to justify why a given point appears in a zone.
         """
     ),
     code(
         """
-        strongest_amplified = comparison_df.sort_values("share_diff", ascending=False).head(12)
-        strongest_substituted = comparison_df.sort_values("share_diff", ascending=True).head(12)
-
-        print("Strongest amplified topics:")
         display(
-            strongest_amplified[
-                [
-                    "merged_display_topic",
-                    "topic_label",
-                    "article_share",
-                    "baseline_article_share",
-                    "share_diff",
-                ]
-            ]
+            salient_points_df.loc[salient_points_df["map_zone"] == "Substitution zone", [
+                "outlet_label",
+                "topic_label",
+                "baseline_article_share",
+                "article_share",
+                "share_diff",
+            ]]
         )
 
-        print("Strongest substituted topics:")
         display(
-            strongest_substituted[
-                [
-                    "merged_display_topic",
-                    "topic_label",
-                    "article_share",
-                    "baseline_article_share",
-                    "share_diff",
-                ]
-            ]
+            salient_points_df.loc[salient_points_df["map_zone"] == "Amplification zone", [
+                "outlet_label",
+                "topic_label",
+                "baseline_article_share",
+                "article_share",
+                "share_diff",
+            ]]
+        )
+
+        display(
+            salient_points_df.loc[salient_points_df["map_zone"] == "Mainstream only", [
+                "outlet_label",
+                "topic_label",
+                "baseline_article_share",
+                "article_share",
+                "share_diff",
+            ]]
         )
         """
     ),
     md(
         """
-        ## 5. All Alternative Outlets
+        ## 6. Optional Detailed Diagnostic For One Outlet
 
-        This cell lets you scan the prevalence map for every alternative outlet against `Tagesschau`.
+        This is still useful as a secondary diagnostic, but it is **not** the main screenshot-style chart.
         """
     ),
     code(
         """
-        figure_dir = moa.get_local_output_dir(PROJECT_ROOT) / "topic_prevalence_scatter_figures"
-        if SAVE_FIGURES:
-            figure_dir.mkdir(parents=True, exist_ok=True)
+        comparison_df = moa.build_outlet_vs_baseline_prevalence(
+            prevalence_df,
+            outlet_key=OUTLET_TO_COMPARE,
+            baseline_key="tagesschau",
+        )
 
-        for outlet_key in moa.ALT_MEDIA_OUTLET_KEYS:
-            comparison = moa.build_outlet_vs_baseline_prevalence(
-                prevalence_df,
-                outlet_key=outlet_key,
-                baseline_key="tagesschau",
-            )
-            fig, ax = moa.plot_outlet_vs_baseline_prevalence_scatter(
-                comparison,
-                label_count_per_side=LABEL_COUNT_PER_SIDE,
-                min_label_share_diff=MIN_LABEL_SHARE_DIFF,
-            )
-            plt.show()
-
-            if SAVE_FIGURES:
-                output_path = figure_dir / f"{outlet_key}_vs_tagesschau_prevalence_scatter.png"
-                fig.savefig(output_path, bbox_inches="tight")
+        fig, ax = moa.plot_outlet_vs_baseline_prevalence_scatter(
+            comparison_df,
+            label_count_per_side=6,
+            min_label_share_diff=0.01,
+        )
+        plt.show()
         """
     ),
     md(
         """
-        ## Suggested Reading Of The Plot
+        ## Reading Advice
 
-        Use the chart in this order:
-        1. Check whether most points cluster close to the diagonal or diverge strongly.
-        2. Look at the labeled points above the line to identify topics the outlet amplifies.
-        3. Look at the labeled points below the line to identify topics it downplays or substitutes away from.
-        4. Combine this with the broader focus metrics from the main workbench when writing H1.
+        Use the screenshot-style map like this:
+        1. top-left: topics the outlet world elevates that are barely present in `Tagesschau`
+        2. above parity with non-trivial baseline presence: topics that are shared but much more heavily weighted by the outlet
+        3. bottom-right: topics that remain comparatively mainstream-only
+        4. near parity: topics where the outlet and `Tagesschau` weight the topic similarly
         """
     ),
 ]

@@ -13,6 +13,7 @@ from typing import Callable
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.patches import Rectangle
 from matplotlib.ticker import PercentFormatter
 
 MODULE_DIR = Path(__file__).resolve().parent
@@ -1529,5 +1530,251 @@ def plot_outlet_vs_baseline_prevalence_scatter(
         },
     )
     ax.legend(frameon=True, facecolor="white", edgecolor="#DDDDDD", loc="lower right")
+    fig.tight_layout()
+    return fig, ax
+
+
+def build_all_outlet_vs_baseline_prevalence(
+    prevalence_df: pd.DataFrame,
+    *,
+    baseline_key: str = "tagesschau",
+    outlet_keys: tuple[str, ...] = ALT_MEDIA_OUTLET_KEYS,
+) -> pd.DataFrame:
+    """Stack outlet-vs-baseline prevalence comparisons for multiple outlets."""
+
+    frames = [
+        build_outlet_vs_baseline_prevalence(
+            prevalence_df,
+            outlet_key=outlet_key,
+            baseline_key=baseline_key,
+        )
+        for outlet_key in outlet_keys
+    ]
+    return pd.concat(frames, ignore_index=True)
+
+
+def build_salient_prevalence_map_points(
+    all_comparisons_df: pd.DataFrame,
+    *,
+    substitution_baseline_max: float = 0.035,
+    substitution_outlet_min: float = 0.07,
+    amplification_baseline_min: float = 0.03,
+    amplification_margin: float = 0.01,
+    mainstream_only_baseline_min: float = 0.045,
+    mainstream_only_margin: float = 0.01,
+    parity_margin: float = 0.006,
+    parity_min_baseline_share: float = 0.045,
+    points_per_zone: int = 4,
+) -> pd.DataFrame:
+    """Select the most salient topic-outlet points for a screenshot-style prevalence map."""
+
+    plot_df = all_comparisons_df.loc[all_comparisons_df["merged_topic"] != -1].copy()
+    if plot_df.empty:
+        raise ValueError("No non-outlier topics available for the prevalence map.")
+
+    plot_df["combined_share"] = plot_df["article_share"] + plot_df["baseline_article_share"]
+    plot_df["absolute_share_diff"] = plot_df["share_diff"].abs()
+    plot_df["topic_short_label"] = (
+        plot_df["topic_label"]
+        .astype("string")
+        .str.replace(r"^Topic \d+\s+[—-]\s+", "", regex=True)
+        .str.replace("_", " ", regex=False)
+        .str.strip()
+        .str.title()
+    )
+    plot_df["label_text"] = plot_df["topic_short_label"] + "\n" + plot_df["outlet_label"]
+
+    substitutions = (
+        plot_df.loc[
+            (plot_df["baseline_article_share"] <= substitution_baseline_max)
+            & (plot_df["article_share"] >= substitution_outlet_min)
+        ]
+        .sort_values(["article_share", "share_diff"], ascending=[False, False])
+        .drop_duplicates(subset=["merged_topic"])
+        .head(points_per_zone)
+        .assign(map_zone="Substitution zone")
+    )
+
+    amplifications = (
+        plot_df.loc[
+            (plot_df["baseline_article_share"] >= amplification_baseline_min)
+            & (plot_df["share_diff"] >= amplification_margin)
+        ]
+        .sort_values(["share_diff", "article_share"], ascending=[False, False])
+        .drop_duplicates(subset=["merged_topic"])
+        .head(points_per_zone)
+        .assign(map_zone="Amplification zone")
+    )
+
+    mainstream_only = (
+        plot_df.loc[
+            (plot_df["baseline_article_share"] >= mainstream_only_baseline_min)
+            & (plot_df["share_diff"] <= -mainstream_only_margin)
+        ]
+        .sort_values(["baseline_article_share", "share_diff"], ascending=[False, True])
+        .drop_duplicates(subset=["merged_topic"])
+        .head(points_per_zone)
+        .assign(map_zone="Mainstream only")
+    )
+
+    near_parity = plot_df.loc[
+        (plot_df["absolute_share_diff"] <= parity_margin)
+        & (plot_df["baseline_article_share"] >= parity_min_baseline_share)
+    ].copy()
+    if near_parity.empty:
+        near_parity = plot_df.loc[
+            plot_df["absolute_share_diff"] <= max(parity_margin, 0.01)
+        ].copy()
+    near_parity = (
+        near_parity.sort_values(["combined_share", "absolute_share_diff"], ascending=[False, True])
+        .drop_duplicates(subset=["merged_topic"])
+        .head(points_per_zone)
+        .assign(map_zone="Near parity")
+    )
+
+    selected = pd.concat(
+        [substitutions, amplifications, mainstream_only, near_parity],
+        ignore_index=True,
+    ).drop_duplicates(subset=["outlet_key", "merged_topic"])
+
+    return selected.reset_index(drop=True)
+
+
+def plot_salient_prevalence_map(
+    salient_points_df: pd.DataFrame,
+    *,
+    reference_df: pd.DataFrame | None = None,
+    group_col: str = "outlet_group",
+    label_col: str = "label_text",
+    color_map: dict[str, str] | None = None,
+    neutral_color: str = "#b8b8b8",
+    figsize: tuple[int, int] = (12, 8),
+    point_size: int = 220,
+    substitution_baseline_max: float = 0.035,
+    substitution_outlet_min: float = 0.07,
+    amplification_baseline_min: float = 0.045,
+    amplification_y_min: float = 0.08,
+    mainstream_only_baseline_min: float = 0.08,
+    mainstream_only_outlet_max: float = 0.045,
+):
+    """Plot a screenshot-style prevalence map with named conceptual zones."""
+
+    plot_df = salient_points_df.copy()
+    if plot_df.empty:
+        raise ValueError("No salient prevalence-map points to plot.")
+
+    reference = reference_df if reference_df is not None else plot_df
+    axis_limit = float(
+        max(
+            reference["article_share"].max(),
+            reference["baseline_article_share"].max(),
+        )
+    )
+    axis_limit = axis_limit * 1.08 if axis_limit > 0 else 0.01
+
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.set_facecolor("white")
+
+    zone_specs = [
+        (
+            Rectangle(
+                (0, substitution_outlet_min),
+                substitution_baseline_max,
+                max(axis_limit - substitution_outlet_min, 0),
+                facecolor="#f3ebe4",
+                edgecolor="none",
+                alpha=0.65,
+                zorder=0,
+            ),
+            "Substitution zone\nNot in mainstream",
+            (substitution_baseline_max * 0.12, axis_limit * 0.92),
+        ),
+        (
+            Rectangle(
+                (amplification_baseline_min, amplification_y_min),
+                max(axis_limit - amplification_baseline_min, 0),
+                max(axis_limit - amplification_y_min, 0),
+                facecolor="#f5efe0",
+                edgecolor="none",
+                alpha=0.55,
+                zorder=0,
+            ),
+            "Amplification zone\nSame topic, much higher weight",
+            (amplification_baseline_min + 0.01, axis_limit * 0.92),
+        ),
+        (
+            Rectangle(
+                (mainstream_only_baseline_min, 0),
+                max(axis_limit - mainstream_only_baseline_min, 0),
+                mainstream_only_outlet_max,
+                facecolor="#eef2e8",
+                edgecolor="none",
+                alpha=0.6,
+                zorder=0,
+            ),
+            "Mainstream only",
+            (mainstream_only_baseline_min + 0.01, mainstream_only_outlet_max * 0.92),
+        ),
+    ]
+
+    for rect, zone_label, zone_xy in zone_specs:
+        ax.add_patch(rect)
+        ax.text(
+            zone_xy[0],
+            zone_xy[1],
+            zone_label,
+            ha="left",
+            va="top",
+            fontsize=11,
+            color="#666666",
+            zorder=1,
+        )
+
+    ax.plot([0, axis_limit], [0, axis_limit], linestyle="--", color="#cfcfcf", linewidth=1.4, zorder=1)
+    ax.text(axis_limit, axis_limit, "parity", ha="left", va="bottom", fontsize=10, color="#8f8f8f")
+
+    point_colors = []
+    for _, row in plot_df.iterrows():
+        if row.get("map_zone") in {"Near parity", "Mainstream only"}:
+            point_colors.append(neutral_color)
+        elif color_map and group_col in plot_df.columns:
+            point_colors.append(color_map.get(str(row[group_col]), neutral_color))
+        else:
+            point_colors.append(neutral_color)
+    plot_df["point_color"] = point_colors
+
+    ax.scatter(
+        plot_df["baseline_article_share"],
+        plot_df["article_share"],
+        s=point_size,
+        c=plot_df["point_color"],
+        alpha=0.92,
+        edgecolors="white",
+        linewidths=1.0,
+        zorder=2,
+    )
+
+    for _, row in plot_df.iterrows():
+        label = str(row[label_col]) if label_col in plot_df.columns else str(row["topic_label"])
+        ax.text(
+            float(row["baseline_article_share"]) + 0.003,
+            float(row["article_share"]) + 0.003,
+            label,
+            ha="left",
+            va="bottom",
+            fontsize=10,
+            color="#333333",
+            zorder=3,
+        )
+
+    ax.set_xlim(0, axis_limit)
+    ax.set_ylim(0, axis_limit)
+    ax.xaxis.set_major_formatter(PercentFormatter(1.0))
+    ax.yaxis.set_major_formatter(PercentFormatter(1.0))
+    ax.set_xlabel("Tagesschau topic prevalence")
+    ax.set_ylabel("Outlet topic prevalence")
+    ax.set_title("Topic prevalence map: substitution and amplification vs Tagesschau")
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     fig.tight_layout()
     return fig, ax

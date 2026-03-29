@@ -13,6 +13,7 @@ from typing import Callable
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.ticker import PercentFormatter
 
 MODULE_DIR = Path(__file__).resolve().parent
 DEFAULT_PROJECT_ROOT = MODULE_DIR.parent
@@ -1395,5 +1396,138 @@ def plot_outlet_vs_baseline_prevalence(
             color="#333333",
         )
 
+    fig.tight_layout()
+    return fig, ax
+
+
+def plot_outlet_vs_baseline_prevalence_scatter(
+    comparison_df: pd.DataFrame,
+    *,
+    figsize: tuple[int, int] = (10, 10),
+    point_size_scale: float = 2800.0,
+    min_point_size: float = 28.0,
+    label_count_per_side: int = 6,
+    min_label_share_diff: float = 0.01,
+    amplify_color: str = "#c62828",
+    substitute_color: str = "#1565c0",
+    neutral_color: str = "#7f8c8d",
+):
+    """Scatter one outlet's topic shares against the baseline outlet's shares."""
+
+    plot_df = comparison_df.loc[comparison_df["merged_topic"] != -1].copy()
+    if plot_df.empty:
+        raise ValueError("Comparison dataframe does not contain any non-outlier topics.")
+
+    plot_df["combined_share"] = plot_df["article_share"] + plot_df["baseline_article_share"]
+    plot_df["absolute_share_diff"] = plot_df["share_diff"].abs()
+    plot_df["point_size"] = min_point_size + (plot_df["combined_share"] * point_size_scale)
+
+    color_map = {
+        "Amplified vs baseline": amplify_color,
+        "Substituted away from baseline": substitute_color,
+        "Same prevalence": neutral_color,
+    }
+    plot_df["point_color"] = plot_df["comparison_bucket"].map(color_map).fillna(neutral_color)
+
+    outlet_label = str(plot_df["outlet_label"].iloc[0])
+    baseline_label = str(plot_df["baseline_label"].iloc[0])
+    max_share = float(
+        max(
+            plot_df["article_share"].max(),
+            plot_df["baseline_article_share"].max(),
+        )
+    )
+    axis_limit = max_share * 1.08 if max_share > 0 else 0.01
+
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.set_facecolor("white")
+
+    # Diagonal reference: points above the line are amplified relative to baseline.
+    ax.fill_between([0, axis_limit], [0, 0], [0, axis_limit], color=substitute_color, alpha=0.05, zorder=0)
+    ax.fill_between([0, axis_limit], [0, axis_limit], [axis_limit, axis_limit], color=amplify_color, alpha=0.05, zorder=0)
+    ax.plot([0, axis_limit], [0, axis_limit], linestyle="--", color="#333333", linewidth=1.2, zorder=1)
+
+    for bucket in [
+        "Substituted away from baseline",
+        "Same prevalence",
+        "Amplified vs baseline",
+    ]:
+        bucket_df = plot_df.loc[plot_df["comparison_bucket"] == bucket]
+        if bucket_df.empty:
+            continue
+        ax.scatter(
+            bucket_df["baseline_article_share"],
+            bucket_df["article_share"],
+            s=bucket_df["point_size"],
+            c=bucket_df["point_color"],
+            alpha=0.8,
+            edgecolors="white",
+            linewidths=0.6,
+            label=bucket,
+            zorder=2,
+        )
+
+    label_candidates = pd.concat(
+        [
+            plot_df.loc[plot_df["share_diff"] >= min_label_share_diff].nlargest(label_count_per_side, "share_diff"),
+            plot_df.loc[plot_df["share_diff"] <= -min_label_share_diff].nsmallest(label_count_per_side, "share_diff"),
+        ],
+        ignore_index=True,
+    ).drop_duplicates(subset=["merged_topic"])
+
+    for _, row in label_candidates.iterrows():
+        x_value = float(row["baseline_article_share"])
+        y_value = float(row["article_share"])
+        x_offset = 8
+        y_offset = 8 if y_value >= x_value else -10
+        va = "bottom" if y_value >= x_value else "top"
+        ax.annotate(
+            str(row["topic_label"]),
+            xy=(x_value, y_value),
+            xytext=(x_offset, y_offset),
+            textcoords="offset points",
+            fontsize=8.5,
+            ha="left",
+            va=va,
+            bbox={
+                "facecolor": "white",
+                "edgecolor": "#DDDDDD",
+                "alpha": 0.92,
+                "boxstyle": "round,pad=0.18",
+            },
+            arrowprops={
+                "arrowstyle": "-",
+                "color": "#999999",
+                "linewidth": 0.8,
+                "shrinkA": 0,
+                "shrinkB": 0,
+            },
+            zorder=3,
+        )
+
+    ax.set_xlim(0, axis_limit)
+    ax.set_ylim(0, axis_limit)
+    ax.xaxis.set_major_formatter(PercentFormatter(1.0))
+    ax.yaxis.set_major_formatter(PercentFormatter(1.0))
+    ax.set_xlabel(f"{baseline_label} topic prevalence")
+    ax.set_ylabel(f"{outlet_label} topic prevalence")
+    ax.set_title(f"{outlet_label} vs {baseline_label}: topic prevalence map")
+    ax.text(
+        0.02,
+        0.98,
+        "Above diagonal: amplification\nBelow diagonal: substitution",
+        transform=ax.transAxes,
+        ha="left",
+        va="top",
+        fontsize=9,
+        color="#333333",
+        bbox={
+            "facecolor": "white",
+            "edgecolor": "#DDDDDD",
+            "alpha": 0.9,
+            "boxstyle": "round,pad=0.35",
+        },
+    )
+    ax.legend(frameon=True, facecolor="white", edgecolor="#DDDDDD", loc="lower right")
     fig.tight_layout()
     return fig, ax

@@ -1123,18 +1123,6 @@ def plot_substitution_amplification_scatter(
         _thesis_axis_style(ax)
         ax.grid(False)
 
-        custom_offsets = {
-            ("Russian Ukraine framing", "Antispiegel"): (18, -2, "left", "top"),
-            ("Russian Ukraine framing", "RT"): (8, 4, "left", "bottom"),
-            ("AfD / BSW parties", "Deutschlandkurier"): (8, 6, "left", "bottom"),
-            ("TV / radio commentary", "Nius"): (10, 8, "left", "bottom"),
-            ("Book fair debate", "Compact"): (10, -2, "left", "top"),
-            ("Merz / chancellor race", "Tichys Einblick"): (10, 8, "left", "bottom"),
-            ("Greenland / NATO", "All outlets"): (8, 8, "left", "bottom"),
-            ("Turkey / CHP politics", "All outlets"): (8, -2, "left", "top"),
-            ("Energy / climate policy", "All outlets"): (8, -10, "left", "top"),
-        }
-
         zone_rectangles = [
             (
                 Rectangle(
@@ -1204,15 +1192,10 @@ def plot_substitution_amplification_scatter(
         )
 
         for _, row in plot_df.iterrows():
-            dx, dy, ha, va = custom_offsets.get(
-                (str(row["plot_label"]), str(row["outlet_label"])),
-                (
-                    8,
-                    8 if row["y_share"] >= row["x_share"] else -10,
-                    "left",
-                    "bottom" if row["y_share"] >= row["x_share"] else "top",
-                ),
-            )
+            dx = 8
+            dy = 8 if row["y_share"] >= row["x_share"] else -10
+            ha = "left"
+            va = "bottom" if row["y_share"] >= row["x_share"] else "top"
             ax.annotate(
                 str(row["plot_label"]),
                 xy=(float(row["x_share"]), float(row["y_share"])),

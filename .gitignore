@@ -31,7 +31,7 @@ mattis_eda.ipynb
 
 .numba_cache/
 .mplconfig/
-BERTopic/outputs/*.joblib
+BERTopic/outputs/
 1b_TopicClassification/classification_trial_results_gpt5mini.csv
 2a_NER/*.csv
 2a_NER/outputs/*.csv
@@ -43,5 +43,3 @@ Sentiment_Analysis/outputs/
 3a_Sentiment_Analysis/models/**/*.bin
 3a_Sentiment_Analysis/models/**/*.safetensors
 3a_Sentiment_Analysis/outputs/
-
-2a_NER/outputs/*.csv

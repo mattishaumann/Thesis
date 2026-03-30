@@ -5,6 +5,7 @@
 
 # Python cache artifacts
 __pycache__/
+**/__pycache__/
 *.pyc
 
 # Raw and processed datasets (never commit local data dumps)
@@ -43,3 +44,6 @@ Sentiment_Analysis/outputs/
 3a_Sentiment_Analysis/models/**/*.bin
 3a_Sentiment_Analysis/models/**/*.safetensors
 3a_Sentiment_Analysis/outputs/
+
+experiments/**/*.executed.ipynb
+experiments/**/outputs/

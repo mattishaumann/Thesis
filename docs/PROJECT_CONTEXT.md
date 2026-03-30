@@ -12,15 +12,17 @@ The core claim being tested: alternative media don't just have a different edito
 
 | Outlet | Category | Key | Articles (post-cleaning) | Corpus Size |
 |--------|----------|-----|--------------------------|-------------|
-| **Tagesschau** | Mainstream (public broadcaster) | `tagesschau` | 6,272 | REFERENCE |
-| **RT DE** | Pro-Russian (state-funded) | `rt` | 4,556 | Large |
-| **NIUS** | Right-Populist | `nius` | 3,266 | Medium |
+| **Tagesschau** | Mainstream (public broadcaster) | `tagesschau` | 6,320 | REFERENCE |
+| **RT DE** | Pro-Russian (state-funded) | `rt` | 4,560 | Large |
+| **NIUS** | Right-Populist | `nius` | 3,269 | Medium |
 | **Tichys Einblick** | Right-Populist / Conservative-Libertarian | `tichys` | 2,756 | Medium |
-| **Compact** | Right-Wing (banned magazine, online-only) | `compact` | 1,580 | Small |
-| **Deutschlandkurier** | Right-Wing | `deutschlandkurier` | 1,460 | Small |
+| **Compact** | Right-Wing (banned magazine, online-only) | `compact` | 1,486 | Small |
+| **Deutschlandkurier** | Right-Wing | `deutschlandkurier` | 1,484 | Small |
 | **Anti-Spiegel** | Pro-Russian (one-man blog) | `antispiegel` | 565 | Very Small |
 
-**Total corpus**: ~20,455 articles.
+**Canonical cleaned corpus (`df_combined.csv`)**: 20,440 articles.
+
+**BERTopic-prepared subset used for merged assignment**: 20,358 articles.
 
 **Important context on corpus imbalance**: Tagesschau has 11x more articles than Antispiegel. All metrics are designed to be size-controlled or rank-based to handle this. Corpus size still matters for statistical power (Antispiegel results carry wider confidence intervals).
 
@@ -64,10 +66,8 @@ Thesis/
 │   ├── bertopic_config.py                   # BERTopicConfig dataclass (all hyperparameters)
 │   ├── stopwords_de.py                      # Curated German stopwords (3 tiers)
 │   ├── merged_outlets_analysis.py           # 2.3k-line analysis hub: loaders, specs, viz
-│   ├── Merged_BERTopic_All_Outlets.ipynb    # Merge workflow notebook
-│   ├── RT_Tagesschau_Topic_Comparison.ipynb # Early RT-vs-TS comparison
-│   ├── local_outputs/                       # Per-outlet trained models (safetensors)
-│   └── outputs/                             # Model artifacts (7 per-outlet + 1 merged)
+│   ├── Merged_BERTopic_All_Outlets.ipynb    # Main merged-topic workflow notebook
+│   └── local_outputs/                       # Canonical saved outlet models + merged exports
 │
 ├── experiments/
 │   └── agenda_distortion/                   # H1 experiment (current focus)
@@ -107,6 +107,8 @@ Each outlet has a dedicated Jupyter notebook (`00_Initial EDA/01-08_*.ipynb`) th
 5. Removes duplicates on Title + Text
 6. Exports `*_clean.csv`
 
+Those seven `*_clean.csv` files are then concatenated into `00_Initial EDA/df_combined.csv`, which is now the canonical cross-outlet corpus for merged-topic assignment.
+
 **Outlet-specific quirks**:
 - **Tagesschau**: Nested JSON content blocks requiring HTML extraction
 - **Compact**: 214 source CSVs, multi-encoding issues, affiliate links in 4.5% of articles
@@ -117,6 +119,11 @@ Each outlet has a dedicated Jupyter notebook (`00_Initial EDA/01-08_*.ipynb`) th
 ### BERTopic Pipeline
 
 **Embedding model**: `paraphrase-multilingual-MiniLM-L12-v2` (sentence-transformers)
+
+**Important lineage**:
+- The seven saved outlet models in `1a_BERTopic/local_outputs/` are **not** the legacy overall model from `00_Initial EDA/07_OverallTM.ipynb`.
+- They are outlet-specific BERTopic models trained separately in the per-outlet notebooks.
+- The merged-topic notebook combines those saved outlet models, then applies the merged topic space back to the canonical `df_combined.csv` corpus.
 
 **Document preparation** (`bertopic_pipeline.py`):
 - Light text cleaning (HTML unescape, boilerplate regex removal, whitespace normalization)
@@ -222,6 +229,8 @@ Based on metric thresholds, each outlet is classified as:
 **Parameters**: `min_similarity=0.7`, outlier reduction via embeddings fallback (threshold=0.10)
 
 **Corpus**: 20,455 articles across 7 outlets, 74 merged topics
+
+This is the historical pre-alignment v1 run. The current canonical merged workflow now starts from `df_combined.csv` instead, so corpus accounting in the live notebook is `20,440` cleaned rows and `20,358` BERTopic-prepared rows.
 
 | Outlet | Articles | Entropy | JSD | Spearman rho | Top-K Overlap | Breadth (rel.) | Classification |
 |--------|----------|---------|-----|--------------|---------------|----------------|----------------|
@@ -391,7 +400,7 @@ Three tiers: 129 base German stopwords + 9 project-specific terms (artikel, bild
 
 ### Output Artifacts (v1)
 Located in `experiments/agenda_distortion/outputs/v1/`:
-- `merged_articles.csv` -- 20,455 rows, each article with merged topic assignment + UMAP coords
+- `merged_articles.csv` -- 20,455 rows, each article with merged topic assignment + UMAP coords from the historical v1 run
 - `merged_topic_info.csv` -- 74 topics with c-TF-IDF labels, counts, representative docs
 - `h1_metrics.csv` -- 7 rows (one per outlet), 12 columns (all metrics)
 - `h1_classification.csv` -- distortion type per outlet

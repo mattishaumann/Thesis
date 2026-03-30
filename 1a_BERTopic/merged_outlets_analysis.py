@@ -6,6 +6,7 @@ import os
 import re
 import sys
 import warnings
+from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
@@ -135,13 +136,16 @@ if str(MODULE_DIR) not in sys.path:
     sys.path.insert(0, str(MODULE_DIR))
 
 from bertopic_config import BERTopicConfig
-from bertopic_pipeline import prepare_documents
+from bertopic_pipeline import build_vectorizer, prepare_documents
 
 
 EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 MERGED_MODEL_SUBDIR = "merged_all_outlets_model"
 TOPIC_NAME_OVERRIDES_FILENAME = "merged_topic_name_overrides.csv"
 MERGED_ARTICLES_BASENAME = "merged_articles_with_topics"
+EDA_DIRNAME = "00_Initial EDA"
+DF_COMBINED_FILENAME = "df_combined.csv"
+DF_COMBINED_WITH_TOPICS_BASENAME = "df_combined_with_topics"
 
 TICHYS_EXTRA_STOPWORDS = (
     "amazon",
@@ -160,6 +164,16 @@ TICHYS_EXTRA_STOPWORDS = (
 
 TEXT_TYPES = {"text", "headline"}
 WHITESPACE_RE = re.compile(r"\s+")
+
+DF_COMBINED_SOURCE_MAP = {
+    "tagesschau": "Tagesschau",
+    "rt": "RT_de",
+    "antispiegel": "Antispiegel",
+    "tichys": "Tichys_Einblick",
+    "nius": "Nius",
+    "compact": "Compact",
+    "deutschlandkurier": "Deutschlandkurier",
+}
 
 
 @dataclass(frozen=True)
@@ -183,6 +197,12 @@ def find_project_root(start: Path) -> Path:
 
 def get_local_output_dir(project_root: Path) -> Path:
     output_dir = project_root / "1a_BERTopic" / "local_outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
+
+def get_initial_eda_dir(project_root: Path) -> Path:
+    output_dir = project_root / EDA_DIRNAME
     output_dir.mkdir(parents=True, exist_ok=True)
     return output_dir
 
@@ -228,6 +248,97 @@ def resolve_existing_path(*candidates: Path) -> Path:
             return candidate
     raise FileNotFoundError(
         "Could not find any expected path. Tried: " + ", ".join(str(candidate) for candidate in candidates)
+    )
+
+
+def _normalize_merge_key(series: pd.Series) -> pd.Series:
+    """Normalize join keys enough to survive formatting differences across exports."""
+
+    return (
+        series.astype("string")
+        .fillna("")
+        .str.replace("\u00a0", " ", regex=False)
+        .str.replace(r"\s+", " ", regex=True)
+        .str.strip()
+    )
+
+
+def load_df_combined(project_root: Path) -> pd.DataFrame:
+    csv_path = get_initial_eda_dir(project_root) / DF_COMBINED_FILENAME
+    return pd.read_csv(csv_path, low_memory=False)
+
+
+def split_df_combined_by_outlet(project_root: Path) -> dict[str, pd.DataFrame]:
+    """Split df_combined into the seven outlet slices used in the thesis corpus."""
+
+    df_combined = load_df_combined(project_root)
+    if "source" not in df_combined.columns:
+        raise KeyError("df_combined.csv must include a 'source' column.")
+
+    outlet_frames: dict[str, pd.DataFrame] = {}
+    for key, source_name in DF_COMBINED_SOURCE_MAP.items():
+        frame = df_combined.loc[df_combined["source"].astype("string") == source_name].copy()
+        outlet_frames[key] = frame
+    return outlet_frames
+
+
+def attach_row_ids_from_df_combined(
+    project_root: Path,
+    articles: pd.DataFrame,
+    *,
+    source_col: str = "source",
+    date_col: str = "Date",
+    title_col: str = "Title",
+) -> pd.DataFrame:
+    """
+    Carry the `row_id` from df_combined into an article dataframe using stable metadata keys.
+
+    This is only needed for legacy raw-loader paths where the article frame was rebuilt
+    outside df_combined and therefore does not already contain row_id.
+    """
+
+    required_columns = {source_col, date_col, title_col}
+    if not required_columns.issubset(articles.columns):
+        return articles.copy()
+
+    combined = load_df_combined(project_root)
+    if not {"row_id", "source", "Date", "Title"}.issubset(combined.columns):
+        return articles.copy()
+
+    left = articles.copy()
+    right = combined.loc[:, ["row_id", "source", "Date", "Title"]].copy()
+
+    for frame, src, date, title in (
+        (left, source_col, date_col, title_col),
+        (right, "source", "Date", "Title"),
+    ):
+        frame["_row_source_key"] = _normalize_merge_key(frame[src])
+        frame["_row_date_key"] = frame[date].astype("string").fillna("").str.strip().str[:10]
+        frame["_row_title_key"] = _normalize_merge_key(frame[title])
+        frame["_row_match_index"] = frame.groupby(
+            ["_row_source_key", "_row_date_key", "_row_title_key"],
+            dropna=False,
+        ).cumcount()
+
+    matched = left.merge(
+        right[
+            [
+                "_row_source_key",
+                "_row_date_key",
+                "_row_title_key",
+                "_row_match_index",
+                "row_id",
+            ]
+        ],
+        on=["_row_source_key", "_row_date_key", "_row_title_key", "_row_match_index"],
+        how="left",
+    )
+
+    matched["row_id"] = pd.to_numeric(matched["row_id"], errors="coerce").astype("Int64")
+    matched["row_id_match_status"] = np.where(matched["row_id"].notna(), "matched", "unmatched")
+    return matched.drop(
+        columns=["_row_source_key", "_row_date_key", "_row_title_key", "_row_match_index"],
+        errors="ignore",
     )
 
 
@@ -666,11 +777,7 @@ def resolve_model_paths(candidates: list[Path]) -> dict[str, Path]:
 
 
 def resolve_merged_model_path(project_root: Path) -> Path:
-    candidates = [
-        get_local_output_dir(project_root),
-        project_root / "1a_BERTopic" / "outputs",
-        project_root / "BERTopic" / "outputs",
-    ]
+    candidates = [get_local_output_dir(project_root)]
     return resolve_model_path(MERGED_MODEL_SUBDIR, candidates)
 
 
@@ -685,8 +792,11 @@ def load_saved_merged_model(project_root: Path):
 
 
 def prepare_outlet_documents(project_root: Path, key: str) -> pd.DataFrame:
+    """Legacy raw-loader path kept for compatibility with older analysis code."""
+
     spec = OUTLET_SPECS[key]
     df = spec.loader(project_root)
+    df = attach_row_ids_from_df_combined(project_root, df)
     prepared = prepare_documents(
         df,
         text_col=spec.text_col,
@@ -699,9 +809,59 @@ def prepare_outlet_documents(project_root: Path, key: str) -> pd.DataFrame:
     return prepared
 
 
+def prepare_outlet_documents_from_df_combined(
+    project_root: Path,
+    key: str,
+    *,
+    df_combined_by_outlet: dict[str, pd.DataFrame] | None = None,
+) -> pd.DataFrame:
+    """
+    Prepare one outlet slice directly from df_combined.
+
+    This is the corpus-aligned path for the merged BERTopic notebook:
+    raw outlet-specific cleaning is assumed to already be baked into df_combined.
+    The only remaining step is BERTopic document preparation with the outlet's
+    topic-model config.
+    """
+
+    spec = OUTLET_SPECS[key]
+    combined_parts = df_combined_by_outlet or split_df_combined_by_outlet(project_root)
+    df = combined_parts[key].copy()
+
+    if "row_id" not in df.columns:
+        raise KeyError("df_combined slice must include row_id so topic assignments can map back exactly.")
+    if "Text" not in df.columns:
+        raise KeyError("df_combined slice must include a Text column.")
+
+    prepared = prepare_documents(
+        df,
+        text_col="Text",
+        config=spec.config_factory(),
+        id_col="row_id",
+        source_name=spec.label,
+    ).copy()
+    prepared["outlet_key"] = spec.key
+    prepared["outlet_label"] = spec.label
+    return prepared
+
+
 def load_all_prepared_documents(project_root: Path) -> dict[str, pd.DataFrame]:
     return {
         key: prepare_outlet_documents(project_root, key)
+        for key in OUTLET_SPECS
+    }
+
+
+def load_all_prepared_documents_from_df_combined(project_root: Path) -> dict[str, pd.DataFrame]:
+    """Prepare the merged-topic corpus from the canonical df_combined snapshot."""
+
+    combined_parts = split_df_combined_by_outlet(project_root)
+    return {
+        key: prepare_outlet_documents_from_df_combined(
+            project_root,
+            key,
+            df_combined_by_outlet=combined_parts,
+        )
         for key in OUTLET_SPECS
     }
 
@@ -816,6 +976,9 @@ def build_merged_article_frame(
     merged_model,
     combined_prepared: pd.DataFrame,
     *,
+    apply_outlier_reduction: bool = True,
+    outlier_strategy: str = "c-tf-idf",
+    outlier_threshold: float = 0.10,
     umap_n_neighbors: int = 10,
     umap_min_dist: float = 0.0,
     umap_metric: str = "cosine",
@@ -824,6 +987,26 @@ def build_merged_article_frame(
     docs = combined_prepared["document"].tolist()
     topics, probabilities = merged_model.transform(docs)
     embeddings = merged_model._extract_embeddings(docs, method="document")
+
+    if apply_outlier_reduction and any(topic == -1 for topic in topics):
+        try:
+            topics = merged_model.reduce_outliers(
+                docs,
+                topics,
+                strategy=outlier_strategy,
+                threshold=outlier_threshold,
+            )
+        except Exception as exc:
+            if "Vocabulary not fitted" in str(exc) and outlier_strategy == "c-tf-idf":
+                topics = merged_model.reduce_outliers(
+                    docs,
+                    topics,
+                    strategy="embeddings",
+                    threshold=outlier_threshold,
+                    embeddings=embeddings,
+                )
+            else:
+                raise
 
     reducer = UMAP(
         n_neighbors=umap_n_neighbors,
@@ -835,6 +1018,18 @@ def build_merged_article_frame(
     coords = reducer.fit_transform(embeddings)
 
     merged_topic_info = enrich_topic_info_with_display(merged_model.get_topic_info())
+    merged_topic_info["ModelCount"] = merged_topic_info["Count"].astype(int)
+
+    assigned_counts = (
+        pd.Series(topics, name="Topic")
+        .value_counts(dropna=False)
+        .rename_axis("Topic")
+        .reset_index(name="AssignedCount")
+    )
+    merged_topic_info = merged_topic_info.merge(assigned_counts, on="Topic", how="left")
+    merged_topic_info["AssignedCount"] = merged_topic_info["AssignedCount"].fillna(0).astype(int)
+    merged_topic_info["AssignedShare"] = merged_topic_info["AssignedCount"] / max(len(docs), 1)
+
     display_label_map = dict(zip(merged_topic_info["Topic"], merged_topic_info["DisplayLabel"]))
     display_topic_map = dict(zip(merged_topic_info["Topic"], merged_topic_info["DisplayTopic"]))
 
@@ -879,8 +1074,11 @@ def build_article_topic_dataset(
     article_topic_df["topic_display_label"] = article_topic_df["topic_display_label"].fillna("Outliers")
 
     preferred_columns = [
+        "row_id",
+        "row_id_match_status",
         "document_id",
         "source_name",
+        "source",
         "outlet_key",
         "outlet_label",
         "Title",
@@ -940,6 +1138,66 @@ def export_article_topic_dataset(
     return save_dataframe_exports(article_topic_df, output_base)
 
 
+def build_df_combined_with_topics(
+    project_root: Path,
+    article_topic_df: pd.DataFrame,
+) -> pd.DataFrame:
+    """Return df_combined enriched with the merged topic assignment for each article."""
+
+    combined_df = load_df_combined(project_root)
+    article_topics = article_topic_df.copy()
+    if "row_id" not in article_topics.columns:
+        article_topics = attach_row_ids_from_df_combined(project_root, article_topics)
+
+    topic_columns = [
+        col
+        for col in [
+            "row_id",
+            "row_id_match_status",
+            "document_id",
+            "source_name",
+            "outlet_key",
+            "outlet_label",
+            "merged_topic",
+            "merged_display_topic",
+            "merged_display_label",
+            "merged_probability",
+            "topic_keyword_label",
+            "manual_topic_name",
+            "topic_label",
+            "topic_display_label",
+            "umap_x",
+            "umap_y",
+        ]
+        if col in article_topics.columns
+    ]
+
+    deduped_topics = (
+        article_topics.loc[article_topics["row_id"].notna(), topic_columns]
+        .drop_duplicates(subset=["row_id"], keep="first")
+        .copy()
+    )
+
+    enriched = combined_df.merge(deduped_topics, on="row_id", how="left")
+    enriched["topic_match_status"] = np.where(enriched["merged_topic"].notna(), "matched", "unmatched")
+    if "row_id_match_status" in enriched.columns:
+        enriched = enriched.drop(columns=["row_id_match_status"])
+    return enriched
+
+
+def export_df_combined_with_topics(
+    project_root: Path,
+    article_topic_df: pd.DataFrame,
+    *,
+    basename: str = DF_COMBINED_WITH_TOPICS_BASENAME,
+) -> tuple[pd.DataFrame, dict[str, Path]]:
+    """Write df_combined enriched with merged topics back to 00_Initial EDA."""
+
+    enriched = build_df_combined_with_topics(project_root, article_topic_df)
+    output_base = get_initial_eda_dir(project_root) / basename
+    return enriched, save_dataframe_exports(enriched, output_base)
+
+
 def load_exported_article_topic_dataset(
     project_root: Path,
     *,
@@ -959,11 +1217,443 @@ def load_exported_article_topic_dataset(
         for column in ("merged_topic", "merged_display_topic"):
             if column in loaded.columns:
                 loaded[column] = pd.to_numeric(loaded[column], errors="coerce").astype("Int64")
+        if "row_id" in loaded.columns:
+            loaded["row_id"] = pd.to_numeric(loaded["row_id"], errors="coerce").astype("Int64")
         for column in ("umap_x", "umap_y", "merged_probability"):
             if column in loaded.columns:
                 loaded[column] = pd.to_numeric(loaded[column], errors="coerce")
         return loaded
     return None
+
+
+def build_merged_article_umap_3d(
+    merged_model,
+    merged_articles: pd.DataFrame,
+    *,
+    umap_n_neighbors: int = 12,
+    umap_min_dist: float = 0.05,
+    umap_metric: str = "cosine",
+    random_state: int = 42,
+) -> pd.DataFrame:
+    """Project merged article embeddings into a 3D UMAP space for interactive inspection."""
+
+    docs = merged_articles["document"].tolist()
+    embeddings = merged_model._extract_embeddings(docs, method="document")
+    reducer = UMAP(
+        n_neighbors=umap_n_neighbors,
+        n_components=3,
+        min_dist=umap_min_dist,
+        metric=umap_metric,
+        random_state=random_state,
+    )
+    coords = reducer.fit_transform(embeddings)
+
+    umap_3d = merged_articles.copy()
+    umap_3d["umap_3d_x"] = coords[:, 0]
+    umap_3d["umap_3d_y"] = coords[:, 1]
+    umap_3d["umap_3d_z"] = coords[:, 2]
+    return umap_3d
+
+
+def plot_merged_topic_umap_3d(
+    merged_articles_3d: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    top_n: int = 20,
+    max_points: int | None = 12000,
+    random_state: int = 42,
+):
+    """Return a Plotly 3D UMAP figure for the largest merged topics."""
+
+    try:
+        import plotly.express as px
+    except ImportError as exc:
+        raise ImportError("plotly is required for the 3D UMAP plot.") from exc
+
+    topic_info = merged_topic_info.copy()
+    top_topic_ids = (
+        topic_info.loc[topic_info["Topic"] != -1, ["Topic", "Count"]]
+        .sort_values(["Count", "Topic"], ascending=[False, True])
+        .head(top_n)["Topic"]
+        .tolist()
+    )
+
+    plot_df = merged_articles_3d.copy()
+    if max_points is not None and len(plot_df) > max_points:
+        plot_df = plot_df.sample(max_points, random_state=random_state).copy()
+
+    plot_df["topic_3d_group"] = np.where(
+        plot_df["merged_topic"].isin(top_topic_ids),
+        plot_df["topic_display_label"].fillna(plot_df["merged_display_label"]),
+        "Other topics",
+    )
+
+    fig = px.scatter_3d(
+        plot_df,
+        x="umap_3d_x",
+        y="umap_3d_y",
+        z="umap_3d_z",
+        color="topic_3d_group",
+        hover_name="Title" if "Title" in plot_df.columns else None,
+        hover_data={
+            "outlet_label": True if "outlet_label" in plot_df.columns else False,
+            "merged_topic": True,
+            "topic_display_label": True if "topic_display_label" in plot_df.columns else False,
+            "umap_3d_x": False,
+            "umap_3d_y": False,
+            "umap_3d_z": False,
+        },
+        opacity=0.55,
+        title="Merged Topic Space (3D UMAP)",
+    )
+    fig.update_traces(marker=dict(size=3))
+    fig.update_layout(
+        legend_title_text="Topic cluster",
+        margin=dict(l=0, r=0, t=40, b=0),
+    )
+    return fig
+
+
+def attach_assigned_counts_to_topic_info(
+    topic_info: pd.DataFrame,
+    assigned_topics: pd.Series | list[int] | np.ndarray,
+    *,
+    total_docs: int | None = None,
+) -> pd.DataFrame:
+    """
+    Attach assigned article counts to a topic-info table without changing topic names.
+
+    `Count` remains the canonical model-side count from the saved BERTopic artifact.
+    `AssignedCount` reflects the number of articles currently assigned to each topic in
+    the final article-level corpus.
+    """
+
+    enriched_topic_info = topic_info.copy()
+    if "DisplayTopic" not in enriched_topic_info.columns or "DisplayLabel" not in enriched_topic_info.columns:
+        enriched_topic_info = enrich_topic_info_with_display(enriched_topic_info)
+
+    if "Count" in enriched_topic_info.columns and "ModelCount" not in enriched_topic_info.columns:
+        enriched_topic_info["ModelCount"] = enriched_topic_info["Count"].astype(int)
+
+    assigned_topic_series = pd.Series(assigned_topics, name="Topic")
+    assigned_counts = (
+        assigned_topic_series
+        .value_counts(dropna=False)
+        .rename_axis("Topic")
+        .reset_index(name="AssignedCount")
+    )
+    enriched_topic_info = enriched_topic_info.merge(assigned_counts, on="Topic", how="left")
+    enriched_topic_info["AssignedCount"] = enriched_topic_info["AssignedCount"].fillna(0).astype(int)
+
+    total_topic_docs = int(total_docs) if total_docs is not None else int(len(assigned_topic_series))
+    enriched_topic_info["AssignedShare"] = enriched_topic_info["AssignedCount"] / max(total_topic_docs, 1)
+    return enriched_topic_info
+
+
+def refresh_topic_representations(
+    merged_model,
+    article_topic_df: pd.DataFrame,
+    *,
+    top_n_words: int = 20,
+    config: BERTopicConfig | None = None,
+):
+    """
+    Recompute topic keywords from the final assigned merged-article corpus.
+
+    The saved BERTopic artifact only keeps the topic representation that existed at
+    save time. If it was saved with `top_n_words=10`, `get_topic(...)` will only
+    expose 10 terms. This helper rebuilds the c-TF-IDF representation directly from
+    the final article-level assignments so longer keyword lists can be exported.
+    """
+
+    required_columns = {"document", "merged_topic"}
+    if not required_columns.issubset(article_topic_df.columns):
+        missing = ", ".join(sorted(required_columns - set(article_topic_df.columns)))
+        raise KeyError(f"article_topic_df is missing required columns: {missing}")
+
+    docs = article_topic_df["document"].fillna("").astype(str).tolist()
+    topics = article_topic_df["merged_topic"].astype(int).tolist()
+    if not docs:
+        raise ValueError("article_topic_df is empty; cannot rebuild topic representations.")
+
+    effective_config = config or BERTopicConfig(top_n_words=top_n_words)
+
+    # BERTopic's saved artifact does not reliably restore the original vectorizer
+    # settings after load. In practice, loaded merged models may come back with
+    # `stop_words=None`, `ngram_range=(1, 1)`, and `min_df=1`, even when the
+    # original topic representation used the project stopword list and broader
+    # CountVectorizer settings. For refreshed keyword exports we therefore rebuild
+    # the vectorizer explicitly from the current project config instead of trusting
+    # the loaded model's vectorizer.
+    vectorizer_model = build_vectorizer(effective_config)
+
+    update_kwargs = {
+        "topics": topics,
+        "vectorizer_model": vectorizer_model,
+        "top_n_words": top_n_words,
+    }
+
+    ctfidf_model = deepcopy(getattr(merged_model, "ctfidf_model", None))
+    if ctfidf_model is not None:
+        update_kwargs["ctfidf_model"] = ctfidf_model
+
+    representation_model = deepcopy(getattr(merged_model, "representation_model", None))
+    if representation_model is not None:
+        update_kwargs["representation_model"] = representation_model
+
+    merged_model.update_topics(docs, **update_kwargs)
+    merged_model.topics_ = list(topics)
+    merged_model.top_n_words = top_n_words
+
+    refreshed_topic_info = attach_assigned_counts_to_topic_info(
+        merged_model.get_topic_info(),
+        topics,
+        total_docs=len(docs),
+    )
+    return merged_model, refreshed_topic_info
+
+
+def build_topic_keyword_summary(
+    merged_model,
+    merged_topic_info: pd.DataFrame,
+    *,
+    top_n_topics: int | None = 10,
+    top_k_words: int = 20,
+    topic_ids: list[int] | None = None,
+    topic_filter: str | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Return topic-size, long keyword, and side-by-side comparison tables.
+
+    `keyword_weight` is the c-TF-IDF score assigned by BERTopic's topic representation
+    step. Higher values mean the term is more distinctive for that topic relative to the
+    full corpus, not that it is a probability.
+
+    Note: the current saved merged-model artifact only stores the topic representation
+    that BERTopic persisted at save time. If that artifact contains 10 keywords per topic,
+    requesting 20 will still only return the available 10.
+    """
+
+    topic_info = merged_topic_info.copy()
+    topic_info = topic_info.loc[topic_info["Topic"] != -1].copy()
+    count_col = "AssignedCount" if "AssignedCount" in topic_info.columns else "Count"
+
+    if topic_ids:
+        topic_info = topic_info.loc[topic_info["Topic"].isin(topic_ids)].copy()
+    elif topic_filter:
+        filter_mask = (
+            topic_info["Name"].astype("string").str.contains(topic_filter, case=False, na=False)
+            | topic_info["DisplayLabel"].astype("string").str.contains(topic_filter, case=False, na=False)
+            | topic_info.get("topic_label", pd.Series(index=topic_info.index, dtype="string"))
+            .astype("string")
+            .str.contains(topic_filter, case=False, na=False)
+        )
+        topic_info = topic_info.loc[filter_mask].copy()
+
+    topic_size_df = topic_info[
+        [
+            col
+            for col in [
+                "Topic",
+                "DisplayTopic",
+                count_col,
+                "ModelCount",
+                "AssignedShare",
+                "Name",
+                "DisplayLabel",
+            ]
+            if col in topic_info.columns
+        ]
+    ].sort_values([count_col, "DisplayTopic"], ascending=[False, True])
+
+    if top_n_topics is not None:
+        topic_size_df = topic_size_df.head(top_n_topics)
+    topic_size_df = topic_size_df.reset_index(drop=True)
+
+    keyword_rows = []
+    for _, topic_row in topic_size_df.iterrows():
+        topic_id = int(topic_row["Topic"])
+        topic_keywords = merged_model.get_topic(topic_id) or []
+        for keyword_rank, (word, weight) in enumerate(topic_keywords[:top_k_words], start=1):
+            keyword_rows.append(
+                {
+                    "topic_id": topic_id,
+                    "display_topic": int(topic_row["DisplayTopic"]),
+                    "topic_count": int(topic_row[count_col]),
+                    "topic_name": topic_row["Name"],
+                    "display_label": topic_row["DisplayLabel"],
+                    "keyword_rank": keyword_rank,
+                    "keyword": word,
+                    "keyword_weight": float(weight),
+                }
+            )
+
+    keyword_weights_df = pd.DataFrame(keyword_rows)
+    if keyword_weights_df.empty:
+        return topic_size_df, keyword_weights_df, pd.DataFrame()
+
+    comparison_df = keyword_weights_df.copy()
+    comparison_df["keyword_with_weight"] = comparison_df.apply(
+        lambda row: f"{row['keyword']} ({row['keyword_weight']:.4f})",
+        axis=1,
+    )
+    comparison_order = topic_size_df["DisplayLabel"].tolist()
+    comparison_df = (
+        comparison_df.pivot(
+            index="keyword_rank",
+            columns="display_label",
+            values="keyword_with_weight",
+        )
+        .reindex(columns=comparison_order)
+        .reset_index()
+    )
+
+    return topic_size_df, keyword_weights_df, comparison_df
+
+
+def build_topic_keyword_rank_table(keyword_weights_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Return one row per topic with ranked `keyword (weight)` columns.
+
+    This is easier to scan when multiple nearby topics need manual naming, for
+    example several Russia-related topics that should be compared side by side.
+    """
+
+    if keyword_weights_df.empty:
+        return pd.DataFrame()
+
+    formatted = keyword_weights_df.copy()
+    formatted["keyword_rank_label"] = formatted["keyword_rank"].map(lambda rank: f"keyword_{int(rank):02d}")
+    formatted["keyword_with_weight"] = formatted.apply(
+        lambda row: f"{row['keyword']} ({row['keyword_weight']:.4f})",
+        axis=1,
+    )
+
+    rank_table = (
+        formatted.pivot_table(
+            index=["topic_id", "display_topic", "topic_count", "topic_name", "display_label"],
+            columns="keyword_rank_label",
+            values="keyword_with_weight",
+            aggfunc="first",
+        )
+        .reset_index()
+        .rename_axis(columns=None)
+        .sort_values(["topic_count", "display_topic"], ascending=[False, True])
+        .reset_index(drop=True)
+    )
+    return rank_table
+
+
+def build_approximate_distribution_dataset(
+    merged_model,
+    article_topic_df: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    batch_size: int = 256,
+    window: int = 4,
+    stride: int = 1,
+    min_similarity: float = 0.1,
+    use_embedding_model: bool = False,
+) -> tuple[pd.DataFrame, pd.DataFrame, np.ndarray]:
+    """
+    Approximate a full topic-mixture distribution for each article.
+
+    BERTopic's `approximate_distribution(...)` returns document-level topic-mixture
+    proportions across the current topic representation. These values sum to about
+    1 per row, but they are not HDBSCAN assignment confidences.
+    """
+
+    if "document" not in article_topic_df.columns:
+        raise KeyError("article_topic_df must contain a 'document' column.")
+    if getattr(merged_model, "c_tf_idf_", None) is None:
+        raise ValueError(
+            "merged_model.c_tf_idf_ is missing. Run refresh_topic_representations(...) "
+            "first so approximate_distribution(...) has a valid topic representation."
+        )
+
+    docs = article_topic_df["document"].fillna("").astype(str).tolist()
+    if not docs:
+        raise ValueError("article_topic_df is empty; cannot approximate topic distributions.")
+
+    topic_distribution, _ = merged_model.approximate_distribution(
+        docs,
+        batch_size=batch_size,
+        window=window,
+        stride=stride,
+        min_similarity=min_similarity,
+        use_embedding_model=use_embedding_model,
+    )
+
+    topic_id_order = [int(topic_id) for topic_id in merged_model.topic_labels_.keys() if int(topic_id) != -1]
+    if topic_distribution.shape[1] != len(topic_id_order):
+        raise ValueError(
+            "Topic-distribution width does not match the inferred topic order. "
+            f"Got matrix width={topic_distribution.shape[1]} and {len(topic_id_order)} topic ids."
+        )
+
+    topic_info = merged_topic_info.loc[merged_topic_info["Topic"].isin(topic_id_order)].copy()
+    topic_info = topic_info.drop_duplicates(subset=["Topic"]).set_index("Topic")
+
+    probability_columns = [f"topic_prob_{topic_id}" for topic_id in topic_id_order]
+    probability_df = pd.DataFrame(topic_distribution, columns=probability_columns)
+
+    preferred_article_columns = [
+        "row_id",
+        "document_id",
+        "source_name",
+        "source",
+        "outlet_key",
+        "outlet_label",
+        "Title",
+        "Date",
+        "URL",
+        "merged_topic",
+        "merged_display_topic",
+        "topic_label",
+        "topic_display_label",
+    ]
+    article_columns = [col for col in preferred_article_columns if col in article_topic_df.columns]
+
+    approximate_distribution_df = pd.concat(
+        [
+            article_topic_df.loc[:, article_columns].reset_index(drop=True),
+            probability_df.reset_index(drop=True),
+        ],
+        axis=1,
+    )
+
+    dominant_topic_indices = topic_distribution.argmax(axis=1)
+    dominant_topics = [topic_id_order[index] for index in dominant_topic_indices]
+    dominant_probs = topic_distribution.max(axis=1)
+
+    approximate_distribution_df["approx_topic"] = dominant_topics
+    approximate_distribution_df["approx_topic_probability"] = dominant_probs
+    approximate_distribution_df["approx_display_topic"] = (
+        approximate_distribution_df["approx_topic"].map(topic_info["DisplayTopic"]).astype("Int64")
+    )
+    approximate_distribution_df["approx_topic_name"] = (
+        approximate_distribution_df["approx_topic"].map(topic_info["Name"]).fillna("Unknown topic")
+    )
+    approximate_distribution_df["approx_display_label"] = (
+        approximate_distribution_df["approx_topic"].map(topic_info["DisplayLabel"]).fillna("Unknown topic")
+    )
+
+    topic_column_reference_df = pd.DataFrame(
+        [
+            {
+                "Topic": topic_id,
+                "DisplayTopic": int(topic_info.loc[topic_id, "DisplayTopic"])
+                if topic_id in topic_info.index and pd.notna(topic_info.loc[topic_id, "DisplayTopic"])
+                else pd.NA,
+                "Name": topic_info.loc[topic_id, "Name"] if topic_id in topic_info.index else pd.NA,
+                "DisplayLabel": topic_info.loc[topic_id, "DisplayLabel"] if topic_id in topic_info.index else pd.NA,
+                "probability_column": f"topic_prob_{topic_id}",
+            }
+            for topic_id in topic_id_order
+        ]
+    )
+
+    return approximate_distribution_df, topic_column_reference_df, topic_distribution
 
 
 def plot_merged_topic_umap(

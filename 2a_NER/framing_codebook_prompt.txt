@@ -41,15 +41,16 @@ Verwenden Sie diese Kategorie immer dann, wenn die Übereinstimmung semantisch �
 Kontext um die Medienerwähnung(en): {context}
 Erkannte Medienerwähnung(en): {entity_mention}
 
-Aufgabe: Weisen Sie der Erwähnung der Entitäten basierend auf dem Kontext genau eine Kategorie zu. Identifizieren Sie außerdem das einzelne Wort oder die kurze Phrase im Kontext, die diese Klassifizierung am deutlichsten signalisiert. Wenn kein Framing-Signal vorhanden ist (Neutral oder Irrelevant), setzen Sie „evidence“ auf eine leere Zeichenfolge.
+Aufgabe: Weisen Sie der Erwähnung der Entitäten basierend auf dem Kontext genau eine Kategorie zu. Identifizieren Sie außerdem das Wort oder eine kurze Phrase aus dem Kontext (nicht isoliert, sondern im relevanten Zusammenhang), die diese Klassifizierung am deutlichsten signalisiert. Wenn kein Framing-Signal vorhanden ist (Neutral oder Irrelevant), setzen Sie „evidence“ auf eine leere Zeichenfolge.
 
 Wichtige Richtlinien:
-•⁠  ⁠Wenn sich die übereinstimmende Zeichenfolge in diesem Kontext semantisch nicht auf Medien bezieht, weisen Sie „Irrelevant“ zu, auch wenn der reguläre Ausdruck technisch eine Übereinstimmung gefunden hat
-•⁠  ⁠Wenn mehrere Bias-Typen vorhanden zu sein scheinen, wählen Sie die dominante oder primäre Anschuldigung basierend auf den stärksten sprachlichen Hinweisen
-•⁠  ⁠Wenn mehrere Medienreferenzen in einem Kontext genannt werden, klassifizieren Sie das dominante Framing des Kontextfensters insgesamt, nicht jede Erwähnung einzeln.
+• Wenn sich die übereinstimmende Zeichenfolge in diesem Kontext semantisch nicht auf Medien bezieht, weisen Sie „Irrelevant“ zu, auch wenn der reguläre Ausdruck technisch eine Übereinstimmung gefunden hat
+• Wenn mehrere Bias-Typen vorhanden zu sein scheinen, wählen Sie die dominante oder primäre Anschuldigung basierend auf den stärksten sprachlichen Hinweisen
+• Wenn mehrere Medienreferenzen in einem Kontext genannt werden, klassifizieren Sie das dominante Framing des Kontextfensters insgesamt, nicht jede Erwähnung einzeln
+• Der erkannte Ausdruck muss sich im Kontext eindeutig auf den genannten Medienakteur beziehen; andernfalls wählen Sie „IRRELEVANT“
 
 Geben Sie ein JSON-Objekt mit genau diesen beiden Feldern zurück:
-•⁠  ⁠„category“: entweder „POSITIONS-/PARTEILICHKEITS-BIAS”, „VERZERRUNG/MANIPULATION“, „DISINFORMATION/FALSCHDARSTELLUNG“, „VERSAGEN/INKOMPETENZ“, „NEUTRAL“ oder „IRRELEVANT“
-•⁠  ⁠„evidence“: das Wort oder die kurze Phrase aus dem Kontext, die auf den Vorwurf der Voreingenommenheit hindeutet, oder eine leere Zeichenfolge, wenn die Kategorie „Neutral“ oder „Irrelevant“ ist
+• „category“: entweder „POSITIONS-/PARTEILICHKEITS-BIAS”, „VERZERRUNG/MANIPULATION“, „DISINFORMATION/FALSCHDARSTELLUNG“, „VERSAGEN/INKOMPETENZ“, „NEUTRAL“ oder „IRRELEVANT“
+• „evidence“: das Wort oder eine kurze Phrase aus dem Kontext (nicht isoliert, sondern im relevanten Zusammenhang), die auf den Vorwurf der Voreingenommenheit hindeutet, oder eine leere Zeichenfolge, wenn die Kategorie „Neutral“ oder „Irrelevant“ ist
 
 Gib nur das JSON-Objekt zurück, keinen zusätzlichen Text.

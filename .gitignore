@@ -5,6 +5,7 @@
 
 # Python cache artifacts
 __pycache__/
+**/__pycache__/
 *.pyc
 
 # Raw and processed datasets (never commit local data dumps)
@@ -19,7 +20,7 @@ data/processed/
 
 # Tagesschau crawl notebook outputs
 data/experiments/tagesschau_crawl/data/raw/tagesschau/
-data/experiments/tagesschau_crawl/data/raw/tagesschau/
+
 1a_BERTopic/outputs/
 1a_BERTopic/local_outputs/
 1a_BERTopic/outputsdk_model/
@@ -31,8 +32,19 @@ mattis_eda.ipynb
 
 .numba_cache/
 .mplconfig/
-.DS_Store
 BERTopic/outputs/*.joblib
 1b_TopicClassification/classification_trial_results_gpt5mini.csv
 2a_NER/*.csv
 2a_NER/outputs/*.csv
+
+# Sentiment / emotion pipeline — large weights & run outputs (re-download with download_model_weights.py)
+Sentiment_Analysis/models/**/*.bin
+Sentiment_Analysis/models/**/*.safetensors
+Sentiment_Analysis/outputs/
+3a_Sentiment_Analysis/models/**/*.bin
+3a_Sentiment_Analysis/models/**/*.safetensors
+3a_Sentiment_Analysis/outputs/
+
+2a_NER/outputs/*.csv
+experiments/**/*.executed.ipynb
+experiments/**/outputs/

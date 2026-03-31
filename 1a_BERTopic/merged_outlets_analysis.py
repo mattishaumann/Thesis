@@ -2,27 +2,43 @@ from __future__ import annotations
 
 import ast
 import html
+import json
 import re
+import shutil
 import sys
 import warnings
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.lines import Line2D
 from umap import UMAP
 
 MODULE_DIR = Path(__file__).resolve().parent
 if str(MODULE_DIR) not in sys.path:
     sys.path.insert(0, str(MODULE_DIR))
+PROJECT_ROOT_DIR = MODULE_DIR.parent
+if str(PROJECT_ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT_DIR))
 
 from bertopic_config import BERTopicConfig
-from bertopic_pipeline import prepare_documents
+from bertopic_pipeline import prepare_documents_with_audit, run_bertopic_pipeline
 
 
 EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+CANONICAL_COMBINED_RELATIVE_PATH = Path("00_Initial EDA") / "df_combined.csv"
+DEFAULT_TOPICS_EXPORT_RELATIVE_PATH = Path("data") / "processed" / "df_combined_with_merged_topics.csv"
+DEFAULT_THESIS_TOPIC_EXPORT_RELATIVE_PATH = Path("data") / "processed" / "df_combined_with_topic.csv"
+DEFAULT_MERGED_ARTICLES_CACHE_RELATIVE_PATH = Path("data") / "processed" / "merged_articles_with_umap.csv"
+DEFAULT_MERGED_TOPIC_INFO_CACHE_RELATIVE_PATH = Path("data") / "processed" / "merged_topic_info_display.csv"
+DEFAULT_MERGED_ANALYSIS_METADATA_RELATIVE_PATH = Path("data") / "processed" / "merged_analysis_metadata.json"
+DEFAULT_MERGED_MODEL_RELATIVE_PATH = Path("1a_BERTopic") / "local_outputs" / "merged_all_outlets_model"
+DEFAULT_FROZEN_MERGED_RUNS_RELATIVE_DIR = Path("1a_BERTopic") / "local_outputs" / "frozen_merged_runs"
+REQUIRED_COMBINED_COLUMNS = ("Date", "Title", "Text", "source", "row_id")
 
 TICHYS_EXTRA_STOPWORDS = (
     "amazon",
@@ -88,6 +104,21 @@ def read_csv_resilient(csv_path: Path) -> pd.DataFrame:
             pass
 
     raise ValueError(f"Could not read: {csv_path}")
+
+
+def get_canonical_combined_path(project_root: Path | None = None) -> Path:
+    root = project_root or PROJECT_ROOT_DIR
+    return root / CANONICAL_COMBINED_RELATIVE_PATH
+
+
+def load_canonical_combined_df(project_root: Path | None = None) -> pd.DataFrame:
+    df = pd.read_csv(get_canonical_combined_path(project_root))
+    missing = [column for column in REQUIRED_COMBINED_COLUMNS if column not in df.columns]
+    if missing:
+        raise ValueError(f"Combined dataframe is missing required columns: {missing}")
+    if df["row_id"].duplicated().any():
+        raise ValueError("Combined dataframe contains duplicate row_id values.")
+    return df
 
 
 def _load_csv_tree(base_dir: Path, source_name: str) -> pd.DataFrame:
@@ -358,27 +389,35 @@ def load_deutschlandkurier_dataframe(project_root: Path) -> pd.DataFrame:
     return df_clean
 
 
+def load_canonical_outlet_dataframe(project_root: Path, source_name: str) -> pd.DataFrame:
+    canonical_df = load_canonical_combined_df(project_root)
+    subset = canonical_df.loc[canonical_df["source"] == source_name].copy()
+    if subset.empty:
+        raise ValueError(f"No rows found for source '{source_name}'.")
+    return subset.reset_index(drop=True)
+
+
 OUTLET_SPECS: dict[str, OutletSpec] = {
     "tagesschau": OutletSpec(
         key="tagesschau",
         label="Tagesschau",
         model_name="ts_model",
         text_col="Text",
-        id_col="URL",
+        id_col="row_id",
         config_factory=lambda: BERTopicConfig(
             hdbscan_min_cluster_size=35,
             hdbscan_min_samples=2,
             umap_n_neighbors=25,
             umap_min_dist=0.0,
         ),
-        loader=load_tagesschau_dataframe,
+        loader=lambda project_root: load_canonical_outlet_dataframe(project_root, "Tagesschau"),
     ),
     "rt": OutletSpec(
         key="rt",
         label="RT",
         model_name="rt_model",
         text_col="Text",
-        id_col="URL",
+        id_col="row_id",
         config_factory=lambda: BERTopicConfig(
             hdbscan_min_cluster_size=15,
             hdbscan_min_samples=3,
@@ -386,14 +425,14 @@ OUTLET_SPECS: dict[str, OutletSpec] = {
             umap_n_neighbors=40,
             umap_min_dist=0.05,
         ),
-        loader=load_rt_dataframe,
+        loader=lambda project_root: load_canonical_outlet_dataframe(project_root, "RT_de"),
     ),
     "antispiegel": OutletSpec(
         key="antispiegel",
         label="Antispiegel",
         model_name="as_model",
         text_col="Text",
-        id_col="URL",
+        id_col="row_id",
         config_factory=lambda: BERTopicConfig(
             hdbscan_min_cluster_size=8,
             hdbscan_min_samples=2,
@@ -403,47 +442,47 @@ OUTLET_SPECS: dict[str, OutletSpec] = {
             umap_min_dist=0.05,
             nr_topics=None,
         ),
-        loader=load_antispiegel_dataframe,
+        loader=lambda project_root: load_canonical_outlet_dataframe(project_root, "Antispiegel"),
     ),
     "tichys": OutletSpec(
         key="tichys",
         label="Tichys Einblick",
         model_name="te_model",
         text_col="Text",
-        id_col="URL",
+        id_col="row_id",
         config_factory=lambda: BERTopicConfig(
             hdbscan_min_cluster_size=10,
             umap_n_neighbors=15,
             extra_stopwords=TICHYS_EXTRA_STOPWORDS,
         ),
-        loader=load_tichys_dataframe,
+        loader=lambda project_root: load_canonical_outlet_dataframe(project_root, "Tichys_Einblick"),
     ),
     "nius": OutletSpec(
         key="nius",
         label="Nius",
         model_name="ns_model",
         text_col="Text",
-        id_col="URL",
+        id_col="row_id",
         config_factory=lambda: BERTopicConfig(hdbscan_min_cluster_size=15),
-        loader=load_nius_dataframe,
+        loader=lambda project_root: load_canonical_outlet_dataframe(project_root, "Nius"),
     ),
     "compact": OutletSpec(
         key="compact",
         label="Compact",
         model_name="compact_model",
-        text_col="Inhalt",
-        id_col="URL",
+        text_col="Text",
+        id_col="row_id",
         config_factory=BERTopicConfig,
-        loader=load_compact_dataframe,
+        loader=lambda project_root: load_canonical_outlet_dataframe(project_root, "Compact"),
     ),
     "deutschlandkurier": OutletSpec(
         key="deutschlandkurier",
         label="Deutschlandkurier",
         model_name="dk_model",
         text_col="Text",
-        id_col="URL",
+        id_col="row_id",
         config_factory=BERTopicConfig,
-        loader=load_deutschlandkurier_dataframe,
+        loader=lambda project_root: load_canonical_outlet_dataframe(project_root, "Deutschlandkurier"),
     ),
 }
 
@@ -455,6 +494,16 @@ ALT_MEDIA_OUTLET_KEYS: tuple[str, ...] = (
     "compact",
     "deutschlandkurier",
 )
+
+OUTLET_COLOR_MAP: dict[str, str] = {
+    "tagesschau": "#1b9e77",
+    "rt": "#d95f02",
+    "antispiegel": "#7570b3",
+    "tichys": "#e7298a",
+    "nius": "#66a61e",
+    "compact": "#e6ab02",
+    "deutschlandkurier": "#1f78b4",
+}
 
 
 def resolve_model_path(model_name: str, candidates: list[Path]) -> Path:
@@ -474,18 +523,27 @@ def resolve_model_paths(candidates: list[Path]) -> dict[str, Path]:
     }
 
 
-def prepare_outlet_documents(project_root: Path, key: str) -> pd.DataFrame:
+def prepare_outlet_documents_with_audit(project_root: Path, key: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     spec = OUTLET_SPECS[key]
     df = spec.loader(project_root)
-    prepared = prepare_documents(
+    prepared, audit = prepare_documents_with_audit(
         df,
         text_col=spec.text_col,
         config=spec.config_factory(),
         id_col=spec.id_col,
         source_name=spec.label,
-    ).copy()
+    )
+    prepared = prepared.copy()
+    audit = audit.copy()
     prepared["outlet_key"] = spec.key
     prepared["outlet_label"] = spec.label
+    audit["outlet_key"] = spec.key
+    audit["outlet_label"] = spec.label
+    return prepared, audit
+
+
+def prepare_outlet_documents(project_root: Path, key: str) -> pd.DataFrame:
+    prepared, _ = prepare_outlet_documents_with_audit(project_root, key)
     return prepared
 
 
@@ -496,9 +554,151 @@ def load_all_prepared_documents(project_root: Path) -> dict[str, pd.DataFrame]:
     }
 
 
+def load_all_prepared_documents_with_audits(
+    project_root: Path,
+) -> tuple[dict[str, pd.DataFrame], dict[str, pd.DataFrame]]:
+    prepared_by_outlet: dict[str, pd.DataFrame] = {}
+    audit_by_outlet: dict[str, pd.DataFrame] = {}
+    for key in OUTLET_SPECS:
+        prepared, audit = prepare_outlet_documents_with_audit(project_root, key)
+        prepared_by_outlet[key] = prepared
+        audit_by_outlet[key] = audit
+    return prepared_by_outlet, audit_by_outlet
+
+
 def combine_prepared_documents(prepared_by_outlet: dict[str, pd.DataFrame]) -> pd.DataFrame:
     ordered = [prepared_by_outlet[key] for key in OUTLET_SPECS]
     return pd.concat(ordered, ignore_index=True)
+
+
+def combine_preparation_audits(audit_by_outlet: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    ordered = [audit_by_outlet[key] for key in OUTLET_SPECS]
+    return pd.concat(ordered, ignore_index=True)
+
+
+def train_outlet_topic_model(
+    project_root: Path,
+    outlet_key: str,
+    *,
+    embedding_model=None,
+    stop_words: list[str] | None = None,
+) -> dict[str, object]:
+    spec = OUTLET_SPECS[outlet_key]
+    df = spec.loader(project_root)
+    result = run_bertopic_pipeline(
+        df,
+        text_col=spec.text_col,
+        config=spec.config_factory(),
+        id_col=spec.id_col,
+        source_name=spec.label,
+        stop_words=stop_words,
+        embedding_model=embedding_model,
+    )
+    return result
+
+
+def save_outlet_topic_model(
+    topic_model,
+    output_dir: Path,
+    outlet_key: str,
+    *,
+    embedding_model_name: str = EMBEDDING_MODEL_NAME,
+    clear_existing: bool = True,
+) -> Path:
+    spec = OUTLET_SPECS[outlet_key]
+    save_dir = output_dir / spec.model_name
+    save_dir.parent.mkdir(parents=True, exist_ok=True)
+    if clear_existing and save_dir.exists():
+        shutil.rmtree(save_dir)
+    topic_model.save(
+        save_dir,
+        serialization="safetensors",
+        save_ctfidf=True,
+        save_embedding_model=embedding_model_name,
+    )
+    return save_dir
+
+
+def attach_merged_topics_to_canonical_corpus(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    *,
+    preparation_audit: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    canonical_df = load_canonical_combined_df(project_root)
+    assignment_columns = [
+        "row_id",
+        "document_id",
+        "merged_topic",
+        "merged_probability",
+        "merged_display_topic",
+        "merged_display_label",
+        "outlet_key",
+        "outlet_label",
+    ]
+    assignments = merged_articles.loc[:, [col for col in assignment_columns if col in merged_articles.columns]].copy()
+    if assignments["row_id"].duplicated().any():
+        duplicate_ids = assignments.loc[assignments["row_id"].duplicated(), "row_id"].astype(str).tolist()[:10]
+        raise ValueError(f"Merged assignments contain duplicate row_id values: {duplicate_ids}")
+    assignments = assignments.rename(
+        columns={
+            "document_id": "merged_document_id",
+            "outlet_key": "merged_outlet_key",
+            "outlet_label": "merged_outlet_label",
+        }
+    )
+
+    if preparation_audit is None:
+        _, audit_by_outlet = load_all_prepared_documents_with_audits(project_root)
+        preparation_audit = combine_preparation_audits(audit_by_outlet)
+
+    audit_columns = [
+        "row_id",
+        "document_id",
+        "included_in_model",
+        "exclusion_reason",
+        "document_length",
+        "token_count",
+        "outlet_key",
+        "outlet_label",
+    ]
+    audit = preparation_audit.loc[:, [col for col in audit_columns if col in preparation_audit.columns]].copy()
+    if audit["row_id"].duplicated().any():
+        duplicate_ids = audit.loc[audit["row_id"].duplicated(), "row_id"].astype(str).tolist()[:10]
+        raise ValueError(f"Preparation audit contains duplicate row_id values: {duplicate_ids}")
+    audit = audit.rename(
+        columns={
+            "document_id": "prepared_document_id",
+            "included_in_model": "included_in_merged_tm_input",
+            "exclusion_reason": "merged_tm_exclusion_reason",
+            "document_length": "merged_tm_document_length",
+            "token_count": "merged_tm_token_count",
+            "outlet_key": "prepared_outlet_key",
+            "outlet_label": "prepared_outlet_label",
+        }
+    )
+
+    enriched = canonical_df.merge(audit, on="row_id", how="left", validate="1:1")
+    enriched = enriched.merge(assignments, on="row_id", how="left", validate="1:1")
+    return enriched
+
+
+def export_canonical_corpus_with_merged_topics(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    output_path: Path | None = None,
+    *,
+    preparation_audit: pd.DataFrame | None = None,
+) -> Path:
+    export_path = output_path or (project_root / DEFAULT_TOPICS_EXPORT_RELATIVE_PATH)
+    export_path.parent.mkdir(parents=True, exist_ok=True)
+    enriched = attach_merged_topics_to_canonical_corpus(
+        project_root,
+        merged_articles,
+        preparation_audit=preparation_audit,
+    )
+    enriched.to_csv(export_path, index=False)
+    return export_path
 
 
 def enrich_topic_info_with_display(topic_info: pd.DataFrame) -> pd.DataFrame:
@@ -523,6 +723,135 @@ def enrich_topic_info_with_display(topic_info: pd.DataFrame) -> pd.DataFrame:
     return topic_info
 
 
+def rebuild_topic_info_from_assignments(
+    base_topic_info: pd.DataFrame,
+    assigned_topics: pd.Series | list[int],
+) -> pd.DataFrame:
+    assigned_series = pd.Series(assigned_topics, dtype="Int64", name="Topic").dropna()
+    article_counts = (
+        assigned_series.astype(int)
+        .value_counts(sort=False)
+        .rename_axis("Topic")
+        .reset_index(name="Count")
+    )
+
+    topic_info = base_topic_info.copy()
+    topic_info = topic_info.drop(columns=["Count", "DisplayTopic", "DisplayLabel", "TopicNameClean"], errors="ignore")
+    topic_info = topic_info.merge(article_counts, on="Topic", how="inner")
+    topic_info["Count"] = topic_info["Count"].astype(int)
+    topic_info = topic_info.sort_values(["Topic"], ascending=[True]).reset_index(drop=True)
+    return enrich_topic_info_with_display(topic_info)
+
+
+def save_merged_model(
+    merged_model,
+    project_root: Path,
+    output_dir: Path | None = None,
+    *,
+    embedding_model: str = EMBEDDING_MODEL_NAME,
+    overwrite: bool = True,
+) -> Path:
+    model_dir = output_dir or (project_root / DEFAULT_MERGED_MODEL_RELATIVE_PATH)
+    model_dir.parent.mkdir(parents=True, exist_ok=True)
+    if model_dir.exists() and overwrite:
+        shutil.rmtree(model_dir)
+    merged_model.save(
+        model_dir,
+        serialization="safetensors",
+        save_ctfidf=True,
+        save_embedding_model=embedding_model,
+    )
+    return model_dir
+
+
+def load_saved_merged_model(
+    project_root: Path,
+    *,
+    embedding_model: str = EMBEDDING_MODEL_NAME,
+    model_dir: Path | None = None,
+):
+    from bertopic import BERTopic
+
+    resolved_model_dir = model_dir or (project_root / DEFAULT_MERGED_MODEL_RELATIVE_PATH)
+    if not resolved_model_dir.exists():
+        raise FileNotFoundError(
+            f"Missing saved merged model at {resolved_model_dir}. Run the merged build notebook first."
+        )
+    merged_model = BERTopic.load(resolved_model_dir)
+    return merged_model, resolved_model_dir
+
+
+def build_merged_analysis_metadata(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    merged_model_path: Path | None = None,
+    articles_path: Path | None = None,
+    topic_info_path: Path | None = None,
+    metadata_overrides: dict | None = None,
+) -> dict:
+    resolved_model_path = merged_model_path or (project_root / DEFAULT_MERGED_MODEL_RELATIVE_PATH)
+    resolved_articles_path = articles_path or (project_root / DEFAULT_MERGED_ARTICLES_CACHE_RELATIVE_PATH)
+    resolved_topic_info_path = topic_info_path or (project_root / DEFAULT_MERGED_TOPIC_INFO_CACHE_RELATIVE_PATH)
+    metadata = {
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "merged_model_path": str(resolved_model_path.relative_to(project_root)),
+        "merged_articles_cache_path": str(resolved_articles_path.relative_to(project_root)),
+        "merged_topic_info_cache_path": str(resolved_topic_info_path.relative_to(project_root)),
+        "article_rows": int(len(merged_articles)),
+        "article_outliers_raw": int((merged_articles["merged_topic"] == -1).sum()),
+        "article_topics_non_null": int(merged_articles["merged_topic"].notna().sum()),
+        "topic_rows": int(len(merged_topic_info)),
+        "topic_count_sum": int(merged_topic_info["Count"].sum()),
+        "topic_counts_source": "article_assignments",
+    }
+    if metadata_overrides:
+        metadata.update(metadata_overrides)
+    return metadata
+
+
+def freeze_merged_run_snapshot(
+    project_root: Path,
+    run_label: str,
+    *,
+    merged_model_path: Path | None = None,
+    articles_path: Path | None = None,
+    topic_info_path: Path | None = None,
+    thesis_topic_export_path: Path | None = None,
+    rich_topic_export_path: Path | None = None,
+    metadata_path: Path | None = None,
+    overwrite: bool = False,
+) -> Path:
+    resolved_model_path = merged_model_path or (project_root / DEFAULT_MERGED_MODEL_RELATIVE_PATH)
+    resolved_articles_path = articles_path or (project_root / DEFAULT_MERGED_ARTICLES_CACHE_RELATIVE_PATH)
+    resolved_topic_info_path = topic_info_path or (project_root / DEFAULT_MERGED_TOPIC_INFO_CACHE_RELATIVE_PATH)
+    resolved_thesis_topic_export_path = thesis_topic_export_path or (
+        project_root / DEFAULT_THESIS_TOPIC_EXPORT_RELATIVE_PATH
+    )
+    resolved_rich_topic_export_path = rich_topic_export_path or (project_root / DEFAULT_TOPICS_EXPORT_RELATIVE_PATH)
+    resolved_metadata_path = metadata_path or (project_root / DEFAULT_MERGED_ANALYSIS_METADATA_RELATIVE_PATH)
+
+    snapshot_dir = project_root / DEFAULT_FROZEN_MERGED_RUNS_RELATIVE_DIR / run_label
+    if snapshot_dir.exists():
+        if not overwrite:
+            raise FileExistsError(
+                f"Frozen merged-run snapshot already exists at {snapshot_dir}. "
+                "Choose a new run label or explicitly allow overwrite."
+            )
+        shutil.rmtree(snapshot_dir)
+
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
+    snapshot_model_dir = snapshot_dir / "merged_model"
+    shutil.copytree(resolved_model_path, snapshot_model_dir)
+    shutil.copy2(resolved_articles_path, snapshot_dir / resolved_articles_path.name)
+    shutil.copy2(resolved_topic_info_path, snapshot_dir / resolved_topic_info_path.name)
+    shutil.copy2(resolved_thesis_topic_export_path, snapshot_dir / resolved_thesis_topic_export_path.name)
+    shutil.copy2(resolved_rich_topic_export_path, snapshot_dir / resolved_rich_topic_export_path.name)
+    shutil.copy2(resolved_metadata_path, snapshot_dir / resolved_metadata_path.name)
+    return snapshot_dir
+
+
 def build_merged_article_frame(
     merged_model,
     combined_prepared: pd.DataFrame,
@@ -545,13 +874,12 @@ def build_merged_article_frame(
     )
     coords = reducer.fit_transform(embeddings)
 
-    merged_topic_info = enrich_topic_info_with_display(merged_model.get_topic_info())
-    display_label_map = dict(zip(merged_topic_info["Topic"], merged_topic_info["DisplayLabel"]))
-    display_topic_map = dict(zip(merged_topic_info["Topic"], merged_topic_info["DisplayTopic"]))
-
     frame = combined_prepared.copy()
     frame["merged_topic"] = list(topics)
     frame["merged_probability"] = list(probabilities) if probabilities is not None else None
+    merged_topic_info = rebuild_topic_info_from_assignments(merged_model.get_topic_info(), frame["merged_topic"])
+    display_label_map = dict(zip(merged_topic_info["Topic"], merged_topic_info["DisplayLabel"]))
+    display_topic_map = dict(zip(merged_topic_info["Topic"], merged_topic_info["DisplayTopic"]))
     frame["merged_display_topic"] = frame["merged_topic"].map(display_topic_map).astype("Int64")
     frame["merged_display_label"] = frame["merged_topic"].map(display_label_map).fillna("Outliers")
     frame["umap_x"] = coords[:, 0]
@@ -871,3 +1199,461 @@ def build_outlet_topic_coverage_summary(
         .sort_values(["Merged_Topics_Covered", "Articles", "Outlet"], ascending=[False, False, True])
         .reset_index(drop=True)
     )
+
+
+def build_df_combined_with_topic(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    *,
+    preparation_audit: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    enriched = attach_merged_topics_to_canonical_corpus(
+        project_root,
+        merged_articles,
+        preparation_audit=preparation_audit,
+    )
+    ordered_columns = list(REQUIRED_COMBINED_COLUMNS)
+    thesis_df = enriched.loc[:, ordered_columns].copy()
+    thesis_df["Topic"] = enriched["merged_display_topic"].astype("Int64")
+    return thesis_df
+
+
+def export_df_combined_with_topic(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    output_path: Path | None = None,
+    *,
+    preparation_audit: pd.DataFrame | None = None,
+) -> Path:
+    export_path = output_path or (project_root / DEFAULT_THESIS_TOPIC_EXPORT_RELATIVE_PATH)
+    export_path.parent.mkdir(parents=True, exist_ok=True)
+    thesis_df = build_df_combined_with_topic(
+        project_root,
+        merged_articles,
+        preparation_audit=preparation_audit,
+    )
+    thesis_df.to_csv(export_path, index=False)
+    return export_path
+
+
+def export_merged_analysis_cache(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    articles_output_path: Path | None = None,
+    topic_info_output_path: Path | None = None,
+    metadata_output_path: Path | None = None,
+    merged_model_path: Path | None = None,
+    metadata_overrides: dict | None = None,
+) -> tuple[Path, Path, Path]:
+    articles_path = articles_output_path or (project_root / DEFAULT_MERGED_ARTICLES_CACHE_RELATIVE_PATH)
+    topic_info_path = topic_info_output_path or (project_root / DEFAULT_MERGED_TOPIC_INFO_CACHE_RELATIVE_PATH)
+    metadata_path = metadata_output_path or (project_root / DEFAULT_MERGED_ANALYSIS_METADATA_RELATIVE_PATH)
+    articles_path.parent.mkdir(parents=True, exist_ok=True)
+    topic_info_path.parent.mkdir(parents=True, exist_ok=True)
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    merged_articles.to_csv(articles_path, index=False)
+    merged_topic_info.to_csv(topic_info_path, index=False)
+    metadata = build_merged_analysis_metadata(
+        project_root,
+        merged_articles,
+        merged_topic_info,
+        merged_model_path=merged_model_path,
+        articles_path=articles_path,
+        topic_info_path=topic_info_path,
+        metadata_overrides=metadata_overrides,
+    )
+    metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    return articles_path, topic_info_path, metadata_path
+
+
+def load_merged_analysis_cache(
+    project_root: Path,
+    *,
+    articles_path: Path | None = None,
+    topic_info_path: Path | None = None,
+    metadata_path: Path | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
+    resolved_articles_path = articles_path or (project_root / DEFAULT_MERGED_ARTICLES_CACHE_RELATIVE_PATH)
+    resolved_topic_info_path = topic_info_path or (project_root / DEFAULT_MERGED_TOPIC_INFO_CACHE_RELATIVE_PATH)
+    resolved_metadata_path = metadata_path or (project_root / DEFAULT_MERGED_ANALYSIS_METADATA_RELATIVE_PATH)
+
+    if not resolved_articles_path.exists():
+        raise FileNotFoundError(
+            f"Missing merged articles cache at {resolved_articles_path}. Run the merged build notebook first."
+        )
+    if not resolved_topic_info_path.exists():
+        raise FileNotFoundError(
+            f"Missing merged topic-info cache at {resolved_topic_info_path}. Run the merged build notebook first."
+        )
+    if not resolved_metadata_path.exists():
+        raise FileNotFoundError(
+            f"Missing merged analysis metadata at {resolved_metadata_path}. Run the merged build notebook first."
+        )
+
+    merged_articles = pd.read_csv(resolved_articles_path)
+    merged_topic_info = pd.read_csv(resolved_topic_info_path)
+    metadata = json.loads(resolved_metadata_path.read_text(encoding="utf-8"))
+
+    for column in ("row_id", "merged_topic", "merged_display_topic"):
+        if column in merged_articles.columns:
+            merged_articles[column] = pd.array(merged_articles[column], dtype="Int64")
+    for column in ("Topic", "DisplayTopic"):
+        if column in merged_topic_info.columns:
+            merged_topic_info[column] = pd.array(merged_topic_info[column], dtype="Int64")
+
+    return merged_articles, merged_topic_info, metadata
+
+
+def validate_merged_analysis_cache(
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    metadata: dict,
+) -> list[str]:
+    issues: list[str] = []
+    article_rows = int(len(merged_articles))
+    article_outliers = int((merged_articles["merged_topic"] == -1).sum())
+    article_topic_sum = int(merged_articles["merged_topic"].notna().sum())
+    topic_count_sum = int(merged_topic_info["Count"].sum())
+
+    if article_rows != int(metadata.get("article_rows", -1)):
+        issues.append("Metadata article_rows does not match cached merged articles.")
+    if article_outliers != int(metadata.get("article_outliers_raw", -1)):
+        issues.append("Metadata outlier count does not match cached merged articles.")
+    if article_topic_sum != int(metadata.get("article_topics_non_null", -1)):
+        issues.append("Metadata assigned-topic count does not match cached merged articles.")
+    if topic_count_sum != int(metadata.get("topic_count_sum", -1)):
+        issues.append("Metadata topic_count_sum does not match cached topic info.")
+    if article_topic_sum != topic_count_sum:
+        issues.append("Cached topic-info counts do not sum to the cached article-level assignments.")
+    if metadata.get("topic_counts_source") != "article_assignments":
+        issues.append("Merged topic-info metadata is not marked as article-assignment-based.")
+
+    return issues
+
+
+def build_topic_outlet_frequency_table(
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    include_outliers: bool = False,
+) -> pd.DataFrame:
+    topic_info = merged_topic_info.copy()
+    if not include_outliers:
+        topic_info = topic_info.loc[topic_info["Topic"] != -1].copy()
+
+    outlet_labels = [spec.label for spec in OUTLET_SPECS.values()]
+    counts = (
+        merged_articles.groupby(["merged_topic", "outlet_label"]).size().unstack(fill_value=0)
+        if not merged_articles.empty
+        else pd.DataFrame(columns=outlet_labels)
+    )
+
+    if not include_outliers and -1 in counts.index:
+        counts = counts.drop(index=-1)
+
+    counts = counts.reindex(index=topic_info["Topic"].tolist(), fill_value=0)
+    counts = counts.reindex(columns=outlet_labels, fill_value=0)
+
+    table = topic_info.loc[:, ["Topic", "DisplayTopic", "DisplayLabel"]].copy()
+    table = table.rename(columns={"DisplayLabel": "Topic_Label"})
+    table["Total_Articles"] = counts.sum(axis=1).to_numpy()
+    for outlet_label in outlet_labels:
+        table[outlet_label] = counts[outlet_label].to_numpy()
+
+    sort_display = table["DisplayTopic"].fillna(10**9)
+    return (
+        table.assign(_sort_display=sort_display)
+        .sort_values(["_sort_display", "Topic"], ascending=[True, True])
+        .drop(columns="_sort_display")
+        .reset_index(drop=True)
+    )
+
+
+def build_final_topic_list(
+    merged_topic_info: pd.DataFrame,
+    *,
+    include_outliers: bool = False,
+    prefix_start: int = 1,
+) -> pd.DataFrame:
+    topic_info = merged_topic_info.copy()
+
+    if "TopicNameClean" not in topic_info.columns or "DisplayTopic" not in topic_info.columns:
+        topic_info = enrich_topic_info_with_display(topic_info)
+
+    if not include_outliers:
+        topic_info = topic_info.loc[topic_info["Topic"] != -1].copy()
+
+    ordered = (
+        topic_info.sort_values(["DisplayTopic", "Topic"], ascending=[True, True])
+        .reset_index(drop=True)
+        .copy()
+    )
+    ordered["FinalTopic"] = pd.array(range(prefix_start, prefix_start + len(ordered)), dtype="Int64")
+    ordered["FinalTopicName"] = ordered.apply(
+        lambda row: f"{int(row['FinalTopic'])}_{row['TopicNameClean']}",
+        axis=1,
+    )
+    ordered["FinalTopicLabel"] = ordered.apply(
+        lambda row: f"Topic {int(row['FinalTopic'])} — {row['TopicNameClean']}",
+        axis=1,
+    )
+
+    return (
+        ordered.loc[
+            :,
+            [
+                "FinalTopic",
+                "Topic",
+                "FinalTopicName",
+                "FinalTopicLabel",
+                "Count",
+                "Name",
+                "DisplayTopic",
+                "DisplayLabel",
+                "TopicNameClean",
+                "Representation",
+            ],
+        ]
+        .rename(
+            columns={
+                "Topic": "Topic_Raw",
+                "Name": "OriginalName",
+            }
+        )
+        .reset_index(drop=True)
+    )
+
+
+def _truncate_topic_label(label: object, max_chars: int = 42) -> str:
+    text = str(label)
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 1].rstrip() + "…"
+
+
+def _format_topic_label_for_plot(
+    topic_id: int,
+    merged_topic_info: pd.DataFrame,
+    *,
+    include_raw_topic_id: bool = True,
+    max_chars: int = 46,
+) -> str:
+    row = merged_topic_info.loc[merged_topic_info["Topic"] == topic_id]
+    if row.empty:
+        return f"Topic {topic_id}"
+    topic_row = row.iloc[0]
+    display_topic = topic_row.get("DisplayTopic")
+    topic_name = str(topic_row.get("TopicNameClean", topic_row.get("DisplayLabel", topic_id)))
+    base_label = (
+        f"Topic {int(display_topic)}"
+        if pd.notna(display_topic)
+        else f"Topic {topic_id}"
+    )
+    if include_raw_topic_id and topic_id != -1:
+        base_label = f"{base_label} [raw {topic_id}]"
+    return _truncate_topic_label(f"{base_label} — {topic_name}", max_chars=max_chars)
+
+
+def plot_outlet_colored_topic_umap(
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    top_n: int = 10,
+    figsize: tuple[int, int] = (16, 11),
+    point_size: int = 6,
+    alpha: float = 0.40,
+    include_raw_topic_id_in_labels: bool = True,
+):
+    fig, ax = plt.subplots(figsize=figsize)
+    fig.patch.set_facecolor("white")
+    ax.set_facecolor("white")
+
+    for outlet_key, spec in OUTLET_SPECS.items():
+        outlet_df = merged_articles.loc[merged_articles["outlet_key"] == outlet_key]
+        if outlet_df.empty:
+            continue
+        ax.scatter(
+            outlet_df["umap_x"],
+            outlet_df["umap_y"],
+            c=OUTLET_COLOR_MAP.get(outlet_key, "#666666"),
+            s=point_size,
+            alpha=alpha,
+            linewidths=0,
+            rasterized=True,
+            label=spec.label,
+        )
+
+    top_topic_ids = (
+        merged_topic_info.loc[merged_topic_info["Topic"] != -1]
+        .nsmallest(top_n, "DisplayTopic")["Topic"]
+        .tolist()
+    )
+
+    centroids = (
+        merged_articles.loc[merged_articles["merged_topic"].isin(top_topic_ids)]
+        .groupby("merged_topic", as_index=False)[["umap_x", "umap_y"]]
+        .mean()
+    )
+    for _, row in centroids.iterrows():
+        topic_id = int(row["merged_topic"])
+        label = _format_topic_label_for_plot(
+            topic_id,
+            merged_topic_info,
+            include_raw_topic_id=include_raw_topic_id_in_labels,
+        )
+        ax.text(
+            row["umap_x"],
+            row["umap_y"],
+            label,
+            fontsize=9,
+            ha="center",
+            va="center",
+            color="black",
+            bbox={
+                "facecolor": "white",
+                "edgecolor": "#DDDDDD",
+                "alpha": 0.92,
+                "boxstyle": "round,pad=0.18",
+            },
+            zorder=5,
+        )
+
+    handles = [
+        Line2D(
+            [0],
+            [0],
+            marker="o",
+            linestyle="",
+            markerfacecolor=OUTLET_COLOR_MAP.get(outlet_key, "#666666"),
+            markeredgecolor="none",
+            markersize=7,
+            label=spec.label,
+        )
+        for outlet_key, spec in OUTLET_SPECS.items()
+        if outlet_key in merged_articles["outlet_key"].unique()
+    ]
+    if handles:
+        ax.legend(handles=handles, loc="upper right", frameon=True, title="Outlet")
+
+    ax.set_title(
+        f"Merged BERTopic UMAP — Articles Colored by Outlet, Top {top_n} Display Topics Labeled"
+    )
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_xlabel("")
+    ax.set_ylabel("")
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    fig.tight_layout()
+    return fig, ax
+
+
+def _normalized_shannon_entropy(proportions: pd.Series) -> float:
+    values = proportions.to_numpy(dtype=float)
+    values = values[values > 0]
+    if len(values) == 0:
+        return float("nan")
+    if len(proportions) <= 1:
+        return 0.0
+    entropy = -np.sum(values * np.log(values))
+    return float(entropy / np.log(len(proportions)))
+
+
+def _jensen_shannon_divergence(p: pd.Series, q: pd.Series) -> float:
+    p_values = p.to_numpy(dtype=float)
+    q_values = q.to_numpy(dtype=float)
+    m_values = 0.5 * (p_values + q_values)
+
+    def _kl_divergence(a: np.ndarray, b: np.ndarray) -> float:
+        mask = (a > 0) & (b > 0)
+        if not np.any(mask):
+            return 0.0
+        return float(np.sum(a[mask] * np.log2(a[mask] / b[mask])))
+
+    return 0.5 * _kl_divergence(p_values, m_values) + 0.5 * _kl_divergence(q_values, m_values)
+
+
+def _ranked_topic_ids(counts: pd.Series, top_k: int) -> list[int]:
+    ranking = (
+        counts.rename("count")
+        .rename_axis("topic")
+        .reset_index()
+        .sort_values(["count", "topic"], ascending=[False, True])
+    )
+    return ranking.head(top_k)["topic"].astype(int).tolist()
+
+
+def build_agenda_distortion_scorecard(
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    reference_outlet_key: str = "tagesschau",
+    top_k: int = 10,
+    min_topic_articles: int = 10,
+) -> pd.DataFrame:
+    from scipy.stats import binom
+
+    topic_ids = (
+        merged_topic_info.loc[merged_topic_info["Topic"] != -1]
+        .sort_values(["DisplayTopic", "Topic"], ascending=[True, True])["Topic"]
+        .astype(int)
+        .tolist()
+    )
+
+    assigned = merged_articles.loc[merged_articles["merged_topic"] != -1].copy()
+    counts = pd.crosstab(assigned["outlet_key"], assigned["merged_topic"])
+    counts = counts.reindex(index=list(OUTLET_SPECS.keys()), columns=topic_ids, fill_value=0)
+    proportions = counts.div(counts.sum(axis=1).replace(0, np.nan), axis=0).fillna(0.0)
+    reference_distribution = proportions.loc[reference_outlet_key]
+    reference_top_topics = set(_ranked_topic_ids(counts.loc[reference_outlet_key], top_k))
+    global_topic_distribution = counts.sum(axis=0) / max(int(counts.to_numpy().sum()), 1)
+    total_topic_count = len(topic_ids)
+
+    rows: list[dict[str, object]] = []
+    for outlet_key, spec in OUTLET_SPECS.items():
+        outlet_df = merged_articles.loc[merged_articles["outlet_key"] == outlet_key].copy()
+        article_count = int(len(outlet_df))
+        outlier_articles = int((outlet_df["merged_topic"] == -1).sum())
+        assigned_articles = int(article_count - outlier_articles)
+        outlet_distribution = proportions.loc[outlet_key]
+        outlet_counts = counts.loc[outlet_key]
+
+        actual_topics_covered = int((outlet_counts >= min_topic_articles).sum())
+        expected_topics_covered = float(
+            np.sum(
+                [
+                    binom.sf(min_topic_articles - 1, assigned_articles, float(topic_probability))
+                    for topic_probability in global_topic_distribution.to_numpy(dtype=float)
+                ]
+            )
+        )
+        actual_coverage_share = actual_topics_covered / total_topic_count if total_topic_count else float("nan")
+        expected_coverage_share = expected_topics_covered / total_topic_count if total_topic_count else float("nan")
+        coverage_breadth = (
+            actual_coverage_share / expected_coverage_share
+            if np.isfinite(expected_coverage_share) and expected_coverage_share > 0
+            else float("nan")
+        )
+
+        rows.append(
+            {
+                "Outlet": spec.label,
+                "Articles": article_count,
+                "Assigned_Articles": assigned_articles,
+                "Outlier_Articles": outlier_articles,
+                "Outlier_Rate": (outlier_articles / article_count) if article_count else float("nan"),
+                "Entropy": _normalized_shannon_entropy(outlet_distribution),
+                "JSD_vs_Tagesschau": _jensen_shannon_divergence(outlet_distribution, reference_distribution),
+                "Spearman_vs_Tagesschau": float(outlet_distribution.corr(reference_distribution, method="spearman")),
+                f"Top{top_k}_Overlap_vs_Tagesschau": (
+                    len(set(_ranked_topic_ids(outlet_counts, top_k)) & reference_top_topics) / top_k
+                ),
+                "Topics_Covered_ge_10": actual_topics_covered,
+                "Expected_Topics_ge_10": expected_topics_covered,
+                "Coverage_Breadth": coverage_breadth,
+            }
+        )
+
+    return pd.DataFrame(rows)

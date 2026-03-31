@@ -2,6 +2,20 @@
 
 Master thesis repository for preprocessing, exploratory topic modeling, and supporting analysis notebooks.
 
+## Canonical Corpus
+
+The canonical thesis article corpus is documented in:
+
+- `CANONICAL_COMBINED_DATASET.md`
+
+The canonical reference file is:
+
+- `00_Initial EDA/df_combined.csv`
+
+The reproducible builder is:
+
+- `00_Initial EDA/00_Build_df_combined.ipynb`
+
 ## Repository Layout
 
 - `data preprocessing/`
@@ -35,11 +49,19 @@ These notebooks:
 4. apply final outlier reduction on the selected BERTopic model,
 5. save the reduced final BERTopic model to `BERTopic/outputs/`.
 
-The combined notebook is:
+The canonical corpus build notebook is:
+
+- `00_Build_df_combined.ipynb`
+
+This notebook rebuilds `df_combined.csv` from the cleaned outlet CSVs, assigns `row_id`, and reproduces the overview checks/plots that previously lived in `07_OverallTM.ipynb`.
+
+The combined topic-model notebook is:
 
 - `07_OverallTM.ipynb`
 
-This notebook loads the cleaned outlet CSVs and builds the overall cross-outlet corpus.
+This notebook should now be treated as legacy overall-topic-model context rather than the active corpus build step.
+
+For current thesis work, outlet-specific BERTopic models should be trained from source-specific subsets of the canonical combined dataframe, keyed by `row_id`.
 
 ## Cleaned Outlet Data
 
@@ -68,7 +90,9 @@ Saved topic-model outputs are written under `BERTopic/outputs/`.
 If the cleaned corpora or topic models need to be regenerated, the current practical order is:
 
 1. run the outlet notebooks in `data preprocessing/` to refresh cleaned CSVs and outlet-specific BERTopic outputs,
-2. rerun `07_OverallTM.ipynb` to build the combined corpus and overall topic model.
+2. rerun `00_Build_df_combined.ipynb` to rebuild the canonical combined corpus,
+3. rerun the outlet BERTopic notebooks so they use `df_combined` subsets keyed by `row_id`,
+4. rerun the merged BERTopic workflow.
 
 ## Environment
 

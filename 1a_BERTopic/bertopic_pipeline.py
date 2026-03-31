@@ -31,6 +31,7 @@ except ImportError:
 # Cleaning patterns for German news articles, tuned to remove common boilerplate while preserving semantic content.
 WHITESPACE_PATTERN = re.compile(r"\s+")
 TOKEN_PATTERN = re.compile(r"(?u)\b\w+\b")
+MAX_SINGLE_LINE_BOILERPLATE_CHARS = 80
     
 
 def _require_dependency(package_name: str, install_hint: str):
@@ -102,7 +103,20 @@ def clean_text(text: Any, config: BERTopicConfig | None = None) -> str:
     cleaned = cleaned.replace("\xa0", " ")
 
     for pattern in config.boilerplate_patterns:
-        cleaned = re.sub(pattern, " ", cleaned)
+        compiled_pattern = re.compile(pattern)
+
+        # Guard against boilerplate regexes wiping whole single-line articles.
+        # Some corpus texts are already flattened, so broad line-anchored patterns
+        # like "^Mehr ...:.*$" can otherwise remove substantive articles that
+        # happen to start with words such as "Mehr" or "Auch bei".
+        def _replace_boilerplate(match: re.Match[str]) -> str:
+            matched_text = match.group(0)
+            normalized_match = WHITESPACE_PATTERN.sub(" ", matched_text).strip()
+            if "\n" not in matched_text and len(normalized_match) > MAX_SINGLE_LINE_BOILERPLATE_CHARS:
+                return matched_text
+            return " "
+
+        cleaned = compiled_pattern.sub(_replace_boilerplate, cleaned)
 
     cleaned = WHITESPACE_PATTERN.sub(" ", cleaned).strip()
     if config.lowercase:
@@ -114,15 +128,15 @@ def _token_count(text: str) -> int:
     return len(TOKEN_PATTERN.findall(text))
 
 
-def prepare_documents(
+def _build_preparation_tables(
     df: pd.DataFrame,
     text_col: str,
     config: BERTopicConfig | None = None,
     *,
     id_col: str | None = None,
     source_name: str | None = None,
-) -> pd.DataFrame:
-    """Return a cleaned document table ready for BERTopic."""
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Return the prepared BERTopic table and a row-level preprocessing audit."""
 
     config = config or BERTopicConfig()
     if text_col not in df.columns:
@@ -140,16 +154,84 @@ def prepare_documents(
     prepared["document_length"] = prepared["document"].str.len()
     prepared["token_count"] = prepared["document"].map(_token_count)
 
-    prepared = prepared.loc[
-        (prepared["document_length"] >= config.min_text_chars)
-        & (prepared["token_count"] >= config.min_tokens)
-    ].copy()
+    audit = prepared.copy()
+    audit["passes_min_text_chars"] = audit["document_length"] >= config.min_text_chars
+    audit["passes_min_tokens"] = audit["token_count"] >= config.min_tokens
+    audit["passes_min_filters"] = audit["passes_min_text_chars"] & audit["passes_min_tokens"]
+    audit["is_duplicate_document"] = False
 
     if config.deduplicate:
-        prepared = prepared.drop_duplicates(subset=["document"]).copy()
+        duplicate_mask = audit.loc[audit["passes_min_filters"], "document"].duplicated(keep="first")
+        audit.loc[audit["passes_min_filters"], "is_duplicate_document"] = duplicate_mask.to_numpy()
 
+    audit["included_in_model"] = audit["passes_min_filters"] & ~audit["is_duplicate_document"]
+
+    def _exclusion_reason(row: pd.Series) -> str | None:
+        reasons: list[str] = []
+        if not row["passes_min_text_chars"]:
+            reasons.append("short_text")
+        if not row["passes_min_tokens"]:
+            reasons.append("too_few_tokens")
+        if row["is_duplicate_document"]:
+            reasons.append("duplicate_clean_document")
+        return "|".join(reasons) if reasons else None
+
+    audit["exclusion_reason"] = audit.apply(_exclusion_reason, axis=1)
+    prepared = audit.loc[audit["included_in_model"]].copy()
     prepared = prepared.reset_index(drop=True)
+    audit = audit.reset_index(drop=True)
+
+    prepared = prepared.drop(
+        columns=[
+            "passes_min_text_chars",
+            "passes_min_tokens",
+            "passes_min_filters",
+            "is_duplicate_document",
+            "included_in_model",
+            "exclusion_reason",
+        ],
+        errors="ignore",
+    )
+    return prepared, audit
+
+
+def prepare_documents(
+    df: pd.DataFrame,
+    text_col: str,
+    config: BERTopicConfig | None = None,
+    *,
+    id_col: str | None = None,
+    source_name: str | None = None,
+) -> pd.DataFrame:
+    """Return a cleaned document table ready for BERTopic."""
+
+    prepared, _ = _build_preparation_tables(
+        df,
+        text_col,
+        config,
+        id_col=id_col,
+        source_name=source_name,
+    )
     return prepared
+
+
+def prepare_documents_with_audit(
+    df: pd.DataFrame,
+    text_col: str,
+    config: BERTopicConfig | None = None,
+    *,
+    id_col: str | None = None,
+    source_name: str | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Return the cleaned document table plus a row-level preprocessing audit."""
+
+    return _build_preparation_tables(
+        df,
+        text_col,
+        config,
+        id_col=id_col,
+        source_name=source_name,
+    )
 
 
 def build_vectorizer(
@@ -269,7 +351,7 @@ def run_bertopic_pipeline(
     """Clean documents, fit BERTopic, and return reusable result tables."""
 
     config = config or BERTopicConfig()
-    prepared = prepare_documents(
+    prepared, preparation_audit = prepare_documents_with_audit(
         df,
         text_col,
         config,
@@ -298,9 +380,14 @@ def run_bertopic_pipeline(
 
     topic_info = topic_model.get_topic_info()
     doc_info = topic_model.get_document_info(docs)
+    context_columns = [
+        column
+        for column in ("original_index", "document_id", "source_name", "row_id", "source", "Date", "Title")
+        if column in prepared.columns
+    ]
     doc_info = pd.concat(
         [
-            prepared[["original_index", "document_id", "source_name"]].reset_index(drop=True),
+            prepared[context_columns].reset_index(drop=True),
             doc_info.reset_index(drop=True),
         ],
         axis=1,
@@ -309,6 +396,7 @@ def run_bertopic_pipeline(
     return {
         "config": config,
         "prepared_documents": prepared,
+        "preparation_audit": preparation_audit,
         "docs": docs,
         "topic_model": topic_model,
         "topics": topics,
@@ -316,5 +404,3 @@ def run_bertopic_pipeline(
         "topic_info": topic_info,
         "doc_info": doc_info,
     }
-
-

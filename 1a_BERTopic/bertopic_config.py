@@ -17,7 +17,7 @@ class BERTopicConfig:
     language: str = "multilingual"
     low_memory: bool = True
     calculate_probabilities: bool = False
-    top_n_words: int = 10
+    top_n_words: int = 30
     nr_topics: int | str | None = None
 
     min_text_chars: int = 50 # Minimum number of characters in a document for it to be included in the topic modeling process.

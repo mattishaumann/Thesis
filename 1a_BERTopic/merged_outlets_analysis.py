@@ -1657,3 +1657,203 @@ def build_agenda_distortion_scorecard(
         )
 
     return pd.DataFrame(rows)
+
+
+# ── Topic name overrides ──────────────────────────────────────────────────────
+
+DEFAULT_TOPIC_LABEL_MAP_RELATIVE_PATH = Path("data") / "processed" / "topic_label_map.csv"
+
+
+def load_topic_name_overrides(
+    project_root: Path | None = None,
+    path: Path | None = None,
+) -> dict[int, str]:
+    """Load custom topic labels from topic_label_map.csv.
+
+    Returns a dict mapping topic_id (int) → custom_label string.
+    Only topics with a non-empty custom_label are included.
+    """
+    root = project_root or PROJECT_ROOT_DIR
+    csv_path = path or (root / DEFAULT_TOPIC_LABEL_MAP_RELATIVE_PATH)
+    if not csv_path.exists():
+        return {}
+    df = pd.read_csv(csv_path)
+    if "topic_id" not in df.columns or "custom_label" not in df.columns:
+        return {}
+    mask = df["custom_label"].notna() & df["custom_label"].str.strip().ne("")
+    return dict(zip(df.loc[mask, "topic_id"].astype(int), df.loc[mask, "custom_label"].str.strip()))
+
+
+def apply_topic_name_overrides(
+    topic_info: pd.DataFrame,
+    overrides: dict[int, str],
+    *,
+    label_col: str = "CustomLabel",
+) -> pd.DataFrame:
+    """Add a CustomLabel column to topic_info using the overrides dict.
+
+    Topics not in overrides keep their existing Name/DisplayLabel.
+    """
+    out = topic_info.copy()
+    existing_label = out.get("DisplayLabel", out.get("Name", pd.Series(dtype=str)))
+    out[label_col] = (
+        out["Topic"]
+        .map(overrides)
+        .fillna(existing_label.values if hasattr(existing_label, "values") else existing_label)
+    )
+    return out
+
+
+# ── Compatibility aliases ─────────────────────────────────────────────────────
+
+def build_article_topic_dataset(
+    merged_model,
+    combined_prepared: pd.DataFrame,
+    **kwargs,
+) -> tuple:
+    """Alias for build_merged_article_frame."""
+    return build_merged_article_frame(merged_model, combined_prepared, **kwargs)
+
+
+def export_article_topic_dataset(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    **kwargs,
+) -> tuple:
+    """Alias for export_merged_analysis_cache."""
+    return export_merged_analysis_cache(project_root, merged_articles, merged_topic_info, **kwargs)
+
+
+def export_df_combined_with_topics(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    output_path: Path | None = None,
+    **kwargs,
+) -> Path:
+    """Alias for export_df_combined_with_topic (plural form)."""
+    return export_df_combined_with_topic(project_root, merged_articles, output_path, **kwargs)
+
+
+def build_topic_keyword_summary(
+    topic_info: pd.DataFrame,
+    *,
+    n_words: int = 10,
+) -> pd.DataFrame:
+    """Return a tidy DataFrame with topic_id, rank, and keyword columns."""
+    rows = []
+    for _, row in topic_info.iterrows():
+        topic_id = row.get("Topic", row.get("topic_id"))
+        if topic_id == -1:
+            continue
+        name = str(row.get("Name", ""))
+        keywords = [w.strip() for w in name.split("_") if w.strip() and not w.strip().isdigit()]
+        for rank, kw in enumerate(keywords[:n_words], start=1):
+            rows.append({"topic_id": topic_id, "rank": rank, "keyword": kw})
+    return pd.DataFrame(rows)
+
+
+def build_topic_keyword_rank_table(
+    topic_info: pd.DataFrame,
+    *,
+    n_words: int = 10,
+) -> pd.DataFrame:
+    """Return a wide DataFrame: rows = topics, columns = keyword_1 … keyword_n."""
+    rows = []
+    for _, row in topic_info.iterrows():
+        topic_id = row.get("Topic", row.get("topic_id"))
+        if topic_id == -1:
+            continue
+        name = str(row.get("Name", ""))
+        keywords = [w.strip() for w in name.split("_") if w.strip() and not w.strip().isdigit()]
+        entry: dict = {"topic_id": topic_id, "Count": row.get("Count", None)}
+        for i, kw in enumerate(keywords[:n_words], start=1):
+            entry[f"keyword_{i}"] = kw
+        rows.append(entry)
+    return pd.DataFrame(rows)
+
+
+def refresh_topic_representations(
+    topic_model,
+    docs: list[str],
+    topics: list[int],
+    **kwargs,
+) -> None:
+    """Re-run update_topics on an already-fitted model to refresh c-TF-IDF representations."""
+    topic_model.update_topics(docs, topics=topics, **kwargs)
+
+
+def build_merged_article_umap_3d(
+    merged_model,
+    combined_prepared: pd.DataFrame,
+    *,
+    umap_n_neighbors: int = 10,
+    umap_min_dist: float = 0.0,
+    random_state: int = 42,
+) -> tuple:
+    """3-D variant of build_merged_article_frame. Returns (articles_df, topic_info_df)."""
+    try:
+        from umap import UMAP
+    except ImportError as exc:
+        raise ImportError("umap-learn is required for 3D UMAP.") from exc
+
+    docs = combined_prepared["document"].tolist()
+    topics, probs = merged_model.transform(docs)
+    topics = list(topics)
+
+    embeddings = merged_model._extract_embeddings(docs, method="document")
+    umap_3d = UMAP(
+        n_neighbors=umap_n_neighbors,
+        n_components=3,
+        min_dist=umap_min_dist,
+        metric="cosine",
+        random_state=random_state,
+    ).fit_transform(embeddings)
+
+    articles = combined_prepared.copy()
+    articles["merged_topic"] = topics
+    articles["merged_probability"] = probs if probs is not None else float("nan")
+    articles["umap_x"] = umap_3d[:, 0]
+    articles["umap_y"] = umap_3d[:, 1]
+    articles["umap_z"] = umap_3d[:, 2]
+
+    new_topics_list = list(topics)
+    topic_info = rebuild_topic_info_from_assignments(
+        merged_model.get_topic_info(), new_topics_list
+    )
+    topic_info = enrich_topic_info_with_display(topic_info)
+    return articles, topic_info
+
+
+def plot_merged_topic_umap_3d(
+    merged_articles: pd.DataFrame,
+    merged_topic_info: pd.DataFrame,
+    *,
+    top_n: int = 10,
+    figsize: tuple = (14, 10),
+    **kwargs,
+):
+    """Simple 3D scatter of umap_x / umap_y / umap_z columns (requires prior build_merged_article_umap_3d call)."""
+    import matplotlib.pyplot as plt
+
+    if "umap_z" not in merged_articles.columns:
+        raise ValueError("umap_z column missing. Run build_merged_article_umap_3d first.")
+
+    top_topic_ids = (
+        merged_topic_info.loc[merged_topic_info["Topic"] != -1]
+        .nlargest(top_n, "Count")["Topic"]
+        .tolist()
+    )
+    display_map = dict(zip(merged_topic_info["Topic"], merged_topic_info.get("DisplayLabel", merged_topic_info["Name"])))
+
+    fig = plt.figure(figsize=figsize)
+    ax = fig.add_subplot(111, projection="3d")
+    outliers = merged_articles.loc[merged_articles["merged_topic"] == -1]
+    ax.scatter(outliers["umap_x"], outliers["umap_y"], outliers["umap_z"], c="#E0E0E0", s=1, alpha=0.2)
+
+    non_outliers = merged_articles.loc[merged_articles["merged_topic"] != -1]
+    ax.scatter(
+        non_outliers["umap_x"], non_outliers["umap_y"], non_outliers["umap_z"],
+        c=non_outliers["merged_topic"], s=1, alpha=0.3, cmap="tab20",
+    )
+    return fig, ax

@@ -144,17 +144,19 @@ Each outlet has a dedicated Jupyter notebook (`00_Initial EDA/01-08_*.ipynb`) th
 
 **Clustering**: HDBSCAN (`cluster_selection_method="eom"`, `prediction_data=True`)
 
-**Per-outlet tuning** (HDBSCAN `min_cluster_size` scaled to corpus size):
+**Per-outlet tuning** (final parameters as of Apr 2, 2026 — all `nr_topics` caps removed):
 
-| Outlet | min_cluster_size | Rationale |
-|--------|-----------------|-----------|
-| Tagesschau | 35 | Largest (6.3k) |
-| RT | 15 | Large (4.6k) |
-| Nius | 15 | Medium (3.3k) |
-| Tichys Einblick | 10 | Medium (2.8k) |
-| Compact | 20 | Default |
-| Deutschlandkurier | 20 | Default |
-| Antispiegel | 8 | Smallest (565), also min_df=1 |
+| Outlet | Docs | `min_cluster_size` | `min_samples` | `n_neighbors` | `min_dist` | Outlier threshold | Topics | Outlier% |
+|--------|------|--------------------|--------------|--------------|-----------|-------------------|--------|----------|
+| Tagesschau | 6,319 | 35 | 2 | 25 | 0.0 | 0.10 | 55 | 11.8% |
+| RT DE | 4,560 | 14 | 4 | 18 | 0.05 | 0.10 | 74 | 12.1% |
+| Nius | 3,266 | 15 | 10 | 30 | 0.0 | 0.10 | 38 | 15.1% |
+| Tichys Einblick | 2,756 | 10 | 10 | 15 | 0.0 | 0.05 | 51 | 1.1% |
+| Compact | 1,486 | 10 | 3 | 18 | 0.05 | 0.10 | 42 | 12.8% |
+| Deutschlandkurier | 1,465 | 20 | 10 | 30 | 0.0 | 0.10 | 18 | 11.9% |
+| Anti-Spiegel | 565 | 8 | 2 | 10 | 0.05 | 0.10 | 30 | 6.5% |
+
+Note: `reduce_topics(nr_topics=25)` was previously applied to Compact and Tichys but removed — forced topic merging distorts c-TF-IDF representations and breaks `merge_models()` similarity matching. See `1a_BERTopic/BERTOPIC_METHODOLOGY.md` for full justification.
 
 **Random state**: `42` everywhere (numpy, UMAP, HDBSCAN, BERTopic)
 

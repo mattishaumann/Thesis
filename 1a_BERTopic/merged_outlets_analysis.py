@@ -36,8 +36,8 @@ DEFAULT_THESIS_TOPIC_EXPORT_RELATIVE_PATH = Path("data") / "processed" / "df_com
 DEFAULT_MERGED_ARTICLES_CACHE_RELATIVE_PATH = Path("data") / "processed" / "merged_articles_with_umap.csv"
 DEFAULT_MERGED_TOPIC_INFO_CACHE_RELATIVE_PATH = Path("data") / "processed" / "merged_topic_info_display.csv"
 DEFAULT_MERGED_ANALYSIS_METADATA_RELATIVE_PATH = Path("data") / "processed" / "merged_analysis_metadata.json"
-DEFAULT_MERGED_MODEL_RELATIVE_PATH = Path("1a_BERTopic") / "local_outputs" / "merged_all_outlets_model"
-DEFAULT_FROZEN_MERGED_RUNS_RELATIVE_DIR = Path("1a_BERTopic") / "local_outputs" / "frozen_merged_runs"
+DEFAULT_MERGED_MODEL_RELATIVE_PATH = Path("1a_BERTopic") / "outputs" / "merged_all_outlets_model"
+DEFAULT_FROZEN_MERGED_RUNS_RELATIVE_DIR = Path("1a_BERTopic") / "outputs" / "frozen_merged_runs"
 REQUIRED_COMBINED_COLUMNS = ("Date", "Title", "Text", "source", "row_id")
 
 TICHYS_EXTRA_STOPWORDS = (
@@ -554,6 +554,12 @@ def load_all_prepared_documents(project_root: Path) -> dict[str, pd.DataFrame]:
     }
 
 
+def load_all_prepared_documents_from_df_combined(project_root: Path) -> dict[str, pd.DataFrame]:
+    """Backward-compatible alias for the canonical df_combined-based preparation flow."""
+
+    return load_all_prepared_documents(project_root)
+
+
 def load_all_prepared_documents_with_audits(
     project_root: Path,
 ) -> tuple[dict[str, pd.DataFrame], dict[str, pd.DataFrame]]:
@@ -861,6 +867,18 @@ def build_merged_article_frame(
     umap_metric: str = "cosine",
     random_state: int = 42,
 ) -> tuple[pd.DataFrame, pd.DataFrame, UMAP]:
+    if "row_id" not in combined_prepared.columns:
+        raise KeyError(
+            "combined_prepared must include a 'row_id' column so merged topics can be traced back to source articles."
+        )
+    if combined_prepared["row_id"].duplicated().any():
+        duplicate_ids = (
+            combined_prepared.loc[combined_prepared["row_id"].duplicated(), "row_id"]
+            .astype(str)
+            .tolist()[:10]
+        )
+        raise ValueError(f"combined_prepared contains duplicate row_id values: {duplicate_ids}")
+
     docs = combined_prepared["document"].tolist()
     topics, probabilities = merged_model.transform(docs)
     embeddings = merged_model._extract_embeddings(docs, method="document")
@@ -1216,6 +1234,78 @@ def build_df_combined_with_topic(
     thesis_df = enriched.loc[:, ordered_columns].copy()
     thesis_df["Topic"] = enriched["merged_display_topic"].astype("Int64")
     return thesis_df
+
+
+def build_traceable_merged_assignment_view(
+    project_root: Path,
+    merged_articles: pd.DataFrame,
+    *,
+    preparation_audit: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    """Return one clean article-level assignment table for analysis.
+
+    Canonical columns:
+    - row_id: stable article identifier
+    - outlet: single outlet label for analysis/display
+    - topic_id: stable merged topic id for grouping/joins
+    - topic_nr: display topic number for human-readable ordering
+    - topic_label: display label for tables/plots
+
+    This intentionally drops duplicate bookkeeping columns such as document_id,
+    prepared_document_id, merged_document_id, prepared_outlet_label, and
+    merged_outlet_label.
+    """
+
+    enriched = attach_merged_topics_to_canonical_corpus(
+        project_root,
+        merged_articles,
+        preparation_audit=preparation_audit,
+    )
+
+    source_to_outlet_label = {
+        "Tagesschau": "Tagesschau",
+        "RT_de": "RT",
+        "Antispiegel": "Antispiegel",
+        "Tichys_Einblick": "Tichys Einblick",
+        "Nius": "Nius",
+        "Compact": "Compact",
+        "Deutschlandkurier": "Deutschlandkurier",
+    }
+
+    out = enriched.loc[
+        :,
+        [
+            "row_id",
+            "source",
+            "Date",
+            "Title",
+            "Text",
+            "merged_topic",
+            "merged_display_topic",
+            "merged_display_label",
+            "merged_probability",
+            "included_in_merged_tm_input",
+            "merged_tm_exclusion_reason",
+        ],
+    ].copy()
+
+    out = out.rename(
+        columns={
+            "source": "outlet",
+            "merged_topic": "topic_id",
+            "merged_display_topic": "topic_nr",
+            "merged_display_label": "topic_label",
+            "merged_probability": "topic_probability",
+            "included_in_merged_tm_input": "included_in_model",
+            "merged_tm_exclusion_reason": "exclusion_reason",
+        }
+    )
+
+    out["outlet"] = out["outlet"].map(source_to_outlet_label).fillna(out["outlet"])
+    out["row_id"] = pd.array(out["row_id"], dtype="Int64")
+    out["topic_id"] = pd.array(out["topic_id"], dtype="Int64")
+    out["topic_nr"] = pd.array(out["topic_nr"], dtype="Int64")
+    return out
 
 
 def export_df_combined_with_topic(

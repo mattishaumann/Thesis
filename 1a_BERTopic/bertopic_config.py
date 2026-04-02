@@ -52,7 +52,7 @@ class BERTopicConfig:
     hdbscan_prediction_data: bool = True
 
     random_state: int = 42
-    output_dir: Path = Path("1a_BERTopic/local_outputs")
+    output_dir: Path = Path("1a_BERTopic/outputs")
     extra_stopwords: tuple[str, ...] = field(default_factory=tuple)
 
 

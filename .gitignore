@@ -38,12 +38,16 @@ BERTopic/outputs/
 2a_NER/outputs/*.csv
 
 # Sentiment / emotion pipeline — large weights & run outputs (re-download with download_model_weights.py)
+*.bin
 Sentiment_Analysis/models/**/*.bin
 Sentiment_Analysis/models/**/*.safetensors
 Sentiment_Analysis/outputs/
 3a_Sentiment_Analysis/models/**/*.bin
 3a_Sentiment_Analysis/models/**/*.safetensors
 3a_Sentiment_Analysis/outputs/
+04_Sentiment_Analysis/models/
+04_Sentiment_Analysis/outputs/*.csv
+03_NER_Framing/outputs/*.csv
 
 experiments/**/*.executed.ipynb
 experiments/**/outputs/

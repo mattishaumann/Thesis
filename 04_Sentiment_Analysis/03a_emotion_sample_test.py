@@ -29,7 +29,7 @@ from emotion_utils import (
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
-DEFAULT_DATA = REPO_ROOT / "00_Initial EDA" / "df_combined.csv"
+DEFAULT_DATA = REPO_ROOT / "01_EDAperOutlet" / "outputs" / "df_combined.csv"
 DEFAULT_MODEL_DIR = (
     SCRIPT_DIR
     / "models"

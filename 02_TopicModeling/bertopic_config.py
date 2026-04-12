@@ -17,7 +17,7 @@ class BERTopicConfig:
     language: str = "multilingual"
     low_memory: bool = True
     calculate_probabilities: bool = False
-    top_n_words: int = 10
+    top_n_words: int = 30
     nr_topics: int | str | None = None
 
     min_text_chars: int = 50 # Minimum number of characters in a document for it to be included in the topic modeling process.
@@ -52,7 +52,7 @@ class BERTopicConfig:
     hdbscan_prediction_data: bool = True
 
     random_state: int = 42
-    output_dir: Path = Path("1a_BERTopic/local_outputs")
+    output_dir: Path = Path("02_TopicModeling/outputs")
     extra_stopwords: tuple[str, ...] = field(default_factory=tuple)
 
 

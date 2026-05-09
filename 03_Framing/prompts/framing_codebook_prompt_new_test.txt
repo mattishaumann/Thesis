@@ -1,0 +1,61 @@
+Sie sind Experte darin, zu erkennen, wie Medienunternehmen in deutschsprachigen Nachrichtenartikeln dargestellt werden. Analysieren Sie die folgende Erwähnungen der Medienakteure im Kontext und ordnen Sie die Art des Vorwurfs der Voreingenommenheit (falls vorhanden), der gegen die Medienakteure erhoben wird, anhand der untenstehenden Taxonomie ein.
+
+Taxonomie:
+
+POSITIONS-/PARTEILICHKEITS-BIAS
+Der Medienakteur wird beschuldigt, bestimmten Interessen zu dienen oder politische Loyalitäten zu haben.
+Umfasst: Dienst an politischen Parteien/Politikern/Regierungen; Förderung bestimmter Ideologien (links/rechts/globalistisch/Establishment); systematische Bevorzugung bestimmter sozialer Gruppen; Kontrolle durch oder Dienst an externen Mächten (Staat, Konzerne, WEF); Schutz von Eliten/Establishment statt der Bürger.
+Wichtige Indikatoren: „Sprachrohr“, „Systemmedien“, „dient den Interessen von“, Hinweise auf Kontrolle, Vereinnahmung oder Loyalität.
+Beispiel: „Die Tagesschau ist der verlängerte Arm der Ampelkoalition“ → dient der Regierungskoalition.
+Beispiel aus Korpus: „In seiner Angst redet Haseloff wirr: ‚Ein System kann an der Wahlurne zu Fall gebracht werden', behauptet der gelernte Diplom-Physiker. Nun kennen wir uns in der Teilchenphysik nicht so aus, aber als Historiker müssen wir ihn korrigieren: Nie wurde in Schland ein System durch Wahlen zu Fall gebracht. Berichten ARD und ZDF, ihrem Auftrag zuwider, politisch zu einseitig? Ist Longtagesschau (wie ein Onliner namens Garp Irving die Folgen der Dauerberieselung nennt) eine Krankheit?" → politisch zu einseitig (entity_mention: “ARD | ZDF”)
+
+VERZERRUNG/MANIPULATION
+Dem Medienunternehmen wird vorgeworfen, die Realität durch seine Berichterstattungsmethoden absichtlich zu verzerren.
+Dazu gehören: selektive Berichterstattung (Auswahl bestimmter Geschichten); Verschleierung/Auslassung entscheidender Informationen („Lückenpresse“); Entkontextualisierung von Ereignissen; Verwendung von tendenziöser/manipulativer Sprache; strategische Hervorhebung/Herunterspielung; Framing zur Meinungsbildung.
+Wichtige Indikatoren: „verschweigt“, „verdreht die Fakten“, „einseitige Berichterstattung“, „Propaganda-Sprache“, „aus dem Kontext gerissen“.
+Beispiel: „ARD berichtet über Messerangriffe, verschweigt aber die Herkunft der Täter“ → Verschleierung von Informationen.
+Beispiel aus Korpus: „Das Bekennerschreiben wurde nachweislich um 14.20 Uhr am Anschlagstag veröffentlicht. Mehrere Nachrichtensendungen, so die ZDF-heute-Sendung, unterließen jedoch eine dementsprechende Information an die Zuschauer. ZDFheute verschweigt in der reichweitenstarken 19 Uhr Ausgabe, dass es nach dem Brandanschlag auf die Stromversorgung in Berlin ein Bekennerschreiben auf der Antifa Plattform Indymedia gibt." → Verschweigen eines Bekennerschreibens (entity_mention: “ZDF | ÖRR”)
+
+DISINFORMATION/FALSCHDARSTELLUNG
+Dem Medienunternehmen wird vorgeworfen, Lügen oder falsche Informationen zu verbreiten.
+Dazu gehören: Veröffentlichung nachweislich falscher Behauptungen; Erfindung von Ereignissen/Zitaten; wissentliche Verbreitung von Propaganda; Belügen der Öffentlichkeit.
+Wichtige Indikatoren: „Lügenpresse“, „Fake News“, „Desinformation“, „erfindet“, „Lügen verbreiten“, direkte Widerspruchsbehauptungen („X ist falsch“).
+Beispiel: „Die Impf-Berichterstattung der öffentlich-rechtlichen Medien war eine gigantische Lüge“ → Lügen über Impfstoffe.
+Beispiel aus Korpus: „Weiter hieß es, das sei nach den Anschlägen auf die Nord Streams nicht die erste Auslandsreise des Mannes gewesen. Der Spiegel behauptete, von Sicherheitsbehörden erfahren zu haben, dass der Mann ab Herbst 2023 ‚unter seinem echten Namen vielfach' die ukrainische Grenze passiert habe. Da stellt sich wieder die gleiche Frage, denn das Andromeda-Märchen inklusive der Namen der angeblichen Täter wird seit März 2023 verbreitet: Wie konnte der Mann dann aber danach frei in der EU herumreisen, noch dazu unter seinem richtigen Namen, ohne festgenommen zu werden?" → Verbreitung einer als „Märchen" bezeichneten Falschdarstellung (entity_mention: “Spiegel”)
+
+VERSAGEN/INKOMPETENZ
+Dem Medienunternehmen wird vorgeworfen, seine Arbeit schlecht zu machen, anstatt böswillig zu sein.
+Dazu gehören: schlechte journalistische Standards; minderwertige Berichterstattung; oberflächliche Berichterstattung; Mangel an kritischer Hinterfragung; unprofessionelles Verhalten; gebrochene Versprechen/nicht erfüllter Auftrag.
+Schlüsselindikatoren: „versagt“, „oberflächlich“, „unkritisch“, „mangelnde Qualität“, „hat seine Aufgabe verfehlt“.
+Anmerkung: Deutet eher auf Schwäche als auf Böswilligkeit hin – keine absichtliche Voreingenommenheit oder Lüge.
+Beispiel: „Die Tagesschau stellt der Regierung keine kritischen Fragen mehr“ → unfähig in ihrer Kontrollfunktion.
+Beispiel aus Korpus: „Die Mainstream Presse zerlegt sich selbst. Dunia Hayali abgetaucht, Julia Ruhs gecancelt, Axel Springer im Bürgerkrieg um die Herrschaft über Welt und Jakob Augstein schießt jetzt plötzlich gegen den Spiegel. Bei uns bekommen Sie einen perfekten Überblick." → Selbstzerlegung und innere Dysfunktion der Presse (entity_mention: “Tagesschau”)
+
+NEUTRAL
+Die Entität wird lediglich erwähnt, als Quelle zitiert oder sachlich referenziert, ohne wertenden Rahmen oder Kritik. Es liegt kein Vorwurf der Voreingenommenheit vor.
+Verwenden Sie dies, wenn der Satz wiedergibt, was die Entität gesagt oder getan hat, ohne ein Urteil über ihren Charakter, ihre Qualität, Legitimität oder journalistische Integrität anzudeuten.
+Beispiel: „Laut Tagesschau fand das Treffen in Berlin statt“ → sachliche Quellenangabe.
+Beispiel aus Korpus: „Mai bei seinem ersten Versuch, zum Kanzler gewählt zu werden, in einer Abstimmung, die eigentlich reine Formsache hätte sein sollen, scheiterte. Dies sei ‚ein beispielloses Scheitern in der modernen deutschen Geschichte', das laut einer Umfrage der BILD-Zeitung 51 Prozent der Deutschen überzeugt, es werde ‚der AfD nutzen', und 57 Prozent als ‚Makel' betrachten, der das Ansehen von Merz für den Rest seiner Amtszeit beflecken wird. Wie dem auch sei: Angesichts des Maßes an Verfolgung, dem politische Andersdenkende in Deutschland ausgesetzt sind, ist eine solche vorläufige Aussetzung der Maßnahmen gegen die einzige bedeutende Oppositionskraft im Bundestag nur ein schwacher Trost." → sachliche Bezugnahme auf eine Umfrage. (entity_mention: “Bild-Zeitung”)
+
+IRRELEVANT
+Die gefundene Zeichenfolge ist ein Fehlalarm. Obwohl sie den Regex-Ausdruck ausgelöst hat, bezieht sie sich in diesem Kontext nicht auf ein Mainstream-Medium, eine Medieninstitution, einen Journalisten oder eine medienbezogene Entität. Stattdessen hat sie eine andere wörtliche Bedeutung, ist Teil eines nicht zusammenhängenden Ausdrucks oder Namens oder bezeichnet anderweitig keine Medien als Akteur.
+Verwenden Sie diese Kategorie immer dann, wenn die Übereinstimmung semantisch überhaupt keine Medienreferenz darstellt oder wenn im Kontext keine Medienentität erkannt werden kann.
+
+---
+
+Kontext um die Medienerwähnung(en): {context}
+Erkannte Medienerwähnung(en): {entity_mention}
+
+Aufgabe: Weisen Sie der Erwähnung der Entitäten basierend auf dem Kontext genau eine Kategorie zu. Identifizieren Sie außerdem das Wort oder eine kurze Phrase aus dem Kontext (nicht isoliert, sondern im relevanten Zusammenhang), die diese Klassifizierung am deutlichsten signalisiert. Wenn kein Framing-Signal vorhanden ist (Neutral oder Irrelevant), setzen Sie „evidence“ auf eine leere Zeichenfolge.
+
+Wichtige Richtlinien:
+•⁠  ⁠Wenn sich die übereinstimmende Zeichenfolge in diesem Kontext semantisch nicht auf Medien bezieht, weisen Sie „IRRELEVANT“ zu, auch wenn der reguläre Ausdruck technisch eine Übereinstimmung gefunden hat
+•⁠  ⁠Klassifizieren Sie ausschließlich Vorwürfe, die sich inhaltlich auf die erkannte(n) Medienerwähnung(en) beziehen, nicht auf andere im selben Kontext genannte Akteure (z. B. zitierte Journalist:innen, andere Institutionen). Wenn mehrere relevante Medienakteure im Kontext genannt werden, identifizieren Sie den dominanten Bias-Typ, der diesen Erwähnungen zugeschrieben wird. Ignorieren Sie Vorwürfe, die sich auf andere Akteure im Kontext beziehen
+•⁠  ⁠Unterscheiden Sie, wer den Bias-Vorwurf äußert: Wird er nur einer dritten Partei zugeschrieben (erkennbar an Redewiedergabe, Konjunktiv I, Zitatmarkern wie „laut", „nach Ansicht von"), ohne dass der Text ihn erkennbar übernimmt, wählen Sie NEUTRAL.
+•⁠  ⁠Wenn mehrere Bias-Typen vorhanden zu sein scheinen, wählen Sie die dominante oder primäre Anschuldigung basierend auf den stärksten sprachlichen Hinweisen
+
+Geben Sie ein JSON-Objekt mit genau diesen beiden Feldern zurück:
+•⁠  ⁠„category“: entweder „POSITIONS-/PARTEILICHKEITS-BIAS”, „VERZERRUNG/MANIPULATION“, „DISINFORMATION/FALSCHDARSTELLUNG“, „VERSAGEN/INKOMPETENZ“, „NEUTRAL“ oder „IRRELEVANT“
+•⁠  ⁠„evidence“: das Wort oder eine kurze Phrase aus dem Kontext (nicht isoliert, sondern im relevanten Zusammenhang), die auf den Vorwurf der Voreingenommenheit hindeutet, oder eine leere Zeichenfolge, wenn die Kategorie „Neutral“ oder „Irrelevant“ ist
+
+Gib nur das JSON-Objekt zurück, keinen zusätzlichen Text.

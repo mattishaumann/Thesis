@@ -1,85 +1,44 @@
-# Thesis
+# Thesis — Codebase Overview
 
-Master thesis repository for preprocessing, exploratory topic modeling, and supporting analysis notebooks.
+This repository contains the code behind a Master's thesis that compares **six German alternative news outlets** against **Tagesschau** (the public-broadcaster mainstream baseline) along three mechanisms associated with delegitimizing or polarizing media discourse.
 
-## Repository Layout
+## The three mechanisms
 
-- `data preprocessing/`
-  Contains the main outlet-level preprocessing and BERTopic notebooks.
-- `BERTopic/`
-  Shared BERTopic pipeline code, configuration, stopword handling, and saved model outputs.
-- `Initial EDA/`
-  Early exploratory notebooks and draft analyses.
-- `data/`
-  Raw, processed, and experimental data folders.
-- `code/`
-  Additional scripts and analysis code used alongside the notebooks.
+The analysis is organized around three mechanisms. Each one has its own top-level folder for the analysis, on top of a shared corpus and a shared topic model.
 
-## Main Notebook Workflow
+1. **Agenda Divergence** — which topics each outlet covers compared to Tagesschau. Uses per-outlet BERTopic models that are merged into a single shared topic space, then compared with Jensen–Shannon divergence and Shannon entropy. → [`02_TopicModeling/`](02_TopicModeling/)
+2. **Delegitimization** — *how* each outlet frames mainstream media when it mentions it. Mainstream-media mentions are extracted with NER plus a hand-curated regex of pejorative terms, then frame-classified with a 2-shot LLM prompt over four bias frames (plus neutral / irrelevant). → [`03_Framing/`](03_Framing/)
+3. **Emotional Amplification** — whether alternative outlets lean on **anger** and **fear** more than Tagesschau, and where that concentrates. Uses a fine-tuned German ELECTRA model (Widmann & Wich, 2023) over 8 discrete emotions, with comparisons made *within* topic cluster to avoid topic-vocabulary confounds. → [`04_EmotionDetection/`](04_EmotionDetection/)
 
-The current preprocessing/topic-modeling workflow is centered in `data preprocessing/`:
+## Folder structure
 
-- `01_RT.ipynb`
-- `02_Compact.ipynb`
-- `03_Nius.ipynb`
-- `04_Tichys_Einblick.ipynb`
-- `05_Antispiegel.ipynb`
-- `06_Tagesschau.ipynb`
-- `08_Deutschlandkurier.ipynb`
+| Folder | What it contains |
+| --- | --- |
+| [`00_DataSource/`](00_DataSource/) | Raw outlet exports and cleaned per-outlet CSVs. 20,440 articles across 7 outlets, 2025-08-01 to 2026-01-31. **Data is confidential and not uploaded — see folder README.** |
+| [`01_EDA_TopicModeling_perOutlet/`](01_EDA_TopicModeling_perOutlet/) | Per-outlet exploratory analysis, outlet-specific cleaning, and the individual BERTopic runs (one model per outlet). Foundation for Mechanism 1. |
+| [`02_TopicModeling/`](02_TopicModeling/) | **Mechanism 1 — Agenda Divergence.** Merge of the per-outlet models into 72 shared topics (manually grouped into 18 thematic clusters), plus the JSD / entropy analysis. |
+| [`03_Framing/`](03_Framing/) | **Mechanism 2 — Delegitimization.** NER + regex filter for mainstream-media mentions → 3-sentence context windows → LLM frame coding → delegitimization-rate analysis. |
+| [`04_EmotionDetection/`](04_EmotionDetection/) | **Mechanism 3 — Emotional Amplification.** GELECTRA emotion classification, run both on the full corpus and on the Mechanism 2 context windows; significance testing and the framing ↔ emotion link. |
 
-These notebooks:
+Each mechanism folder has its own `README.md` with the methodological detail (data flow, model choices, validation, thresholds). Start there if you want to drill into a single mechanism.
 
-1. clean one outlet-specific corpus,
-2. export a cleaned CSV used for downstream combination,
-3. run exploratory BERTopic modeling for that outlet,
-4. apply final outlier reduction on the selected BERTopic model,
-5. save the reduced final BERTopic model to `BERTopic/outputs/`.
+## How the mechanisms connect
 
-The combined notebook is:
+```mermaid
+flowchart LR
+    data["00_DataSource<br/>raw + cleaned corpus<br/>(confidential)"]
+    eda["01_EDA_TopicModeling_perOutlet<br/>per-outlet BERTopic"]
+    tm["02_TopicModeling<br/>merged 72 topics<br/>18 clusters"]
+    framing["03_Framing<br/>delegitimization rate"]
+    emotion["04_EmotionDetection<br/>anger / fear"]
 
-- `07_OverallTM.ipynb`
-
-This notebook loads the cleaned outlet CSVs and builds the overall cross-outlet corpus.
-
-## Cleaned Outlet Data
-
-The cleaned corpora currently expected by the overall notebook are stored in `data preprocessing/`:
-
-- `rt_de_clean.csv`
-- `compact_clean.csv`
-- `nius_clean.csv`
-- `tichys_clean.csv`
-- `antispiegel_clean.csv`
-- `tagesschau_clean.csv`
-- `dkurier_clean.csv`
-
-## BERTopic Code
-
-The shared BERTopic components live in:
-
-- `BERTopic/bertopic_pipeline.py`
-- `BERTopic/bertopic_config.py`
-- `BERTopic/stopwords_de.py`
-
-Saved topic-model outputs are written under `BERTopic/outputs/`.
-
-## Minimal Run Order
-
-If the cleaned corpora or topic models need to be regenerated, the current practical order is:
-
-1. run the outlet notebooks in `data preprocessing/` to refresh cleaned CSVs and outlet-specific BERTopic outputs,
-2. rerun `07_OverallTM.ipynb` to build the combined corpus and overall topic model.
-
-## Environment
-
-Install the Python dependencies from:
-
-- `requirements.txt`
-
-Example:
-
-```bash
-pip install -r requirements.txt
+    data --> eda --> tm
+    data --> framing
+    data --> emotion
+    tm -->|"18 clusters used as<br/>topic control"| emotion
+    framing -->|"context windows<br/>+ delegit. rate"| emotion
 ```
 
-The project is currently notebook-driven, so Jupyter support is required.
+## A note on reproducibility
+
+The corpus underlying every analysis here is **confidential** and is therefore not included in this repository. The code is uploaded for **transparency**, so that the methodology can be inspected — not to be re-run end-to-end. Dependencies are listed in [`requirements.txt`](requirements.txt) for reference.

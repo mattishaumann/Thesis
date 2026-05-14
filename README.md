@@ -14,7 +14,7 @@ The analysis is organized around three mechanisms. Each one has its own top-leve
 
 | Folder | What it contains |
 | --- | --- |
-| [`00_DataSource/`](00_DataSource/) | Raw outlet exports and cleaned per-outlet CSVs. 20,440 articles across 7 outlets, 2025-08-01 to 2026-01-31. **Data is confidential and not uploaded — see folder README.** |
+| [`00_DataSource/`](00_DataSource/) | Raw outlet exports and cleaned per-outlet CSVs. 20,440 articles across 7 outlets, 2025-08-01 to 2026-01-31. **Data is confidential and not uploaded (see folder README).** |
 | [`01_EDA_TopicModeling_perOutlet/`](01_EDA_TopicModeling_perOutlet/) | Per-outlet exploratory analysis, outlet-specific cleaning, and the individual BERTopic runs (one model per outlet). Foundation for Mechanism 1. |
 | [`02_TopicModeling/`](02_TopicModeling/) | **Mechanism 1: Agenda Divergence.** Merge of the per-outlet models into 72 shared topics (manually grouped into 18 thematic clusters), plus the JSD / entropy analysis. |
 | [`03_Framing/`](03_Framing/) | **Mechanism 2: Delegitimization.** NER + regex filter for mainstream-media mentions → 3-sentence context windows → LLM frame coding → delegitimization-rate analysis. |

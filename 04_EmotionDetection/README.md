@@ -1,6 +1,6 @@
-# 04 — Emotion Detection
+# 04 Emotion Detection
 
-This folder is **Mechanism 3 — Emotional Amplification**: whether alternative outlets lean on **anger** and **fear** more than Tagesschau, and where that concentrates.
+This folder is **Mechanism 3 Emotional Amplification**: whether alternative outlets lean on **anger** and **fear** more than Tagesschau, and where that concentrates.
 
 ## Model
 
@@ -13,7 +13,7 @@ A German-language **ELECTRA** model, pre-trained by the German NLP Group and fin
 ## Where the model is run
 
 1. **Full corpus** at document level.
-2. **The delegitimization context windows** produced by [`../03_Framing/`](../03_Framing/) — this is what links Mechanism 2 and Mechanism 3.
+2. **The delegitimization context windows** produced by [`../03_Framing/`](../03_Framing/), this is what links Mechanism 2 and Mechanism 3.
 
 ## Topic-aware comparison (key methodological move)
 

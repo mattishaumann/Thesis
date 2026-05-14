@@ -1,4 +1,4 @@
-# 00 — Data Source
+# 00 Data Source
 
 This folder holds the corpus that every later mechanism builds on: the raw outlet exports plus the cleaned version used for modeling.
 
@@ -6,10 +6,10 @@ This folder holds the corpus that every later mechanism builds on: the raw outle
 
 - **20,440 German articles** across **7 outlets**, collected from **2025-08-01 to 2026-01-31**.
 - Article counts by outlet, grouped by typology:
-  - **Mainstream baseline** — Tagesschau (6,320)
-  - **Pro-Russian** — RT DE (4,560), Antispiegel (565)
-  - **Right-extremist** — Compact (1,486), Deutschlandkurier (1,484)
-  - **Right-conservative** — NIUS (3,269), Tichys Einblick (2,756)
+  - **Mainstream baseline**: Tagesschau (6,320)
+  - **Pro-Russian**: RT DE (4,560), Antispiegel (565)
+  - **Right-extremist**: Compact (1,486), Deutschlandkurier (1,484)
+  - **Right-conservative**: NIUS (3,269), Tichys Einblick (2,756)
 
 ## Sources
 

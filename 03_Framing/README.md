@@ -1,21 +1,21 @@
-# 03 — Framing / Delegitimization
+# 03 Delegitimization
 
-This folder is **Mechanism 2 — Delegitimization**: measuring *how* each outlet frames mainstream media when it mentions it.
+This folder is **Mechanism 2 Delegitimization**: measuring *how* each outlet frames mainstream media when it mentions it.
 
 
 ## Two-step pipeline
 
-### 1. Filtering — find mainstream-media mentions
+### 1. Filtering: find mainstream-media mentions
 
 Lives in [`01_NER_Filtering/`](01_NER_Filtering/).
 
-Mainstream-media mentions are identified via **NER** (manually reviewed) plus a **hand-curated regex** for terms NER misses (`Mainstreammedien`, `Staatsmedien`, `Lügenpresse`, etc.). The final filter contains **67 terms** (42 named entities + 25 collective/pejorative terms — full list in Appendix C of the thesis). Tagesschau self-references are stripped.
+Mainstream-media mentions are identified via **NER** (manually reviewed) plus a **hand-curated regex** for terms NER misses (`Mainstreammedien`, `Staatsmedien`, `Lügenpresse`, etc.). The final filter contains **67 terms** (42 named entities + 25 collective/pejorative terms, a full list in Appendix C of the thesis). Tagesschau self-references are stripped.
 
 For each hit, a **3-sentence context window** is extracted (previous + hit + next sentence); overlapping windows are merged.
 
 **Output: 11,975 mentions across 7,204 articles.**
 
-### 2. Frame classification — LLM coding
+### 2. Frame classification: LLM coding
 
 Lives in [`02_Framing_Classification_Run/`](02_Framing_Classification_Run/).
 
@@ -42,5 +42,5 @@ The headline metric is the **delegitimization rate**: the share of mentions clas
 
 ## Other contents
 
-- [`outputs/`](outputs/) — classification outputs, intermediate tables, and figures.
-- [`utils/`](utils/) — shared helper modules used by the notebooks.
+- [`outputs/`](outputs/): classification outputs, intermediate tables, and figures.
+- [`utils/`](utils/): shared helper modules used by the notebooks.

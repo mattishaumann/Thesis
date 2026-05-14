@@ -20,24 +20,8 @@ The analysis is organized around three mechanisms. Each one has its own top-leve
 | [`03_Framing/`](03_Framing/) | **Mechanism 2 — Delegitimization.** NER + regex filter for mainstream-media mentions → 3-sentence context windows → LLM frame coding → delegitimization-rate analysis. |
 | [`04_EmotionDetection/`](04_EmotionDetection/) | **Mechanism 3 — Emotional Amplification.** GELECTRA emotion classification, run both on the full corpus and on the Mechanism 2 context windows; significance testing and the framing ↔ emotion link. |
 
-Each mechanism folder has its own `README.md` with the methodological detail (data flow, model choices, validation, thresholds). Start there if you want to drill into a single mechanism.
+Each mechanism folder has its own `README.md` with the methodological detail (data flow, model choices, validation, thresholds). 
 
-## How the mechanisms connect
-
-```mermaid
-flowchart LR
-    data["00_DataSource<br/>raw + cleaned corpus<br/>(confidential)"]
-    eda["01_EDA_TopicModeling_perOutlet<br/>per-outlet BERTopic"]
-    tm["02_TopicModeling<br/>merged 72 topics<br/>18 clusters"]
-    framing["03_Framing<br/>delegitimization rate"]
-    emotion["04_EmotionDetection<br/>anger / fear"]
-
-    data --> eda --> tm
-    data --> framing
-    data --> emotion
-    tm -->|"18 clusters used as<br/>topic control"| emotion
-    framing -->|"context windows<br/>+ delegit. rate"| emotion
-```
 
 ## A note on reproducibility
 

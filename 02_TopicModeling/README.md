@@ -1,6 +1,6 @@
-# 02 — Merged Topic Model and Agenda-Divergence Analysis
+# 02 Merged Topic Model and Agenda-Divergence Analysis
 
-This folder is **Mechanism 1 — Agenda Divergence**. It takes the per-outlet BERTopic models built in [`../01_EDA_TopicModeling_perOutlet/`](../01_EDA_TopicModeling_perOutlet/) and merges them into a single shared topic space, then runs the agenda-divergence analysis on top.
+This folder is **Mechanism 1 Agenda Divergence**. It takes the per-outlet BERTopic models built in [`../01_EDA_TopicModeling_perOutlet/`](../01_EDA_TopicModeling_perOutlet/) and merges them into a single shared topic space, then runs the agenda-divergence analysis on top.
 
 ## Merge step
 
@@ -27,5 +27,5 @@ Everything is reported at **both** the topic level (72) and the cluster level (1
 ## Pointers
 
 
-- [`BERTopic_merged.ipynb`](BERTopic_merged.ipynb) — the merge run itself.
-- `Topic_Analysis/` — JSD, entropy, hierarchical-clustering analysis notebooks.
+- [`BERTopic_merged.ipynb`](BERTopic_merged.ipynb): the merge run itself.
+- `Topic_Analysis/`: JSD, entropy, hierarchical-clustering analysis notebooks.
